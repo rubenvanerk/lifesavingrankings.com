@@ -12,6 +12,7 @@
                         <h1 class="text-3xl font-bold text-white">
                             @yield('title')
                         </h1>
+                        <h2 class="text-xl font-bold text-white mt-3">@yield('subtitle')</h2>
                     </div>
                 @endif
             </header>
@@ -19,11 +20,11 @@
 
         <main class="-mt-32">
             <div class="max-w-7xl mx-auto pb-12 ">
-                @yield('content')
+                    @yield('content')
 
-                @isset($slot)
-                    {{ $slot }}
-                @endisset
+                    @isset($slot)
+                        {{ $slot }}
+                    @endisset
             </div>
         </main>
     </div>

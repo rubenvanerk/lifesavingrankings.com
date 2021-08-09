@@ -1,10 +1,56 @@
 @extends('layouts.app')
 
 @section('title')
-    Welcome to LifesavingRankings.com
+    Welcome to Lifesaving<wbr/>Rankings.com
+@endsection
+
+@section('subtitle')
+    The <span class="text-yellow-300 font-extrabold">largest</span> lifesaving competition database
 @endsection
 
 @section('content')
+    <div class="mt-8 pb-6 sm:pb-8">
+        <div class="relative">
+            <div class="absolute inset-0 h-1/2"></div>
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto">
+                    <dl class="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-3">
+                        <div class="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
+                            <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                                Athletes
+                            </dt>
+                            <dd class="order-1 text-5xl font-extrabold text-blue-800">
+                                24K
+                            </dd>
+                        </div>
+                        <div
+                            class="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
+                            <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                                Competitions
+                            </dt>
+                            <dd class="order-1 text-5xl font-extrabold text-blue-800">
+                                204
+                            </dd>
+                        </div>
+                        <div class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
+                            <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                                Results
+                            </dt>
+                            <dd class="order-1 text-5xl font-extrabold text-blue-800">
+                                250k
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <h2 class="max-w-7xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
+        World records women
+    </h2>
+
     <div class="shadow sm:hidden">
         <ul class="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
             <li>
@@ -12,8 +58,11 @@
                 <span class="flex items-center space-x-4">
                   <span class="flex-1 flex space-x-2 truncate">
                     <!-- Heroicon name: solid/cash -->
-                    <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                    <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd"
+                            d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                            clip-rule="evenodd"/>
                     </svg>
                     <span class="flex flex-col text-gray-500 text-sm truncate">
                       <span class="truncate">Payment to Molly Sanders</span>
@@ -22,8 +71,11 @@
                     </span>
                   </span>
                     <!-- Heroicon name: solid/chevron-right -->
-                  <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                  <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                          clip-rule="evenodd"/>
                   </svg>
                 </span>
                 </a>
@@ -32,12 +84,15 @@
             <!-- More transactions... -->
         </ul>
 
-        <nav class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200" aria-label="Pagination">
+        <nav class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200"
+             aria-label="Pagination">
             <div class="flex-1 flex justify-between">
-                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                <a href="#"
+                   class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
                     Previous
                 </a>
-                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                <a href="#"
+                   class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
                     Next
                 </a>
             </div>
@@ -72,8 +127,8 @@
                         <tr class="bg-white">
                             <td class="max-w-0 w-full px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 <div class="flex">
-                                    <a href="#" class="group inline-flex space-x-2 truncate text-sm">
-                                        <p class="text-blue-900 truncate group-hover:text-gray-900 group-hover:underline">
+                                    <a href="#" class="group inline-flex space-x-2 truncate text-sm focus:text-yellow-300">
+                                        <p class="text-blue-900 truncate group-hover:text-gray-900 group-hover:underline ">
                                             100m manikin carry with fins
                                         </p>
                                     </a>
@@ -105,27 +160,27 @@
                         </tbody>
                     </table>
                     <!-- Pagination -->
-{{--                    <nav class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" aria-label="Pagination">--}}
-{{--                        <div class="hidden sm:block">--}}
-{{--                            <p class="text-sm text-gray-700">--}}
-{{--                                Showing--}}
-{{--                                <span class="font-medium">1</span>--}}
-{{--                                to--}}
-{{--                                <span class="font-medium">10</span>--}}
-{{--                                of--}}
-{{--                                <span class="font-medium">20</span>--}}
-{{--                                results--}}
-{{--                            </p>--}}
-{{--                        </div>--}}
-{{--                        <div class="flex-1 flex justify-between sm:justify-end">--}}
-{{--                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">--}}
-{{--                                Previous--}}
-{{--                            </a>--}}
-{{--                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">--}}
-{{--                                Next--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    </nav>--}}
+                    {{--                    <nav class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" aria-label="Pagination">--}}
+                    {{--                        <div class="hidden sm:block">--}}
+                    {{--                            <p class="text-sm text-gray-700">--}}
+                    {{--                                Showing--}}
+                    {{--                                <span class="font-medium">1</span>--}}
+                    {{--                                to--}}
+                    {{--                                <span class="font-medium">10</span>--}}
+                    {{--                                of--}}
+                    {{--                                <span class="font-medium">20</span>--}}
+                    {{--                                results--}}
+                    {{--                            </p>--}}
+                    {{--                        </div>--}}
+                    {{--                        <div class="flex-1 flex justify-between sm:justify-end">--}}
+                    {{--                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">--}}
+                    {{--                                Previous--}}
+                    {{--                            </a>--}}
+                    {{--                            <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">--}}
+                    {{--                                Next--}}
+                    {{--                            </a>--}}
+                    {{--                        </div>--}}
+                    {{--                    </nav>--}}
                 </div>
             </div>
         </div>
