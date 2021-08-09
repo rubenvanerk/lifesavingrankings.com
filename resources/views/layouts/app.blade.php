@@ -29,6 +29,8 @@
         </main>
     </div>
 
+    <x-filter/>
+
     <x-footer/>
 
 @endsection
