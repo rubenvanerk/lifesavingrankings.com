@@ -47,11 +47,16 @@
     </div>
 
 
-    <h2 class="max-w-7xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
-        Filter any page
-    </h2>
+    <h3 class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mt-8">
+        World records women
+    </h3>
 
     <x-table :pagination="false"/>
+
+    <h3 class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mt-8">
+        World records men
+    </h3>
+
     <x-table :pagination="false"/>
 @endsection
 

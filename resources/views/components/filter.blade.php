@@ -14,7 +14,7 @@
         </span>
     </button>
 
-    <div class="bg-blue-800 rounded-lg shadow-2xl" x-show="open"
+    <div class="bg-blue-800 rounded-lg shadow-2xl border-2 border-blue-900" x-show="open"
          x-transition:enter="transition ease-in-out duration-300"
          x-transition:enter-start="opacity-0 transform scale-y-0 translate-y-64"
          x-transition:enter-end="opacity-100 transform scale-y-100 translate-y-0"
@@ -22,8 +22,8 @@
          x-transition:leave-start="opacity-100 transform scale-y-100 translate-y-0"
          x-transition:leave-end="opacity-0 transform scale-y-0 translate-y-64">
 
-        <div class="pt-10 pb-12 px-6 sm:pt-16 sm:px-10 lg:py-8 lg:pr-0 xl:py-8 xl:px-10">
-            <h2 class="text-lg text-white">Results filter</h2>
+        <div class="py-4 px-6">
+            <h2 class="text-lg text-white font-bold">Filter results on this page</h2>
         </div>
     </div>
 </div>
