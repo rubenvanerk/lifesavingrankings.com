@@ -12,7 +12,7 @@ module.exports = {
         extend: {
             backgroundColor: ['active'],
         },
-        animation: ['responsive', 'motion-safe', 'motion-reduce']
+        animation: ['responsive', 'motion-safe', 'motion-reduce'],
     },
     purge: {
         content: [
