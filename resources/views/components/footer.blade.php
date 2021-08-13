@@ -1,7 +1,7 @@
 <div class="bg-blue-800">
     <div class="max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-white">
-            <span class="text-yellow-300">Sponsors</span> of LifesavingRankings.com
+            <span class="text-yellow-300">Sponsors</span> of Lifesaving<wbr/>Rankings.com
         </h2>
         <div class="flow-root mt-8 lg:mt-10">
             <div class="-mt-4 -ml-8 flex flex-wrap justify-between lg:-ml-4">
