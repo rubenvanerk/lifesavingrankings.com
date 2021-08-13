@@ -14,7 +14,7 @@
                             Date
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
-                            <time datetime="2021-09-20">Sep 12 2016</time>
+                            <time datetime="{{ $competition->start_date->format('Y-m-d') }}">{{ $competition->start_date->isoFormat('LL') }}</time>
                             <x-heroicon-s-arrow-sm-right class="h-5 pb-0.5 inline mx-0.5"/>
                             <time datetime="2021-09-20">Sep 16 2016</time>
                         </dd>
