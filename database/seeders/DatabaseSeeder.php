@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         foreach ($competitions as $competition) {
             $venueTypes = collect(VenueType::getValues())->random(random_int(1, 2));
             foreach ($venueTypes as $venueType) {
-                $randomVenue = Venue::query()->where('type', $venueType)->inRandomOrder()->get();
+                $randomVenue = Venue::query()->where('type', $venueType)->inRandomOrder()->first();
                 $competition->venues()->attach($randomVenue);
             }
         }

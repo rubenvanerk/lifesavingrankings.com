@@ -18,6 +18,11 @@ class CompetitionController extends Controller
         if (!$competition->exists) {
             abort(404);
         }
+
+        $competition->load(['venues' => function ($query) {
+            $query->orderBy('type');
+        }]);
+
         return view('competitions.show', compact('competition'));
     }
 }

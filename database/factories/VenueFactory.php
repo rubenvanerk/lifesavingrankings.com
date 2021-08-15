@@ -24,6 +24,7 @@ class VenueFactory extends Factory
     {
         $venueType = VenueType::getRandomInstance();
         return [
+            'name' => ucfirst($this->faker->words(asText: true)),
             'city' => $this->faker->city,
             'country_code' => $this->faker->countryISOAlpha3,
             'type' => $venueType->value,

@@ -16,6 +16,8 @@ class CreateVenuesTable extends Migration
         Schema::create('venues', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name');
+            $table->string('slug');
             $table->string('city');
             $table->string('country_code', 3);
             $table->tinyInteger('type');

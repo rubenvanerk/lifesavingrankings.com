@@ -5,7 +5,7 @@
                 <span class="block px-4 py-4 bg-white">
                     <span class="flex items-center space-x-4">
                           <span class="flex-1 flex space-x-2 truncate">
-                              <img class="flex-shrink-0 w-5 h-5 rounded-md"
+                              <img class="flex-shrink-0 h-4 rounded shadow mt-1"
                                  src="{{ url('/pragmarx/countries/flag/download/ita.svg') }}">
                               <span class="flex flex-col text-gray-500 text-sm truncate w-full leading-relaxed">
                                   <a href="" class="truncate hover:text-gray-900">Lucrezia Fabretti</a>
@@ -81,8 +81,8 @@
                             </td>
                             <td class="w-full px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 <div class="flex">
-                                    <a href="#" class="group inline-flex space-x-2 text-sm">
-                                        <img class="w-5 h-5 rounded-md"
+                                    <a href="#" class="group inline-flex space-x-2 text-sm flex items-center">
+                                        <img class="h-4 rounded shadow"
                                              src="{{ url('/pragmarx/countries/flag/download/ita.svg') }}">
                                         <p class="text-gray-500 group-hover:text-gray-900">
                                             Lucrezia FABRETTI

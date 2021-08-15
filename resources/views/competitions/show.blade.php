@@ -15,8 +15,10 @@
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             <time datetime="{{ $competition->start_date->format('Y-m-d') }}">{{ $competition->start_date->isoFormat('LL') }}</time>
-                            <x-heroicon-s-arrow-sm-right class="h-5 pb-0.5 inline mx-0.5"/>
-                            <time datetime="2021-09-20">Sep 16 2016</time>
+                            @if ($competition->end_date)
+                                <x-heroicon-s-arrow-sm-right class="h-5 pb-0.5 inline mx-0.5"/>
+                                <time datetime="{{ $competition->end_date->format('Y-m-d') }}">{{ $competition->end_date->isoFormat('LL') }}</time>
+                            @endif
                         </dd>
                     </div>
                     <div class="sm:col-span-1">
@@ -24,30 +26,29 @@
                             Timekeeping
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                          Electronic
-                        </span>
-                            <span
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          By hand
-                        </span>
-                            <span
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                              Unknown
-                            </span>
+                            @switch($competition->timekeeping)
+                                @case(\App\Enums\TimekeepingMethod::Unknown)
+                                    <x-base.badge color="gray">Unknown</x-base.badge>
+                                    @break;
+                                @case(\App\Enums\TimekeepingMethod::ByHand)
+                                    <x-base.badge color="blue">By hand</x-base.badge>
+                                    @break;
+                                @case(\App\Enums\TimekeepingMethod::Electronic)
+                                    <x-base.badge color="yellow">Electronic</x-base.badge>
+                                    @break;
+                            @endswitch
                         </dd>
                     </div>
-                    <div class="sm:col-span-2">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Comment
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa
-                            consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in
-                            ea officia proident.
-                        </dd>
-                    </div>
+                    @if ($competition->comment)
+                        <div class="sm:col-span-2">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Comment
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                {!! $competition->comment !!}
+                            </dd>
+                        </div>
+                    @endif
                     <div class="sm:col-span-2">
                         <dt class="text-sm font-medium text-gray-500">
                             Original files
@@ -126,98 +127,64 @@
             </div>
         </div>
 
-        <div x-data="{ venueTab: 'pool' }"
+        <div x-data="{ venueTab: '{{ $competition->venues->first()->type_code }}' }"
              class="bg-white shadow overflow-hidden md:rounded-lg col-span-2 md:col-span-1 mt-4 md:mt-0">
             <div>
                 <nav class="relative z-0 shadow flex divide-x divide-gray-200" aria-label="Tabs">
-
-                    <a href="#" aria-current="page"
-                       @click.prevent="venueTab = 'pool'" :class="venueTab == 'pool' ? 'text-gray-900' : 'text-gray-500'"
-                       class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10">
-                        <span>Pool</span>
-                        <span aria-hidden="true"
-                              x-show="venueTab == 'pool'"
-                              class="bg-blue-500 absolute inset-x-0 bottom-0 h-0.5">
-                        </span>
-                    </a>
-
-                    <a href="#"
-                       @click.prevent="venueTab = 'beach'" :class="venueTab == 'beach' ? 'text-gray-900' : 'text-gray-500'"
-                       class="hover:text-gray-700 group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10">
-                        <span>Beach</span>
-                        <span aria-hidden="true"
-                              x-show="venueTab == 'beach'"
-                              class="bg-yellow-500 absolute inset-x-0 bottom-0 h-0.5">
-                        </span>
-                    </a>
-
+                    @foreach($competition->venues as $venue)
+                        <a @if($competition->venues->count() > 1)href="#" @endif aria-current="page"
+                           @click.prevent="venueTab = '{{ $venue->type_code }}'" :class="venueTab == '{{ $venue->type_code }}' ? 'text-gray-900' : 'text-gray-500'"
+                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center @if($competition->venues->count() > 1)hover:bg-gray-50 @endif focus:z-10">
+                            <span>{{ $venue->type_description }}</span>
+                            <span aria-hidden="true"
+                                  x-show="venueTab == '{{ $venue->type_code }}'"
+                                  class="bg-{{ $venue->type_color }}-500 absolute inset-x-0 bottom-0 h-0.5">
+                            </span>
+                        </a>
+                    @endforeach
                 </nav>
             </div>
             <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                <dl class="sm:divide-y sm:divide-gray-200" x-show="venueTab == 'pool'">
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Name
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            Pieter van den Hoogenband zwemstadion
-                        </dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Country
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex">
-                            <img class="w-5 h-5 rounded-md mr-1"
-                                 src="{{ url('/pragmarx/countries/flag/download/nld.svg') }}">
-                            Netherlands
-                        </dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            City
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            Eindhoven
-                        </dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Pool size
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            50m
-                        </dd>
-                    </div>
-                </dl>
-                <dl class="sm:divide-y sm:divide-gray-200" x-show="venueTab == 'beach'">
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Name
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            Noordwijk strand
-                        </dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Country
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex">
-                            <img class="w-5 h-5 rounded-md mr-1"
-                                 src="{{ url('/pragmarx/countries/flag/download/nld.svg') }}">
-                            Netherlands
-                        </dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            City
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            Noordwijk
-                        </dd>
-                    </div>
-                </dl>
+                @foreach($competition->venues as $venue)
+                    <dl class="sm:divide-y sm:divide-gray-200" x-show="venueTab == '{{ $venue->type_code }}'">
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Name
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{ $venue->name }}
+                            </dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Country
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center">
+                                <img class="h-4 rounded mr-1 shadow"
+                                     src="{{ url('/pragmarx/countries/flag/download/' . $venue->country_code . '.svg') }}">
+                                {{ $venue->country->name->common }}
+                            </dd>
+                        </div>
+                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                City
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{ $venue->city }}
+                            </dd>
+                        </div>
+                        @if($venue->pool_size)
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Pool size
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {{ $venue->pool_size_label }}
+                                </dd>
+                            </div>
+                        @endif
+                    </dl>
+                @endforeach
             </div>
         </div>
 
