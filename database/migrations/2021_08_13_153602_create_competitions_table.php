@@ -19,7 +19,7 @@ class CreateCompetitionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->index();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->tinyInteger('timekeeping')->default(TimekeepingMethod::Unknown);

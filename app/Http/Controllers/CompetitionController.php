@@ -9,7 +9,7 @@ class CompetitionController extends Controller
 {
     public function index(): View
     {
-        $competitions = Competition::with('venues')->get();
+        $competitions = Competition::query()->select(['name', 'slug'])->get();
         return view('competitions.index', compact('competitions'));
     }
 
