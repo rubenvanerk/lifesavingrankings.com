@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Competitions
+    {{ trans_choice('app.competitions', 2) }}
 @endsection
 
 @section('content')

@@ -16,11 +16,11 @@
                         <div class="min-w-0 flex-1 flex justify-between space-x-4">
                             <div>
                                 <p class="text-sm text-gray-500 leading-8">
-                                    Added <a href="#" class="font-medium text-gray-900">ILSE Dordrecht 2021</a> with 3453 results
+                                    {!! __('app.added_competition', ['competition_name' => '<a href="#" class="font-medium text-gray-900">' . 'ILSE Dordrecht' . '</a>', 'result_count' => 3453]) !!}
                                 </p>
                             </div>
                             <div class="text-right text-sm whitespace-nowrap text-gray-500 leading-8">
-                                <time datetime="2020-09-20">Sep 20</time>
+                                <time datetime="{{ now()->format('Y-m-d') }}">{{ now()->isoFormat('ll') }}</time>
                             </div>
                         </div>
                     </div>

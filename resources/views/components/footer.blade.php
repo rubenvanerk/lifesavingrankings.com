@@ -1,7 +1,7 @@
 <div class="bg-blue-800">
     <div class="max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-white">
-            <span class="text-yellow-300">Sponsors</span> of Lifesaving<wbr/>Rankings.com
+            {!! __('app.sponsors', ['style_open' => '<span class="text-yellow-300">', 'style_close' => '</span>', 'html' => '<wbr/>']) !!}
         </h2>
         <div class="flow-root mt-8 lg:mt-10">
             <div class="-mt-4 -ml-8 flex flex-wrap justify-between lg:-ml-4">
@@ -31,19 +31,19 @@
         <nav class="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             <div class="px-5 py-2">
                 <a href="#" class="text-base text-gray-500 hover:text-gray-900">
-                    About
+                    {{ __('footer.about') }}
                 </a>
             </div>
 
             <div class="px-5 py-2">
                 <a href="#" class="text-base text-gray-500 hover:text-gray-900">
-                    Source code
+                    {{ __('footer.source_code') }}
                 </a>
             </div>
 
             <div class="px-5 py-2">
                 <a href="#" class="text-base text-gray-500 hover:text-gray-900">
-                    Support the project
+                    {{ __('footer.support') }}
                 </a>
             </div>
         </nav>
@@ -70,7 +70,7 @@
             </a>
         </div>
         <p class="mt-8 text-center text-base text-gray-400">
-            LifesavingRankings.com is created by <a href="">Ruben van Erk</a>
+            LifesavingRankings.com {{ __('footer.is_created_by') }} <a href="https://rubenvanerk.nl" target="_blank">Ruben van Erk</a>
         </p>
     </div>
 </footer>

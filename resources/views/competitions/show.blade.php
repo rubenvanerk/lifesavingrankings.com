@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    World Championships Interclub Teams Open 2016 results
+    World Championships Interclub Teams Open 2016 {{ strtolower(trans_choice('app.results', '2')) }}
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">
-                            Date
+                            {{ __('app.date') }}
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             <time datetime="{{ $competition->start_date->format('Y-m-d') }}">{{ $competition->start_date->isoFormat('LL') }}</time>
@@ -23,20 +23,12 @@
                     </div>
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">
-                            Timekeeping
+                            {{ __('app.timekeeping') }}
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
-                            @switch($competition->timekeeping)
-                                @case(\App\Enums\TimekeepingMethod::Unknown)
-                                    <x-base.badge color="gray">Unknown</x-base.badge>
-                                    @break;
-                                @case(\App\Enums\TimekeepingMethod::ByHand)
-                                    <x-base.badge color="blue">By hand</x-base.badge>
-                                    @break;
-                                @case(\App\Enums\TimekeepingMethod::Electronic)
-                                    <x-base.badge color="yellow">Electronic</x-base.badge>
-                                    @break;
-                            @endswitch
+                            <x-base.badge color="{{ $competition->timekeeping_color }}">
+                                {{ $competition->timekeeping_label }}
+                            </x-base.badge>
                         </dd>
                     </div>
                     @if ($competition->comment)
@@ -51,7 +43,7 @@
                     @endif
                     <div class="sm:col-span-2">
                         <dt class="text-sm font-medium text-gray-500">
-                            Original files
+                            {{ __('app.original_files') }}
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
@@ -64,7 +56,7 @@
                                     </div>
                                     <div class="ml-4 flex-shrink-0">
                                         <a href="#" class="font-medium text-blue-700 hover:text-blue-500">
-                                            Download
+                                            {{ __('app.download') }}
                                         </a>
                                     </div>
                                 </li>
@@ -77,7 +69,7 @@
                                     </div>
                                     <div class="ml-4 flex-shrink-0">
                                         <a href="#" class="font-medium text-blue-700 hover:text-blue-500">
-                                            Download
+                                            {{ __('app.download') }}
                                         </a>
                                     </div>
                                 </li>
@@ -86,7 +78,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <dt class="text-sm font-medium text-gray-500">
-                            Videos
+                            {{ __('app.videos') }}
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
@@ -100,7 +92,7 @@
                                     <div class="ml-4 flex-shrink-0">
                                         <a href="#"
                                            class="font-medium text-blue-700 hover:text-blue-500 flex items-center">
-                                            <span class="mr-1 flex-1 truncate">Watch</span>
+                                            <span class="mr-1 flex-1 truncate">{{ __('app.watch') }}</span>
                                             <x-heroicon-s-external-link class="flex-shrink-0 h-4 w-4"/>
                                         </a>
                                     </div>
@@ -115,7 +107,7 @@
                                     <div class="ml-4 flex-shrink-0">
                                         <a href="#"
                                            class="font-medium text-blue-700 hover:text-blue-500 flex items-center">
-                                            <span class="mr-1 flex-1 truncate">Watch</span>
+                                            <span class="mr-1 flex-1 truncate">{{ __('app.watch') }}</span>
                                             <x-heroicon-s-external-link class="flex-shrink-0 h-4 w-4"/>
                                         </a>
                                     </div>
@@ -149,7 +141,7 @@
                     <dl class="sm:divide-y sm:divide-gray-200" x-show="venueTab == '{{ $venue->type_code }}'">
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">
-                                Name
+                                {{ __('app.venue.name') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 {{ $venue->name }}
@@ -157,7 +149,7 @@
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">
-                                Country
+                                {{ __('app.venue.country') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center">
                                 <img class="h-4 rounded mr-1 shadow"
@@ -167,7 +159,7 @@
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">
-                                City
+                                {{ __('app.venue.city') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 {{ $venue->city }}
@@ -176,7 +168,7 @@
                         @if($venue->pool_size)
                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    Pool size
+                                    {{ __('app.venue.pool_size') }}
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     {{ $venue->pool_size_label }}
