@@ -12,13 +12,12 @@ class Localize
     public function handle(Request $request, Closure $next)
     {
         $locales = array_keys(config('app.locales'));
-        $session = $request->getSession();
 
-        if (!$session->has(self::SESSION_KEY)) {
-            $session->put(self::SESSION_KEY, $request->getPreferredLanguage($locales));
+        if (!session()->has(self::SESSION_KEY)) {
+            session()->put(self::SESSION_KEY, $request->getPreferredLanguage($locales));
         }
 
-        app()->setLocale($session->get(self::SESSION_KEY));
+        app()->setLocale(session()->get(self::SESSION_KEY));
 
         return $next($request);
     }
