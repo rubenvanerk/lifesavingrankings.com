@@ -17,9 +17,6 @@
                 <div class="mt-4 ml-8 flex flex-grow flex-shrink-0 lg:flex-grow-0 lg:ml-4">
                     <img class="h-12" src="https://tailwindui.com/img/logos/transistor-logo-indigo-300.svg" alt="Transistor">
                 </div>
-                <div class="mt-4 ml-8 flex flex-grow flex-shrink-0 lg:flex-grow-0 lg:ml-4">
-                    <img class="h-12" src="https://tailwindui.com/img/logos/workcation-logo-indigo-300.svg" alt="Workcation">
-                </div>
             </div>
         </div>
     </div>

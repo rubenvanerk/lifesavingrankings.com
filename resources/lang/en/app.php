@@ -8,20 +8,21 @@ return [
     'competitions' => 'Competition|Competitions',
     'results' => 'Result|Results',
     'events' => 'Event|Events',
+    'venues' => 'Venue|Venues',
     'time' => 'Time',
     'date' => 'Date',
+
+    'status' => 'Status',
     'timekeeping' => 'Timekeeping',
     'original_files' => 'Original files',
     'download' => 'Download',
     'videos' => 'Videos',
     'watch' => 'Watch',
 
-    'venue' => [
-        'name' => 'Name',
-        'country' => 'Country',
-        'city' => 'City',
-        'pool_size' => 'Pool size',
-    ],
+    'name' => 'Name',
+    'country' => 'Country',
+    'city' => 'City',
+    'pool_size' => 'Pool size',
 
     'women' => 'women',
     'men' => 'men',

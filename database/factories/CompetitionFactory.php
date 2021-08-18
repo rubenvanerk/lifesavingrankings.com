@@ -27,7 +27,7 @@ class CompetitionFactory extends Factory
         $startDate = new CarbonImmutable($this->faker->dateTimeThisDecade());
         $status = CompetitionStatus::getRandomInstance();
         return [
-            'name' => ucfirst((string)$this->faker->words(asText: true)),
+            'name' => ucfirst((string)$this->faker->words(asText: true)) . ' ' . $startDate->year,
             'start_date' => $startDate,
             'end_date' => $this->faker->boolean ? $this->faker->dateTimeBetween($startDate->addDay(), $startDate->addDays(4)) : null,
             'timekeeping' => TimekeepingMethod::getRandomValue(),

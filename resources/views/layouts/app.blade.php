@@ -29,7 +29,7 @@
         </main>
     </div>
 
-    <x-filter/>
+{{--    <x-filter/>--}}
 
     <x-footer/>
 

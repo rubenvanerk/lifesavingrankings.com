@@ -83,8 +83,14 @@ return [
     'locale' => 'en',
 
     'locales' => [
-        'en' => 'English',
-        'nl' => 'Nederlands',
+        'en' => [
+            'label' => 'English',
+            'code3' => 'eng',
+        ],
+        'nl' => [
+            'label' => 'Nederlands',
+            'code3' => 'nld',
+        ],
     ],
 
     /*

@@ -27,7 +27,7 @@
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             <x-base.badge color="{{ $competition->timekeeping_color }}">
-                                {{ $competition->timekeeping_label }}
+                                {{ $competition->timekeeping->description }}
                             </x-base.badge>
                         </dd>
                     </div>
@@ -119,17 +119,17 @@
             </div>
         </div>
 
-        <div x-data="{ venueTab: '{{ $competition->venues->first()->type_code }}' }"
+        <div x-data="{ venueTab: '{{ $competition->venues->first()->type->value }}' }"
              class="bg-white shadow overflow-hidden md:rounded-lg col-span-2 md:col-span-1 mt-4 md:mt-0">
             <div>
                 <nav class="relative z-0 shadow flex divide-x divide-gray-200" aria-label="Tabs">
                     @foreach($competition->venues as $venue)
                         <a @if($competition->venues->count() > 1)href="#" @endif aria-current="page"
-                           @click.prevent="venueTab = '{{ $venue->type_code }}'" :class="venueTab == '{{ $venue->type_code }}' ? 'text-gray-900' : 'text-gray-500'"
+                           @click.prevent="venueTab = '{{ $venue->type->value }}'" :class="venueTab == '{{ $venue->type->value }}' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center @if($competition->venues->count() > 1)hover:bg-gray-50 @endif focus:z-10">
-                            <span>{{ $venue->type_description }}</span>
+                            <span>{{ $venue->type->description }}</span>
                             <span aria-hidden="true"
-                                  x-show="venueTab == '{{ $venue->type_code }}'"
+                                  x-show="venueTab == '{{ $venue->type->value }}'"
                                   class="bg-{{ $venue->type_color }}-500 absolute inset-x-0 bottom-0 h-0.5">
                             </span>
                         </a>
@@ -138,10 +138,10 @@
             </div>
             <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                 @foreach($competition->venues as $venue)
-                    <dl class="sm:divide-y sm:divide-gray-200" x-show="venueTab == '{{ $venue->type_code }}'">
+                    <dl class="sm:divide-y sm:divide-gray-200" x-show="venueTab == '{{ $venue->type->value }}'">
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">
-                                {{ __('app.venue.name') }}
+                                {{ __('app.name') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 {{ $venue->name }}
@@ -149,17 +149,16 @@
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">
-                                {{ __('app.venue.country') }}
+                                {{ __('app.country') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center">
-                                <img class="h-4 rounded mr-1 shadow"
-                                     src="{{ url('/pragmarx/countries/flag/download/' . $venue->country_code . '.svg') }}">
-                                {{ $venue->country->name->common }}
+                                <x-dynamic-component :component="'flag-4x3-' . strtolower($venue->country_code)" class="h-3.5 mr-1"/>
+                                {{ $venue->country_name }}
                             </dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-sm font-medium text-gray-500">
-                                {{ __('app.venue.city') }}
+                                {{ __('app.city') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 {{ $venue->city }}
@@ -168,7 +167,7 @@
                         @if($venue->pool_size)
                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500">
-                                    {{ __('app.venue.pool_size') }}
+                                    {{ __('app.pool_size') }}
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     {{ $venue->pool_size_label }}

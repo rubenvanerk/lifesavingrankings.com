@@ -17,7 +17,7 @@ Route::get('set-locale/{locale}', LocaleController::class)->name('set-locale');
 Route::view('/', 'home')->name('home');
 
 Route::prefix('competitions')->group(function () {
-    Route::get('/', [CompetitionController::class, 'index'])->name('competitions.index');
+    Route::get('/', \App\Http\Livewire\Competitions\Index::class)->name('competitions.index');
     Route::get('/{competition:slug}', [CompetitionController::class, 'show'])->name('competitions.show');
 });
 

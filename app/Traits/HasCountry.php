@@ -1,11 +1,12 @@
 <?php namespace App\Traits;
 
-use PragmaRX\Countries\Package\Countries;
 
 trait HasCountry
 {
-    public function getCountryAttribute()
+    public function getCountryNameAttribute()
     {
-        return (new Countries())->where('cca3', strtoupper($this->country_code))->first();
+        $currentLocale = config('app.locales.' . app()->getLocale() . '.code3');
+        $country = country($this->country_code);
+        return $country->getTranslation($currentLocale)['common'];
     }
 }

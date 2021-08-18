@@ -16,6 +16,10 @@ class Venue extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'type' => VenueType::class,
+    ];
+
     public function competitions(): BelongsToMany
     {
         return $this->belongsToMany(Competition::class);
@@ -28,19 +32,9 @@ class Venue extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function getTypeCodeAttribute(): string
-    {
-        return strtolower(optional(VenueType::coerce($this->type))->key);
-    }
-
-    public function getTypeDescriptionAttribute(): string
-    {
-        return optional(VenueType::coerce($this->type))->description;
-    }
-
     public function getTypeColorAttribute(): string
     {
-        if (VenueType::coerce($this->type)->is(VenueType::Beach)) {
+        if ($this->type->is(VenueType::Beach)) {
             return 'yellow';
         }
         return 'blue';

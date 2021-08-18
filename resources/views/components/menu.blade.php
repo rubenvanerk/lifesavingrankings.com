@@ -32,6 +32,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="flex lg:hidden">
                 <button type="button" aria-controls="mobile-menu" aria-expanded="false"
                         x-bind:aria-expanded="open.toString()"
@@ -42,19 +43,20 @@
                     <x-heroicon-o-x x-show="open" class="h-6 w-6"/>
                 </button>
             </div>
-            <div class="hidden lg:block lg:ml-4">
-                <div class="flex items-center">
-                    <div class="ml-3 relative flex-shrink-0">
-                        <div>
-                            <a class="bg-blue-900 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white"
-                               id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                <span class="sr-only">{{ __('app.open_user_menu') }}</span>
-                                <x-heroicon-o-user class="h-8 w-8 p-1"/>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+{{--            <div class="hidden lg:block lg:ml-4">--}}
+{{--                <div class="flex items-center">--}}
+{{--                    <div class="ml-3 relative flex-shrink-0">--}}
+{{--                        <div>--}}
+{{--                            <a class="bg-blue-900 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white"--}}
+{{--                               id="user-menu-button" aria-expanded="false" aria-haspopup="true">--}}
+{{--                                <span class="sr-only">{{ __('app.open_user_menu') }}</span>--}}
+{{--                                <x-heroicon-o-user class="h-8 w-8 p-1"/>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <x-base.locale-picker/>
 
@@ -63,14 +65,10 @@
 
     <div class="lg:hidden shadow-2xl" id="mobile-menu" x-show="open">
         <div class="px-2 pt-2 pb-3 space-y-1">
-            <a href="#" class="bg-blue-700 text-white block rounded-md py-2 px-3 text-base font-medium">
-                {{ trans_choice('app.competitions', 2) }}
-            </a>
 
-            <a href="#"
-               class="text-white hover:bg-blue-500 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium">
-                {{ trans_choice('app.events', 2) }}
-            </a>
+            <x-base.mobile-menu-item :active="request()->routeIs('competitions.*')" :url="route('competitions.index')">
+                {{ trans_choice('app.competitions', 2) }}
+            </x-base.mobile-menu-item>
         </div>
         <div class="pt-4 pb-3 border-t border-blue-700">
             <div class="mt-3 px-2 space-y-1">

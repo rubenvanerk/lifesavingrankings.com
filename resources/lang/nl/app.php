@@ -8,20 +8,21 @@ return [
     'competitions' => 'Wedstrijd|Wedstrijden',
     'results' => 'Resultaat|Resultaten',
     'events' => 'Onderdeel|Onderdelen',
+    'venues' => 'Locatie|Locaties',
     'time' => 'Tijd',
     'date' => 'Datum',
+
+    'status' => 'Status',
     'timekeeping' => 'Tijdwaarneming',
     'original_files' => 'Originele bestanden',
     'download' => 'Downloaden',
     'videos' => 'Videos',
     'watch' => 'Bekijken',
 
-    'venue' => [
-        'name' => 'Naam',
-        'country' => 'Land',
-        'city' => 'Plaats',
-        'pool_size' => 'Zwembad lengte',
-    ],
+    'name' => 'Naam',
+    'country' => 'Land',
+    'city' => 'Plaats',
+    'pool_size' => 'Zwembad lengte',
 
     'women' => 'dames',
     'men' => 'heren',
