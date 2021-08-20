@@ -13,8 +13,15 @@ class Index extends Component
 
     public function render(): View
     {
+        $competitions = Competition::select(['id', 'name', 'slug', 'start_date', 'end_date', 'status'])
+            ->with(['venues' => function ($query) {
+                $query->select(['city', 'type', 'pool_size', 'country_code']);
+            }])
+            ->latest('start_date')
+            ->paginate(15);
+
         return view('livewire.competitions.index', [
-            'competitions' => Competition::with('venues')->latest('start_date')->paginate(15),
+            'competitions' => $competitions,
         ]);
     }
 }
