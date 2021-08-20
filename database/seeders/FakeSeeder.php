@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\VenueType;
+use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Venue;
 use Exception;
@@ -18,6 +19,8 @@ class FakeSeeder extends Seeder
      */
     public function run()
     {
+        Athlete::factory(1000)->create();
+
         Venue::factory(25)->create();
         $competitions = Competition::factory(100)->create();
 

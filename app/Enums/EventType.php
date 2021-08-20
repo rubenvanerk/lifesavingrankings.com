@@ -14,6 +14,9 @@ use BenSampo\Enum\FlaggedEnum;
  * @method static static IndividualOcean()
  * @method static static RelayPool()
  * @method static static RelayOcean()
+ * @method static static RelaySegmentPool()
+ * @method static static RelaySegmentOcean()
+ * @method static static None()
  */
 final class EventType extends FlaggedEnum
 {
