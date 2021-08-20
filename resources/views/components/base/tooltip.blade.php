@@ -1,5 +1,5 @@
 <div x-data="{ tooltip: false }">
-    <span x-on:mouseenter="tooltip = true" x-on:mouseleave="tooltip = false">
+    <span @mouseenter="tooltip = true" @click="tooltip = ! tooltip" @mouseleave="tooltip = false" @click.away="tooltip = false">
         {{ $slot }}
     </span>
     <span x-show="tooltip" x-transition

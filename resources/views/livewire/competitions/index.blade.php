@@ -80,7 +80,13 @@
         <x-slot name="mobileBody">
             @foreach($competitions as $competition)
                 <x-table.mobile-row :link="route('competitions.show', $competition)">
-                    <span class="truncate">{{ $competition->name }}</span>
+                    <span class="truncate flex items-center space-x-1">
+                        <span>{{ $competition->name }}</span>
+                        <x-base.tooltip :title="__('app.ils_sanctioned')">
+                            <x-heroicon-s-badge-check class="h-5 w-5" @click.prevent
+                                                      aria-label="{{ __('app.ils_sanctioned') }}"/>
+                        </x-base.tooltip>
+                    </span>
                     <span class="flex items-center space-x-1">
                         <time datetime="{{ $competition->start_date->format('Y-m-d') }}">
                             {{ $competition->start_date->isoFormat('ll') }}
