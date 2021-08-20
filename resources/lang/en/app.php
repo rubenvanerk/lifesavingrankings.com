@@ -20,6 +20,7 @@ return [
     'videos' => 'Videos',
     'watch' => 'Watch',
     'status' => 'Status',
+    'ils_sanctioned' => 'ILS sanctioned competition',
     'status_descriptions' => [
         CompetitionStatus::Wanted => "I'm looking for results for this competitions. Please contact me if you have them!",
         CompetitionStatus::ScheduledForImport => 'Results for this competition are not available yet. Vote on this competition to help me prioritise importing competitions!',

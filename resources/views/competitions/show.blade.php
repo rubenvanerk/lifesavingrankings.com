@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    World Championships Interclub Teams Open 2016 {{ strtolower(trans_choice('app.results', '2')) }}
+    {{ $competition->name }} {{ strtolower(trans_choice('app.results', '2')) }}
 @endsection
 
 @section('content')
@@ -14,12 +14,14 @@
                             {{ __('app.date') }}
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
-                            <time
-                                datetime="{{ $competition->start_date->format('Y-m-d') }}">{{ $competition->start_date->isoFormat('LL') }}</time>
+                            <time datetime="{{ $competition->start_date->format('Y-m-d') }}">
+                                {{ $competition->start_date->isoFormat('LL') }}
+                            </time>
                             @if ($competition->end_date)
                                 <x-heroicon-s-arrow-sm-right class="h-5 pb-0.5 inline mx-0.5"/>
-                                <time
-                                    datetime="{{ $competition->end_date->format('Y-m-d') }}">{{ $competition->end_date->isoFormat('LL') }}</time>
+                                <time datetime="{{ $competition->end_date->format('Y-m-d') }}">
+                                    {{ $competition->end_date->isoFormat('LL') }}
+                                </time>
                             @endif
                         </dd>
                     </div>

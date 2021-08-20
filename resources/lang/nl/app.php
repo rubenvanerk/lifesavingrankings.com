@@ -20,10 +20,11 @@ return [
     'videos' => 'Videos',
     'watch' => 'Bekijken',
     'status' => 'Status',
+    'ils_sanctioned' => 'Wedstrijd goedgekeurd door ILS',
     'status_descriptions' => [
-        CompetitionStatus::Wanted => 'Ik ben op zoek naar resultaten voor deze wedstrijd. Neem contact met me op als je ze hebt!',
-        CompetitionStatus::ScheduledForImport => 'Resultaten voor deze wedstrijd zijn nog niet beschikbaar. Stem op deze wedstrijd om me te helpen het importeren te prioriteren!',
-        CompetitionStatus::UnableToImport => 'Ik kan de bestanden voor deze wedstrijd niet importeren. Neem contact met me op als je de resultaten in een ander format hebt!',
+        CompetitionStatus::Wanted => 'Ik ben op zoek naar uitslagen voor deze wedstrijd. Neem contact met me op als je ze hebt!',
+        CompetitionStatus::ScheduledForImport => 'Uitslagen voor deze wedstrijd zijn nog niet beschikbaar. Stem op deze wedstrijd om me te helpen het importeren te prioriteren!',
+        CompetitionStatus::UnableToImport => 'Ik kan de bestanden voor deze wedstrijd niet importeren. Neem contact met me op als je de uitslagen in een ander format hebt!',
     ],
 
     'name' => 'Naam',

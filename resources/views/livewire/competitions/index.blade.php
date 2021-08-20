@@ -14,11 +14,17 @@
         <x-slot name="body">
             @foreach($competitions as $competition)
                 <x-table.row>
-                    <x-table.cell>
+                    <x-table.cell class="flex items-center space-x-1">
                         <a href="{{ route('competitions.show', $competition) }}"
-                            class="hover:text-gray-900 hover:underline">
+                           class="hover:text-gray-900 hover:underline flex items-center space-x-1">
                             {{ $competition->name }}
                         </a>
+                        @if($competition->ils_sanctioned)
+                            <x-base.tooltip :title="__('app.ils_sanctioned')">
+                                <x-heroicon-s-badge-check class="h-5 w-5"
+                                                          aria-label="{{ __('app.ils_sanctioned') }}"/>
+                            </x-base.tooltip>
+                        @endif
                     </x-table.cell>
                     <x-table.cell>
                         <span class="flex space-x-1 items-center">

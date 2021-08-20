@@ -23,7 +23,7 @@
          aria-labelledby="menu-button" tabindex="-1">
         <div class="py-1" role="none">
             @foreach(config('app.locales') as $localeCode => $locale)
-                <a href="{{ route('set-locale', ['locale' => $localeCode]) }}" class="block px-4 py-2 text-sm text-gray-700 space-x-2 hover:bg-gray-100" role="menuitem">
+                <a href="{{ route('set-locale', ['locale' => $localeCode]) }}" class="block px-4 py-2 text-sm text-gray-700 space-x-2 hover:bg-gray-100 {{ app()->getLocale() == $localeCode ? 'font-semibold' : '' }}" role="menuitem">
                     <span>{{ $locale['label'] }}</span>
                 </a>
             @endforeach

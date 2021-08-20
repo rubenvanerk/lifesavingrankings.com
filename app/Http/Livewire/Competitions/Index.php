@@ -13,7 +13,7 @@ class Index extends Component
 
     public function render(): View
     {
-        $competitions = Competition::select(['id', 'name', 'slug', 'start_date', 'end_date', 'status'])
+        $competitions = Competition::select(['id', 'name', 'slug', 'start_date', 'end_date', 'status', 'ils_sanctioned'])
             ->with(['venues' => function ($query) {
                 $query->select(['city', 'type', 'pool_size', 'country_code']);
             }])
