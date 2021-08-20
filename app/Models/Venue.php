@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Country;
 use App\Enums\VenueType;
 use App\Traits\HasCountry;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,7 @@ class Venue extends Model
 
     protected $casts = [
         'type' => VenueType::class,
+        'country' => Country::class,
     ];
 
     public function competitions(): BelongsToMany
@@ -48,5 +50,10 @@ class Venue extends Model
     public function getIsPoolAttribute(): bool
     {
         return $this->type->is(VenueType::Pool);
+    }
+
+    public function getCountryCodeAttribute()
+    {
+        return strtolower($this->country->getIsoAlpha2());
     }
 }

@@ -26,7 +26,7 @@ class VenueFactory extends Factory
         return [
             'name' => ucfirst($this->faker->words(asText: true)),
             'city' => $this->faker->city,
-            'country_code' => $this->faker->countryCode,
+            'country' => $this->faker->countryCode,
             'type' => $venueType->value,
             'pool_size' => $venueType->is(VenueType::Pool) ? $this->faker->numberBetween(1, 2) * 25 : null,
         ];

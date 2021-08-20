@@ -19,7 +19,7 @@ class CreateVenuesTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('city');
-            $table->string('country_code', 3);
+            $table->string('country', 2);
             $table->tinyInteger('type');
             $table->integer('pool_size')->nullable();
         });

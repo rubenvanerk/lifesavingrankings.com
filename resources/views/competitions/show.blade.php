@@ -157,7 +157,7 @@
                                 {{ __('app.country') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center space-x-1">
-                                <x-dynamic-component :component="'flag-4x3-' . strtolower($venue->country_code)"
+                                <x-dynamic-component :component="'flag-4x3-' . $venue->country_code"
                                                      class="h-3.5 flex-none"/>
                                 <span>
                                     {{ $venue->country_name }}
