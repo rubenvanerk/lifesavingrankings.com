@@ -44,4 +44,9 @@ class Venue extends Model
     {
         return $this->pool_size . 'm';
     }
+
+    public function getIsPoolAttribute(): bool
+    {
+        return $this->type->is(VenueType::Pool);
+    }
 }

@@ -2,7 +2,7 @@
     {{ trans_choice('app.competitions', 2) }}
 @endsection
 
-@section('content')
+<div>
     <x-table>
         <x-slot name="head">
             <x-table.heading>{{ trans_choice('app.competitions', 1) }}</x-table.heading>
@@ -32,10 +32,18 @@
                     </x-table.cell>
                     <x-table.cell>
                         <span class="flex items-center">
-                            <x-dynamic-component :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)" class="h-3.5 mr-2 block lg:hidden"/>
+                            <x-dynamic-component
+                                :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)"
+                                class="h-3.5 mr-2 block lg:hidden"/>
                             @foreach($competition->venues as $venue)
                                 <x-base.badge :color="$venue->type_color">
                                     {{ $venue->city }}
+
+                                    @if($venue->is_pool)
+                                        <span class="ml-1.5 text-blue-400">
+                                            {{ $venue->pool_size_label }}
+                                        </span>
+                                    @endif
                                 </x-base.badge>
                                 @if (!$loop->last)
                                     <x-heroicon-s-plus-sm class="h-4"/>
@@ -45,7 +53,9 @@
                     </x-table.cell>
                     <x-table.cell class="hidden lg:table-cell">
                         <span class="flex items-center">
-                            <x-dynamic-component :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)" class="h-3.5 mr-1"/>
+                            <x-dynamic-component
+                                :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)"
+                                class="h-3.5 mr-1"/>
                             {{ $competition->venues->first()->country_name }}
                         </span>
                     </x-table.cell>
@@ -74,10 +84,17 @@
                         @endif
                     </span>
                     <span class="flex items-center">
-                        <x-dynamic-component :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)" class="h-3.5 mr-2"/>
+                        <x-dynamic-component
+                            :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)"
+                            class="h-3.5 mr-2"/>
                         @foreach($competition->venues as $venue)
                             <x-base.badge :color="$venue->type_color">
                                 {{ $venue->city }}
+                                @if($venue->is_pool)
+                                    <span class="ml-1.5 text-blue-400">
+                                        {{ $venue->pool_size_label }}
+                                    </span>
+                                @endif
                             </x-base.badge>
                             @if (!$loop->last)
                                 <x-heroicon-s-plus-sm class="h-4"/>
@@ -87,5 +104,9 @@
                 </x-table.mobile-row>
             @endforeach
         </x-slot>
+
+        <x-slot name="pagination">
+            {{ $competitions->links() }}
+        </x-slot>
     </x-table>
-@endsection
+</div>
