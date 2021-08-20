@@ -19,7 +19,7 @@
         </div>
 
         <main class="-mt-32">
-            <div class="max-w-7xl mx-auto pb-12 ">
+            <div class="max-w-7xl mx-auto pb-12">
                     @yield('content')
 
                     @isset($slot)
