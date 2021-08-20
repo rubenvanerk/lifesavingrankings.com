@@ -40,10 +40,10 @@
                         </span>
                     </x-table.cell>
                     <x-table.cell>
-                        <span class="flex items-center">
+                        <span class="flex items-center space-x-1">
                             <x-dynamic-component
                                 :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)"
-                                class="h-3.5 mr-2 block lg:hidden"/>
+                                class="h-3.5 flex-none block lg:hidden"/>
                             @foreach($competition->venues as $venue)
                                 <x-base.badge :color="$venue->type_color">
                                     {{ $venue->city }}
@@ -60,12 +60,14 @@
                             @endforeach
                         </span>
                     </x-table.cell>
-                    <x-table.cell class="hidden lg:table-cell">
-                        <span class="flex items-center">
+                    <x-table.cell class="hidden lg:table-cell max-w-0 w-full">
+                        <span class="flex items-center space-x-1">
                             <x-dynamic-component
                                 :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)"
-                                class="h-3.5 mr-1"/>
-                            {{ $competition->venues->first()->country_name }}
+                                class="h-3.5 flex-none"/>
+                            <span class="truncate">
+                                {{ $competition->venues->first()->country_name }}
+                            </span>
                         </span>
                     </x-table.cell>
                     <x-table.cell class="hidden xl:table-cell">
@@ -98,10 +100,10 @@
                             </time>
                         @endif
                     </span>
-                    <span class="flex items-center">
+                    <span class="flex items-center space-x-1">
                         <x-dynamic-component
                             :component="'flag-4x3-' . strtolower($competition->venues->first()->country_code)"
-                            class="h-3.5 mr-2"/>
+                            class="h-3.5 flex-none"/>
                         @foreach($competition->venues as $venue)
                             <x-base.badge :color="$venue->type_color">
                                 {{ $venue->city }}

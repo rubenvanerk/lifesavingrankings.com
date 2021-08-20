@@ -22,7 +22,7 @@ class Competition extends Model
         'timekeeping' => TimekeepingMethod::class,
     ];
 
-    protected static function booted()
+    protected static function booted(): void
     {
         static::addGlobalScope('without_new', function (Builder $builder) {
             $builder->where('status', '<>', CompetitionStatus::New);

@@ -156,10 +156,12 @@
                             <dt class="text-sm font-medium text-gray-500">
                                 {{ __('app.country') }}
                             </dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center">
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center space-x-1">
                                 <x-dynamic-component :component="'flag-4x3-' . strtolower($venue->country_code)"
-                                                     class="h-3.5 mr-1"/>
-                                {{ $venue->country_name }}
+                                                     class="h-3.5 flex-none"/>
+                                <span>
+                                    {{ $venue->country_name }}
+                                </span>
                             </dd>
                         </div>
                         <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
