@@ -84,10 +84,12 @@
                 <x-table.mobile-row :link="route('competitions.show', $competition)">
                     <span class="truncate flex items-center space-x-1">
                         <span>{{ $competition->name }}</span>
-                        <x-base.tooltip :title="__('app.ils_sanctioned')">
-                            <x-heroicon-s-badge-check class="h-5 w-5" @click.prevent
-                                                      aria-label="{{ __('app.ils_sanctioned') }}"/>
-                        </x-base.tooltip>
+                        @if ($competition->ils_sanctioned)
+                            <x-base.tooltip :title="__('app.ils_sanctioned')">
+                                <x-heroicon-s-badge-check class="h-5 w-5" @click.prevent
+                                                          aria-label="{{ __('app.ils_sanctioned') }}"/>
+                            </x-base.tooltip>
+                        @endif
                     </span>
                     <span class="flex items-center space-x-1">
                         <time datetime="{{ $competition->start_date->format('Y-m-d') }}">
