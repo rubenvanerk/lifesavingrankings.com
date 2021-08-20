@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\CompetitionStatus;
 use App\Enums\TimekeepingMethod;
+use App\Traits\HasCachedCount;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Competition extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, HasCachedCount;
 
     protected $guarded = ['id'];
     protected $dates = ['start_date', 'end_date', 'published_on'];

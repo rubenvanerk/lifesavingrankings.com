@@ -20,7 +20,7 @@
                                 {{ trans_choice('app.athletes', 2) }}
                             </dt>
                             <dd class="order-1 text-5xl font-extrabold text-blue-800">
-                                24K
+                                {{ $athleteCount }}
                             </dd>
                         </div>
                         <div
@@ -29,7 +29,7 @@
                                 {{ trans_choice('app.competitions', 2) }}
                             </dt>
                             <dd class="order-1 text-5xl font-extrabold text-blue-800">
-                                204
+                                {{ $competitionCount }}
                             </dd>
                         </div>
                         <div class="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
