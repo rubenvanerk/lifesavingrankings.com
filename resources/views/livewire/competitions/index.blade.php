@@ -15,7 +15,10 @@
             @foreach($competitions as $competition)
                 <x-table.row>
                     <x-table.cell>
-                        <a href="{{ route('competitions.show', $competition) }}">{{ $competition->name }}</a>
+                        <a href="{{ route('competitions.show', $competition) }}"
+                            class="hover:text-gray-900 hover:underline">
+                            {{ $competition->name }}
+                        </a>
                     </x-table.cell>
                     <x-table.cell>
                         <span class="flex space-x-1 items-center">

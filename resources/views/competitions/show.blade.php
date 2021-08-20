@@ -14,10 +14,12 @@
                             {{ __('app.date') }}
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
-                            <time datetime="{{ $competition->start_date->format('Y-m-d') }}">{{ $competition->start_date->isoFormat('LL') }}</time>
+                            <time
+                                datetime="{{ $competition->start_date->format('Y-m-d') }}">{{ $competition->start_date->isoFormat('LL') }}</time>
                             @if ($competition->end_date)
                                 <x-heroicon-s-arrow-sm-right class="h-5 pb-0.5 inline mx-0.5"/>
-                                <time datetime="{{ $competition->end_date->format('Y-m-d') }}">{{ $competition->end_date->isoFormat('LL') }}</time>
+                                <time
+                                    datetime="{{ $competition->end_date->format('Y-m-d') }}">{{ $competition->end_date->isoFormat('LL') }}</time>
                             @endif
                         </dd>
                     </div>
@@ -51,8 +53,8 @@
                                     <div class="w-0 flex-1 flex items-center">
                                         <x-heroicon-s-paper-clip class="flex-shrink-0 h-5 w-5 text-gray-400"/>
                                         <span class="ml-2 flex-1 w-0 truncate">
-                                      2021-orangecup-day-1.pdf
-                                    </span>
+                                            2021-orangecup-day-1.pdf
+                                        </span>
                                     </div>
                                     <div class="ml-4 flex-shrink-0">
                                         <a href="#" class="font-medium text-blue-700 hover:text-blue-500">
@@ -64,8 +66,8 @@
                                     <div class="w-0 flex-1 flex items-center">
                                         <x-heroicon-s-paper-clip class="flex-shrink-0 h-5 w-5 text-gray-400"/>
                                         <span class="ml-2 flex-1 w-0 truncate">
-                                      2021-orangecup-day-2.pdf
-                                    </span>
+                                            2021-orangecup-day-2.pdf
+                                        </span>
                                     </div>
                                     <div class="ml-4 flex-shrink-0">
                                         <a href="#" class="font-medium text-blue-700 hover:text-blue-500">
@@ -86,7 +88,7 @@
                                     <div class="w-0 flex-1 flex items-center">
                                         <x-heroicon-s-video-camera class="flex-shrink-0 h-5 w-5 text-gray-400"/>
                                         <span class="ml-2 flex-1 w-0 truncate">
-                                          Day 1
+                                            Day 1
                                         </span>
                                     </div>
                                     <div class="ml-4 flex-shrink-0">
@@ -125,7 +127,8 @@
                 <nav class="relative z-0 shadow flex divide-x divide-gray-200" aria-label="Tabs">
                     @foreach($competition->venues as $venue)
                         <a @if($competition->venues->count() > 1)href="#" @endif aria-current="page"
-                           @click.prevent="venueTab = '{{ $venue->type->value }}'" :class="venueTab == '{{ $venue->type->value }}' ? 'text-gray-900' : 'text-gray-500'"
+                           @click.prevent="venueTab = '{{ $venue->type->value }}'"
+                           :class="venueTab == '{{ $venue->type->value }}' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center @if($competition->venues->count() > 1)hover:bg-gray-50 @endif focus:z-10">
                             <span>{{ $venue->type->description }}</span>
                             <span aria-hidden="true"
@@ -152,7 +155,8 @@
                                 {{ __('app.country') }}
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center">
-                                <x-dynamic-component :component="'flag-4x3-' . strtolower($venue->country_code)" class="h-3.5 mr-1"/>
+                                <x-dynamic-component :component="'flag-4x3-' . strtolower($venue->country_code)"
+                                                     class="h-3.5 mr-1"/>
                                 {{ $venue->country_name }}
                             </dd>
                         </div>
@@ -178,7 +182,17 @@
                 @endforeach
             </div>
         </div>
-
     </div>
+
+    @if(__('app.status_descriptions')[$competition->status->value] ?? false)
+        <x-base.alert :color="$competition->status_color" class="mt-10">
+            <x-slot name="title">
+                {{ __('app.status') }}: {{ $competition->status->description }}
+            </x-slot>
+            <x-slot name="body">
+                {!! __('app.status_descriptions')[$competition->status->value] !!}
+            </x-slot>
+        </x-base.alert>
+    @endif
 
 @endsection

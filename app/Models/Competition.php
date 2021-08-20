@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\CompetitionStatus;
 use App\Enums\TimekeepingMethod;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +21,13 @@ class Competition extends Model
         'status' => CompetitionStatus::class,
         'timekeeping' => TimekeepingMethod::class,
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('without_new', function (Builder $builder) {
+            $builder->where('status', '<>', CompetitionStatus::New);
+        });
+    }
 
     public function venues(): BelongsToMany
     {

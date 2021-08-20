@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\CompetitionStatus;
+
 return [
     'welcome' => 'Welkom op Lifesaving:htmlRankings.com',
     'tagline' => 'De :style_open grootste :style_close lifesaving uitslagen database',
@@ -12,12 +14,17 @@ return [
     'time' => 'Tijd',
     'date' => 'Datum',
 
-    'status' => 'Status',
     'timekeeping' => 'Tijdwaarneming',
     'original_files' => 'Originele bestanden',
     'download' => 'Downloaden',
     'videos' => 'Videos',
     'watch' => 'Bekijken',
+    'status' => 'Status',
+    'status_descriptions' => [
+        CompetitionStatus::Wanted => 'Ik ben op zoek naar resultaten voor deze wedstrijd. Neem contact met me op als je ze hebt!',
+        CompetitionStatus::ScheduledForImport => 'Resultaten voor deze wedstrijd zijn nog niet beschikbaar. Stem op deze wedstrijd om me te helpen het importeren te prioriteren!',
+        CompetitionStatus::UnableToImport => 'Ik kan de bestanden voor deze wedstrijd niet importeren. Neem contact met me op als je de resultaten in een ander format hebt!',
+    ],
 
     'name' => 'Naam',
     'country' => 'Land',
