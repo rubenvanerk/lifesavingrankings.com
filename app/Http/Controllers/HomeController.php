@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Athlete;
 use App\Models\Competition;
+use App\Models\Result;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,7 @@ class HomeController extends Controller
         return view('home', [
             'athleteCount' => $this->shortNumber(Athlete::getCachedCount()),
             'competitionCount' => $this->shortNumber(Competition::getCachedCount()),
+            'resultCount' => $this->shortNumber(Result::getCachedCount()),
         ]);
     }
 

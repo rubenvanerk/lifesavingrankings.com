@@ -35,6 +35,11 @@ class Event extends Model
             ->saveSlugsTo('slug');
     }
 
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
     public function segments(): HasMany
     {
         return $this->hasMany(RelaySegment::class);

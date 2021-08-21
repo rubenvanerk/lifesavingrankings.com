@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\EventType;
 use App\Enums\VenueType;
 use App\Models\Athlete;
 use App\Models\Competition;
+use App\Models\Event;
+use App\Models\Result;
 use App\Models\Venue;
 use Exception;
 use Illuminate\Database\Seeder;
@@ -22,7 +25,23 @@ class FakeSeeder extends Seeder
         Athlete::factory(1000)->create();
 
         Venue::factory(25)->create();
-        $competitions = Competition::factory(100)->create();
+        $competitionsFactory = Competition::factory(100);
+
+        $events = Event::where('type', EventType::IndividualPool)->get();
+        foreach ($events as $event) {
+            $competitionsFactory = $competitionsFactory->has(
+                Result::factory()
+                    ->count(random_int(50, 100))
+                    ->state(function (array $attributes, Competition $competition) use ($event) {
+                        return [
+                            'event_id' => $event->id,
+                            'competition_id' => $competition->id,
+                        ];
+                    })
+            );
+        }
+
+        $competitions = $competitionsFactory->create();
 
         foreach ($competitions as $competition) {
             $venueTypes = collect(VenueType::getValues())->random(random_int(1, 2));

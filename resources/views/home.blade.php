@@ -37,7 +37,7 @@
                                 {{ trans_choice('app.results', 2) }}
                             </dt>
                             <dd class="order-1 text-5xl font-extrabold text-blue-800">
-                                250K
+                                {{ $resultCount }}
                             </dd>
                         </div>
                     </dl>
