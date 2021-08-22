@@ -8,10 +8,12 @@
         <template x-if="!filter">
             <x-heroicon-s-filter class="h-12 w-12 p-2"/>
         </template>
-        <span
-            class="absolute top-0 right-0 block h-5 w-5 rounded-full ring-2 ring-white bg-blue-800 text-sm font-semibold">
-            3
-        </span>
+        @if ($filter->countActive())
+            <span
+                class="absolute top-0 right-0 block h-5 w-5 rounded-full ring-2 ring-white bg-blue-800 text-sm font-semibold">
+                {{ $filter->countActive() }}
+            </span>
+        @endif
     </button>
 
     <div class="bg-blue-800 rounded-lg shadow-2xl border-2 border-blue-900"

@@ -17,7 +17,7 @@ class Filter extends Component
     {
         $this->fromDate = $filter->fromDate;
         $this->toDate = $filter->toDate;
-        return view('livewire.filter');
+        return view('livewire.filter', compact('filter'));
     }
 
     public function updated()
