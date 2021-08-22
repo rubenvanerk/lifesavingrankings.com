@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('set-locale/{locale}', LocaleController::class)->name('set-locale');
 
-Route::get('/', HomeController::class)->name('home');
+Route::view('/', 'home')->name('home');
 
 Route::prefix('competitions')->group(function () {
     Route::get('/', \App\Http\Livewire\Competitions\Index::class)->name('competitions.index');
