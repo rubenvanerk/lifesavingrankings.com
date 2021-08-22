@@ -1,4 +1,4 @@
-<div class="fixed inset-x-0 bottom-0 max-w-7xl mx-auto pb-6" x-data="{ filter: false }">
+<div class="fixed inset-x-0 bottom-0 max-w-7xl mx-auto lg:pb-6" x-data="{ filter: false }">
     <button type="button" title="Filter"
             @click="filter = ! filter"
             class="absolute z-10 bottom-0 right-0 block transform -translate-y-10 -translate-x-10 inline-flex items-center p-2 border border-transparent rounded-full text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none shadow-2xl">
@@ -16,7 +16,7 @@
         @endif
     </button>
 
-    <div class="bg-blue-800 rounded-lg shadow-2xl border-2 border-blue-900"
+    <div class="bg-blue-800 lg:rounded-lg shadow-2xl border-2 border-blue-900 lg:mx-5 xl:mx-0"
          @click.away="filter = false"
          x-show="filter"
          x-transition:enter="transition ease-in-out duration-300"

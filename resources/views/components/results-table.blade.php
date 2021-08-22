@@ -46,23 +46,26 @@
     </x-slot>
 
     <x-slot name="mobileBody">
+        @foreach($results as $result)
         <x-table.mobile-row>
-            <x-slot name="icon">
-                <x-dynamic-component :component="'flag-4x3-it'" class="flex-shrink-0 h-4 rounded shadow mt-1"/>
-            </x-slot>
-
-            <span class="flex flex-col text-gray-500 text-sm truncate w-full leading-relaxed">
-                <a href="" class="truncate hover:text-gray-900">Lucrezia Fabretti</a>
-                <a href="" class="truncate hover:text-gray-900">100m manikin carry with fins</a>
-                <span class="flex">
-                    <span class="font-medium flex-grow">0:49.33</span>
-                    <a href="#" class="hover:text-gray-900">
-                        <time datetime="{{ now()->format('Y-m-d') }}">
-                            {{ now()->isoFormat('LL') }}
-                        </time>
-                    </a>
+                <x-slot name="icon">
+                    @foreach($result->entrant->nationalities ?? [] as $country)
+                        <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())" class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
+                    @endforeach
+                </x-slot>
+                <span class="flex flex-col text-gray-500 text-sm truncate w-full leading-relaxed">
+                    <a href="" class="truncate hover:text-gray-900">{{ $result->entrant->name }}</a>
+                    <a href="" class="truncate hover:text-gray-900">{{ $result->event->name }}</a>
+                    <span class="flex">
+                        <span class="font-medium flex-grow">{{ $result->time_formatted }}</span>
+                        <a href="{{ route('competitions.show', $result->competition) }}" class="hover:text-gray-900">
+                            <time datetime="{{ $result->competition->start_date->format('Y-m-d') }}">
+                                {{ $result->competition->start_date->isoFormat('LL') }}
+                            </time>
+                        </a>
+                    </span>
                 </span>
-            </span>
         </x-table.mobile-row>
+        @endforeach
     </x-slot>
 </x-table>
