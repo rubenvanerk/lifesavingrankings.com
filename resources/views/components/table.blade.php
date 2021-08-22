@@ -3,7 +3,7 @@
         {{ $mobileBody }}
     </ul>
 
-    {{ $pagination }}
+    {{ $pagination ?? '' }}
 </div>
 
 <div class="hidden sm:block">
@@ -21,7 +21,7 @@
                     </tbody>
                 </table>
 
-                {{ $pagination }}
+                {{ $pagination ?? '' }}
             </div>
         </div>
     </div>

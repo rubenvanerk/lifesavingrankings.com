@@ -42,7 +42,7 @@ class Countries implements CastsAttributes
             return null;
         }
 
-        if (!is_array($value)) {
+        if (!is_iterable($value)) {
             $value = [$value];
         }
 

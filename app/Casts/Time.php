@@ -18,7 +18,12 @@ class Time implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes)
     {
-        return CarbonInterval::microseconds($value);
+        $microseconds = ($value % 100) * 10000;
+        $seconds = (int)floor($value / 100);
+        $minutes = (int)floor($seconds / 60);
+        $seconds %= 60;
+
+        return CarbonInterval::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
     }
 
     /**
@@ -35,6 +40,6 @@ class Time implements CastsAttributes
         if (is_numeric($value)) {
             return (int)$value;
         }
-        return $value->microseconds();
+        return $value->microseconds / 10000;
     }
 }

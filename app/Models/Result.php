@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use App\Casts\Time;
 use App\Traits\HasCachedCount;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 class Result extends Model
 {
-    use HasFactory, HasCachedCount;
+    use HasFactory, HasCachedCount, HasEagerLimit;
+
+    protected $casts = [
+        'time' => Time::class,
+    ];
 
     public function competition(): BelongsTo
     {
@@ -25,5 +31,20 @@ class Result extends Model
     public function entrant(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function getTimeFormattedAttribute(): string
+    {
+        if ($this->time->minutes) {
+            return sprintf('%s:%s.%s',
+                $this->time->minutes,
+                str_pad($this->time->seconds, 2, '0', STR_PAD_LEFT),
+                str_pad($this->time->microseconds / 10000, 2, '0', STR_PAD_LEFT)
+            );
+        }
+        return sprintf('%s.%s',
+            $this->time->seconds,
+            str_pad($this->time->microseconds / 10000, 2, '0', STR_PAD_LEFT)
+        );
     }
 }

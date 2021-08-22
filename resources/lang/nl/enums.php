@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\CompetitionStatus;
+use App\Enums\Gender;
 use App\Enums\TimekeepingMethod;
 use App\Enums\VenueType;
 
@@ -21,4 +22,8 @@ return [
         CompetitionStatus::UnableToImport => 'Kan niet importeren',
         CompetitionStatus::Published => 'Gepubliceerd',
     ],
+    Gender::class => [
+        Gender::Men => 'Heren',
+        Gender::Women => 'Dames',
+    ]
 ];

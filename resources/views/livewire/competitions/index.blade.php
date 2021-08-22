@@ -16,7 +16,7 @@
                 <x-table.row>
                     <x-table.cell class="flex items-center space-x-1">
                         <a href="{{ route('competitions.show', $competition) }}"
-                           class="hover:text-gray-900 hover:underline flex items-center space-x-1">
+                           class="flex items-center space-x-1">
                             {{ $competition->name }}
                         </a>
                         @if($competition->ils_sanctioned)

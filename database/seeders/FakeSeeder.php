@@ -25,13 +25,13 @@ class FakeSeeder extends Seeder
         Athlete::factory(1000)->create();
 
         Venue::factory(25)->create();
-        $competitionsFactory = Competition::factory(100);
+        $competitionsFactory = Competition::factory(50);
 
         $events = Event::where('type', EventType::IndividualPool)->get();
         foreach ($events as $event) {
             $competitionsFactory = $competitionsFactory->has(
                 Result::factory()
-                    ->count(random_int(50, 100))
+                    ->count(random_int(25, 50))
                     ->state(function (array $attributes, Competition $competition) use ($event) {
                         return [
                             'event_id' => $event->id,

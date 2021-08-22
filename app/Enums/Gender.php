@@ -2,17 +2,15 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static Male()
- * @method static static Female()
- * @method static static OptionOne()
- * @method static static OptionTwo()
- * @method static static OptionThree()
+ * @method static static Men()
+ * @method static static Women()
  */
-final class Gender extends Enum
+final class Gender extends Enum implements LocalizedEnum
 {
-    const Male = 1;
-    const Female = 2;
+    const Men = 1;
+    const Women = 2;
 }

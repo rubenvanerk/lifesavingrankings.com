@@ -46,17 +46,7 @@
         </div>
     </div>
 
-    <h3 class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mt-8">
-        <span class="text-yellow-500">{{ ucfirst(__('app.filtered')) }}</span> {{ __('app.records') }} {{ __('app.women') }}
-    </h3>
-
-    <x-placeholder-table :pagination="false"/>
-
-    <h3 class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mt-8">
-        {{ ucfirst(__('app.world')) }} {{ __('app.records') }} {{ __('app.men') }}
-    </h3>
-
-    <x-placeholder-table :pagination="false"/>
+    @livewire('records-table')
 
     <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div class="bg-blue-800 rounded-lg shadow-xl overflow-hidden lg:grid lg:grid-cols-2 lg:gap-4">
