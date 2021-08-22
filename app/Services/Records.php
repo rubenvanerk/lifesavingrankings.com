@@ -6,15 +6,14 @@ use App\Models\Athlete;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
-class ResultService
+class Records
 {
-    public function getRecords(): array
+    public function getRecords($useFilter = true): array
     {
-        $recordsWomen = $this->getRecordsByGender(Gender::Women);
-        $recordsMen = $this->getRecordsByGender(Gender::Men);
+        $recordsWomen = $this->getRecordsByGender(Gender::Women, $useFilter);
+        $recordsMen = $this->getRecordsByGender(Gender::Men, $useFilter);
 
         return [
             strtolower(Gender::Women()->description) => $recordsWomen,
@@ -22,11 +21,17 @@ class ResultService
         ];
     }
 
-    protected function getRecordsByGender($gender): Collection
+    protected function getRecordsByGender($gender, $useFilter): Collection
     {
+        $filter = new Filter();
+
         return Event::query()
             ->where('type', EventType::IndividualPool)
-            ->with(['results' => function (HasMany $query) use ($gender) {
+            ->with(['results' => function (HasMany $query) use ($gender, $filter, $useFilter) {
+                if ($useFilter) {
+                    $query->filter($filter);
+                }
+
                 $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($gender) {
                     $query->where('gender', $gender);
                 });

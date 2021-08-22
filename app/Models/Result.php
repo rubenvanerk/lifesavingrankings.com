@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Casts\Time;
+use App\Services\Filter;
 use App\Traits\HasCachedCount;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +33,21 @@ class Result extends Model
     public function entrant(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function scopeFilter(Builder $query, Filter $filter): void
+    {
+        if ($filter->fromDate) {
+            $query->whereHas('competition', function (Builder $query) use ($filter) {
+                $query->whereDate('start_date', '>=', $filter->fromDate);
+            });
+        }
+
+        if ($filter->toDate) {
+            $query->whereHas('competition', function (Builder $query) use ($filter) {
+                $query->whereDate('end_date', '<=', $filter->toDate);
+            });
+        }
     }
 
     public function getTimeFormattedAttribute(): string

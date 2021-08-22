@@ -29,7 +29,9 @@
         </main>
     </div>
 
-{{--    <x-filter/>--}}
+    @if($filter ?? false)
+        @livewire('filter')
+    @endif
 
     <x-footer/>
 
