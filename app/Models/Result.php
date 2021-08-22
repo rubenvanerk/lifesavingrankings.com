@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\Time;
+use App\Enums\CompetitionStatus;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,6 +20,15 @@ class Result extends Model
     protected $casts = [
         'time' => Time::class,
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('published', function (Builder $builder) {
+            $builder->whereHas('competition', function (Builder $query) {
+                $query->where('status', CompetitionStatus::Published);
+            });
+        });
+    }
 
     public function competition(): BelongsTo
     {
