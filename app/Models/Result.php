@@ -42,7 +42,7 @@ class Result extends Model
 
     public function entrant(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo()->withoutGlobalScope('published');
     }
 
     public function scopeFilter(Builder $query, Filter $filter): void

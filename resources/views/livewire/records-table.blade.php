@@ -9,6 +9,6 @@
             {{ __('app.records') }} {{ $gender }}
         </h3>
 
-        <x-results-table :results="$recordsByGender"/>
+        <x-results-table :results="$recordsByGender" :without="$without ?? []"/>
     @endforeach
 </div>

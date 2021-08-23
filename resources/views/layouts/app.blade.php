@@ -4,7 +4,7 @@
 
     <div class="min-h-screen bg-gray-100">
         <div class="bg-blue-800 pb-32">
-            <x-menu/>
+            <x-layout.menu/>
 
             <header class="py-10">
                 @hasSection('title')
@@ -33,6 +33,6 @@
         @livewire('filter')
     @endif
 
-    <x-footer/>
+    <x-layout.footer/>
 
 @endsection

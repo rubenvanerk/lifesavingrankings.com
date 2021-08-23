@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Casts\Countries;
+use App\Enums\CompetitionStatus;
 use App\Traits\HasCachedCount;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -20,6 +22,13 @@ class Athlete extends Model
         'nationalities' => Countries::class,
     ];
 
+    protected static function booted(): void
+    {
+        static::addGlobalScope('published', function (Builder $builder) {
+            $builder->has('results');
+        });
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -29,6 +38,6 @@ class Athlete extends Model
 
     public function results(): MorphMany
     {
-        return $this->morphMany(Result::class, 'results');
+        return $this->morphMany(Result::class, 'entrant');
     }
 }

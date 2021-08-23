@@ -10,6 +10,7 @@ use View;
 class RecordsTable extends Component
 {
     public bool $readyToLoad = false;
+    public array $without = [];
 
     protected $listeners = ['filtered' => '$refresh'];
 

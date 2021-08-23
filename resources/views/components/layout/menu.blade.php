@@ -10,9 +10,9 @@
                 </div>
                 <div class="hidden lg:block lg:ml-10">
                     <div class="flex space-x-4">
-                        <x-base.menu-item :active="request()->routeIs('competitions.*')" :url="route('competitions.index')">
+                        <x-layout.menu-item :active="request()->routeIs('competitions.*')" :url="route('competitions.index')">
                             {{ trans_choice('app.competitions', 2) }}
-                        </x-base.menu-item>
+                        </x-layout.menu-item>
 {{--                        <x-base.menu-item :active="true" :url="route('events.index')">--}}
 {{--                            {{ trans_choice('app.events', 2) }}--}}
 {{--                        </x-base.menu-item>--}}
@@ -65,10 +65,9 @@
 
     <div class="lg:hidden shadow-2xl" id="mobile-menu" x-show="open">
         <div class="px-2 pt-2 pb-3 space-y-1">
-
-            <x-base.mobile-menu-item :active="request()->routeIs('competitions.*')" :url="route('competitions.index')">
+            <x-layout.menu-item-mobile :active="request()->routeIs('competitions.*')" :url="route('competitions.index')">
                 {{ trans_choice('app.competitions', 2) }}
-            </x-base.mobile-menu-item>
+            </x-layout.menu-item-mobile>
         </div>
         <div class="pt-4 pb-3 border-t border-blue-700">
             <div class="mt-3 px-2 space-y-1">
