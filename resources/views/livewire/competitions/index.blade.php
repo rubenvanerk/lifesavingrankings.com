@@ -21,7 +21,7 @@
                         </a>
                         @if($competition->ils_sanctioned)
                             <x-base.tooltip :title="__('app.ils_sanctioned')">
-                                <x-heroicon-s-badge-check class="h-5 w-5"
+                                <x-heroicon-s-badge-check class="h-5 w-5 text-green-800"
                                                           aria-label="{{ __('app.ils_sanctioned') }}"/>
                             </x-base.tooltip>
                         @endif
@@ -86,7 +86,7 @@
                         <span>{{ $competition->name }}</span>
                         @if ($competition->ils_sanctioned)
                             <x-base.tooltip :title="__('app.ils_sanctioned')">
-                                <x-heroicon-s-badge-check class="h-5 w-5" @click.prevent
+                                <x-heroicon-s-badge-check class="h-5 w-5 text-green-800" @click.prevent
                                                           aria-label="{{ __('app.ils_sanctioned') }}"/>
                             </x-base.tooltip>
                         @endif

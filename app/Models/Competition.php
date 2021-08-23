@@ -18,7 +18,7 @@ class Competition extends Model
     use HasFactory, HasSlug, HasCachedCount;
 
     protected $guarded = ['id'];
-    protected $dates = ['start_date', 'end_date', 'published_on'];
+    protected $dates = ['start_date', 'end_date', 'published_at'];
     protected $casts = [
         'status' => CompetitionStatus::class,
         'timekeeping' => TimekeepingMethod::class,

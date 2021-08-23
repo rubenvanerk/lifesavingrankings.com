@@ -23,7 +23,7 @@ class CreateCompetitionsTable extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->tinyInteger('timekeeping')->default(TimekeepingMethod::Unknown);
-            $table->dateTime('published_on')->nullable();
+            $table->dateTime('published_at')->nullable();
             $table->tinyInteger('status')->default(CompetitionStatus::New);
             $table->string('comment', 512)->nullable();
             $table->boolean('ils_sanctioned')->default(false);

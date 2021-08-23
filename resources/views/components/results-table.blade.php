@@ -9,6 +9,10 @@
 
     <x-slot name="body">
         @foreach($results as $result)
+            @if(empty($result))
+                <x-table.placeholder-row/>
+                @continue
+            @endif
             <x-table.row>
                 <x-table.cell class="max-w-0 w-full">
                     <span class="flex">
@@ -20,7 +24,8 @@
                 <x-table.cell>
                     <a href="#" class="inline-flex items-center space-x-1">
                         @foreach($result->entrant->nationalities ?? [] as $country)
-                            <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())" class="h-3.5"/>
+                            <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
+                                                 class="h-3.5"/>
                         @endforeach
                         <span>
                             {{ $result->entrant->name }}
@@ -47,10 +52,15 @@
 
     <x-slot name="mobileBody">
         @foreach($results as $result)
-        <x-table.mobile-row>
+            @if(empty($result))
+                <x-table.placeholder-mobile-row/>
+                @continue
+            @endif
+            <x-table.mobile-row>
                 <x-slot name="icon">
                     @foreach($result->entrant->nationalities ?? [] as $country)
-                        <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())" class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
+                        <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
+                                             class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
                     @endforeach
                 </x-slot>
                 <span class="flex flex-col text-gray-500 text-sm truncate w-full leading-relaxed">
@@ -65,7 +75,7 @@
                         </a>
                     </span>
                 </span>
-        </x-table.mobile-row>
+            </x-table.mobile-row>
         @endforeach
     </x-slot>
 </x-table>

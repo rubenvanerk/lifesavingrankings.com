@@ -31,7 +31,7 @@ class CompetitionFactory extends Factory
             'start_date' => $startDate,
             'end_date' => $this->faker->boolean ? $this->faker->dateTimeBetween($startDate->addDay(), $startDate->addDays(4)) : null,
             'timekeeping' => TimekeepingMethod::getRandomValue(),
-            'published_on' => $status->is(CompetitionStatus::Published) ? $this->faker->dateTimeBetween($startDate) : null,
+            'published_at' => $status->is(CompetitionStatus::Published) ? $this->faker->dateTimeBetween($startDate) : null,
             'status' => $status->value,
             'comment' => $this->faker->boolean ? $this->faker->text : null,
             'ils_sanctioned' => $this->faker->boolean(20),
