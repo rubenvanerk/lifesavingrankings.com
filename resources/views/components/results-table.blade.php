@@ -16,13 +16,15 @@
     </x-slot>
 
     <x-slot name="body">
-        @foreach($resultsByEvents as $resultsByEvent)
+        @forelse($resultsByEvents as $resultsByEvent)
             @if(empty($resultsByEvent))
                 <x-table.placeholder-row :without="$without ?? []" :limit="$limit"/>
             @else
                 <x-result-row :resultsByEvent="$resultsByEvent" :without="$without ?? []"/>
             @endif
-        @endforeach
+        @empty
+            <x-empty-row :without="$without ?? []"/>
+        @endforelse
     </x-slot>
 
     <x-slot name="mobileBody">

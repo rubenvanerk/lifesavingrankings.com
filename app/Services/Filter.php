@@ -44,4 +44,9 @@ class Filter
         }
         return $activeFilters;
     }
+
+    public function reset(): void
+    {
+        $this->set();
+    }
 }

@@ -13,6 +13,8 @@ class Filter extends Component
 
     protected $casts = ['fromDate' => Carbon::class];
 
+    protected $listeners = ['resetFilter' => '$refresh'];
+
     public function render(\App\Services\Filter $filter): View
     {
         $this->fromDate = $filter->fromDate;

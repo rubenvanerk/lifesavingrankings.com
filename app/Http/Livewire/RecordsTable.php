@@ -48,4 +48,10 @@ class RecordsTable extends Component
             'filter' => $filter,
         ]);
     }
+
+    public function resetFilter(): void
+    {
+        (new \App\Services\Filter())->reset();
+        $this->emit('resetFilter');
+    }
 }
