@@ -16,21 +16,21 @@
     </x-slot>
 
     <x-slot name="body">
-        @foreach($results as $result)
-            @if(empty($result))
-                <x-table.placeholder-row :without="$without ?? []"/>
+        @foreach($resultsByEvents as $resultsByEvent)
+            @if(empty($resultsByEvent))
+                <x-table.placeholder-row :without="$without ?? []" :limit="$limit"/>
             @else
-                <x-result-row :result="$result" :without="$without ?? []"/>
+                <x-result-row :resultsByEvent="$resultsByEvent" :without="$without ?? []"/>
             @endif
         @endforeach
     </x-slot>
 
     <x-slot name="mobileBody">
-        @foreach($results as $result)
-            @if(empty($result))
+        @foreach($resultsByEvents as $resultsByEvent)
+            @if(empty($resultsByEvent))
                 <x-table.placeholder-mobile-row :without="$without ?? []"/>
             @else
-                <x-result-row-mobile :result="$result" :without="$without ?? []"/>
+                <x-result-row-mobile :resultsByEvent="$resultsByEvent" :without="$without ?? []"/>
             @endif
         @endforeach
     </x-slot>

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-x-5 md:mx-2 xl:mx-0">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-x-5 md:mx-2 xl:mx-0 p-5">
         <div class="bg-white shadow overflow-hidden md:rounded-lg col-span-2">
             <div class="border-t border-gray-200 py-5 px-4 sm:px-6 lg:px-8">
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
@@ -197,6 +197,10 @@
                 {!! __('app.status_descriptions')[$competition->status->value] !!}
             </x-slot>
         </x-base.alert>
+    @endif
+
+    @if ($competition->is_published)
+    <livewire:records-table :competition="$competition->id" :limit="3" :title="trans_choice('app.results', 2)" two-columns="true"/>
     @endif
 
 @endsection

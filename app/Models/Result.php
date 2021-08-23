@@ -58,6 +58,12 @@ class Result extends Model
                 $query->whereDate('start_date', '<=', $filter->toDate);
             });
         }
+
+        if ($filter->competition) {
+            $query->whereHas('competition', function (Builder $query) use ($filter) {
+                $query->where('id', $filter->competition->id);
+            });
+        }
     }
 
     public function getTimeFormattedAttribute(): string

@@ -7,12 +7,20 @@
 
     @if (!in_array('athlete', $without ?? []))
         <x-table.cell>
-            <div class="h-5 bg-gray-200 rounded w-64"></div>
+            <div class="flex flex-col gap-y-1">
+                @foreach(range(1, $limit) as $i)
+                    <div class="h-5 bg-gray-200 rounded w-64"></div>
+                @endforeach
+            </div>
         </x-table.cell>
     @endif
 
     <x-table.cell>
-        <div class="h-5 bg-gray-200 rounded w-16"></div>
+        <div class="flex flex-col gap-y-1">
+            @foreach(range(1, $limit) as $i)
+                <div class="h-5 bg-gray-200 rounded w-16"></div>
+            @endforeach
+        </div>
     </x-table.cell>
 
     @if (!in_array('date', $without ?? []))

@@ -1,15 +1,20 @@
 <?php namespace App\Services;
 
+use App\Models\Competition;
+use Event;
+
 class Filter
 {
     public ?string $fromDate;
     public ?string $toDate;
+    public ?Competition $competition;
 
     public function __construct()
     {
         $filter = session('filter', []);
         $this->fromDate = $filter['from_date'] ?? null;
         $this->toDate = $filter['to_date'] ?? null;
+        $this->competition = Competition::find(Event::dispatch('filter.competition', halt: true));
     }
 
     public function set($fromDate = null, $toDate = null): void
@@ -31,10 +36,10 @@ class Filter
     public function countActive(): int
     {
         $activeFilters = 0;
-        if ($this->fromDate) {
+        if ($this->fromDate && !$this->competition) {
             $activeFilters++;
         }
-        if ($this->toDate) {
+        if ($this->toDate && !$this->competition) {
             $activeFilters++;
         }
         return $activeFilters;

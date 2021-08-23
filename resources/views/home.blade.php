@@ -15,7 +15,7 @@
 @section('content')
     <x-home.stats/>
 
-    @livewire('records-table')
+    <livewire:records-table :title="__('app.world') . ' ' . __('app.records')" :filtered-title="__('app.records')"/>
 
     <x-home.call-to-action/>
 @endsection

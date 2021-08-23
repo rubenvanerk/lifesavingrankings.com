@@ -10,10 +10,10 @@ use Illuminate\Support\Collection;
 
 class Records
 {
-    public function getRecords($useFilter = true): array
+    public function getRecords($useFilter = true, $limit = 1): array
     {
-        $recordsWomen = $this->getRecordsByGender(Gender::Women, $useFilter);
-        $recordsMen = $this->getRecordsByGender(Gender::Men, $useFilter);
+        $recordsWomen = $this->getRecordsByGender(Gender::Women, $useFilter, $limit);
+        $recordsMen = $this->getRecordsByGender(Gender::Men, $useFilter, $limit);
 
         return [
             strtolower(Gender::Women()->description) => $recordsWomen,
@@ -21,13 +21,13 @@ class Records
         ];
     }
 
-    protected function getRecordsByGender($gender, $useFilter): Collection
+    protected function getRecordsByGender($gender, $useFilter, $limit): Collection
     {
         $filter = new Filter();
 
         return Event::query()
             ->where('type', EventType::IndividualPool)
-            ->with(['results' => function (HasMany $query) use ($gender, $filter, $useFilter) {
+            ->with(['results' => function (HasMany $query) use ($limit, $gender, $filter, $useFilter) {
                 if ($useFilter) {
                     $query->filter($filter);
                 }
@@ -36,10 +36,11 @@ class Records
                     $query->where('gender', $gender);
                 });
                 $query->with(['event', 'entrant', 'competition']);
-                $query->orderBy('time')->limit(1);
+                $query->orderBy('time')->limit($limit);
             }])
             ->get()
             ->pluck('results')
-            ->flatten();
+            ->flatten()
+            ->groupBy('event_id');
     }
 }

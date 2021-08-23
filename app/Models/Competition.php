@@ -67,4 +67,9 @@ class Competition extends Model
             default => 'gray',
         };
     }
+
+    public function getIsPublishedAttribute(): bool
+    {
+        return $this->status->is(CompetitionStatus::Published());
+    }
 }
