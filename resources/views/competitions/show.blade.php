@@ -200,7 +200,7 @@
     @endif
 
     @if ($competition->is_published)
-    <livewire:records-table :competition="$competition->id" :limit="3" :title="trans_choice('app.results', 2)" two-columns="true"/>
+        <livewire:records-table :competition="$competition->id" :limit="3" :title="trans_choice('app.results', 2)" two-columns="true"/>
     @endif
 
 @endsection

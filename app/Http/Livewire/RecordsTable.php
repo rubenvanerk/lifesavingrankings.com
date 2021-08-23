@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Enums\Gender;
-use App\Models\Competition;
 use App\Services\Records;
 use Event;
 use Livewire\Component;

@@ -39,18 +39,26 @@
 
     @if (!in_array('date', $without ?? []))
         <x-table.cell>
-            <span class="hidden lg:block">{{ $result->competition->start_date->isoFormat('LL') }}</span>
-            <a href="{{ route('competitions.show', $result->competition) }}" class="block lg:hidden">
-                {{ $result->competition->start_date->isoFormat('LL') }}
-            </a>
+            <div class="flex flex-col space-y-1">
+                @foreach($resultsByEvent as $result)
+                    <span class="hidden lg:block">{{ $result->competition->start_date->isoFormat('LL') }}</span>
+                    <a href="{{ route('competitions.show', $result->competition) }}" class="block lg:hidden">
+                        {{ $result->competition->start_date->isoFormat('LL') }}
+                    </a>
+                @endforeach
+            </div>
         </x-table.cell>
     @endif
 
     @if (!in_array('competition', $without ?? []))
         <x-table.cell class="hidden lg:block">
-            <a href="{{ route('competitions.show', $result->competition) }}">
-                {{ $result->competition->name }}
-            </a>
+            <div class="flex flex-col space-y-1">
+                @foreach($resultsByEvent as $result)
+                    <a href="{{ route('competitions.show', $result->competition) }}">
+                        {{ $result->competition->name }}
+                    </a>
+                @endforeach
+            </div>
         </x-table.cell>
     @endif
 </x-table.row>

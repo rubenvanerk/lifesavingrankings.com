@@ -13,9 +13,9 @@
                         <x-layout.menu-item :active="request()->routeIs('competitions.*')" :url="route('competitions.index')">
                             {{ trans_choice('app.competitions', 2) }}
                         </x-layout.menu-item>
-{{--                        <x-base.menu-item :active="true" :url="route('events.index')">--}}
-{{--                            {{ trans_choice('app.events', 2) }}--}}
-{{--                        </x-base.menu-item>--}}
+                        <x-layout.menu-item :active="request()->routeIs('events.*')" :url="route('events.index')">
+                            {{ trans_choice('app.events', 2) }}
+                        </x-layout.menu-item>
                     </div>
                 </div>
             </div>
