@@ -55,7 +55,7 @@ class Result extends Model
 
         if ($filter->toDate) {
             $query->whereHas('competition', function (Builder $query) use ($filter) {
-                $query->whereDate('end_date', '<=', $filter->toDate);
+                $query->whereDate('start_date', '<=', $filter->toDate);
             });
         }
     }

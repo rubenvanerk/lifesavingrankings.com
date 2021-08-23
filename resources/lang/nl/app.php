@@ -17,7 +17,7 @@ return [
     'timekeeping' => 'Tijdwaarneming',
     'original_files' => 'Originele bestanden',
     'download' => 'Downloaden',
-    'videos' => 'Videos',
+    'videos' => "Video's",
     'watch' => 'Bekijken',
     'status' => 'Status',
     'ils_sanctioned' => 'Wedstrijd goedgekeurd door ILS',
@@ -30,7 +30,7 @@ return [
     'name' => 'Naam',
     'country' => 'Land',
     'city' => 'Plaats',
-    'pool_size' => 'Zwembad lengte',
+    'pool_size' => 'Baanlengte',
 
     'women' => 'dames',
     'men' => 'heren',

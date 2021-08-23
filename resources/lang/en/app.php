@@ -30,7 +30,7 @@ return [
     'name' => 'Name',
     'country' => 'Country',
     'city' => 'City',
-    'pool_size' => 'Pool size',
+    'pool_size' => 'Pool length',
 
     'women' => 'women',
     'men' => 'men',

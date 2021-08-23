@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Home;
 
+use App\Enums\CompetitionStatus;
 use App\Models\Competition;
 use Cache;
 use Illuminate\View\Component;
@@ -16,7 +17,11 @@ class CompetitionFeed extends Component
     public function render()
     {
         $competitions = Cache::remember('competition_feed', 60, function () {
-            return Competition::latest('start_date')->select(['id', 'name', 'slug', 'start_date'])->withCount('results')->limit(6)->get();
+            return Competition::latest('start_date')
+                ->where('status', CompetitionStatus::Published)
+                ->select(['id', 'name', 'slug', 'start_date'])
+                ->withCount('results')
+                ->limit(6)->get();
         });
         return view('components.home.competition-feed', [
             'competitions' => $competitions,
