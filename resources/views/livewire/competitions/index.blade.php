@@ -2,6 +2,14 @@
     {{ trans_choice('app.competitions', 2) }}
 @endsection
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('competitions') }}
+@endsection
+
+@section('meta-breadcrumbs')
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'competitions') }}
+@endsection
+
 <div>
     <x-table>
         <x-slot name="head">

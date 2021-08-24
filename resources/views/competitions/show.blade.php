@@ -4,6 +4,14 @@
     {{ $competition->name }} {{ strtolower(trans_choice('app.results', '2')) }}
 @endsection
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('competition', $competition) }}
+@endsection
+
+@section('meta-breadcrumbs')
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'competition', $competition) }}
+@endsection
+
 @section('content')
     <div class="grid grid-cols-2 md:grid-cols-3 gap-x-5 md:mx-2 xl:mx-0 p-5">
         <div class="bg-white shadow overflow-hidden md:rounded-lg col-span-2">

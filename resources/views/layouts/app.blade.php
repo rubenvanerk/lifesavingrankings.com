@@ -20,6 +20,8 @@
 
         <main class="-mt-32">
             <div class="max-w-7xl mx-auto pb-12">
+                    @yield('breadcrumbs')
+
                     @yield('content')
 
                     @isset($slot)

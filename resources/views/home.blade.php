@@ -12,6 +12,10 @@
     {!! __('app.tagline', ['style_open' => '<span class="text-yellow-300 font-extrabold">', 'style_close' => '</span>']) !!}
 @endsection
 
+@section('meta-breadcrumbs')
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'home') }}
+@endsection
+
 @section('content')
     <x-home.stats/>
 
