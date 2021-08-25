@@ -28,7 +28,7 @@
 
         <div class="py-4 px-6 text-white">
             <h2 class="text-lg font-bold pb-4">Filter results on this page</h2>
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 @if(!$filter->competition)
                     <div>
                         <x-buk-label for="from_date"/>

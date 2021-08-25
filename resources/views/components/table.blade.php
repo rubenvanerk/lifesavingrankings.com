@@ -1,5 +1,5 @@
 <div class="shadow sm:hidden">
-    <ul class="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+    <ul class="mobile-table mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
         {{ $mobileBody }}
     </ul>
 

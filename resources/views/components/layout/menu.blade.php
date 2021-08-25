@@ -68,6 +68,10 @@
             <x-layout.menu-item-mobile :active="request()->routeIs('competitions.*')" :url="route('competitions.index')">
                 {{ trans_choice('app.competitions', 2) }}
             </x-layout.menu-item-mobile>
+
+            <x-layout.menu-item-mobile :active="request()->routeIs('events.*')" :url="route('events.index')">
+                {{ trans_choice('app.events', 2) }}
+            </x-layout.menu-item-mobile>
         </div>
         <div class="pt-4 pb-3 border-t border-blue-700">
             <div class="mt-3 px-2 space-y-1">

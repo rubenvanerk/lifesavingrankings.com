@@ -4,7 +4,7 @@
             <span class="flex items-center space-x-4">
                 <span class="flex-1 flex space-x-2 truncate">
                     {{ $icon ?? '' }}
-                    <span class="flex flex-col text-gray-500 text-sm truncate w-full space-y-2">
+                    <span class="flex flex-col text-gray-600 text-sm truncate w-full space-y-2">
                         {{ $slot }}
                     </span>
                 </span>
@@ -18,7 +18,7 @@
             <span class="flex items-center space-x-4">
                 <span class="flex-1 flex space-x-2 truncate">
                     {{ $icon ?? '' }}
-                    <span class="flex flex-col text-gray-500 text-sm truncate w-full space-y-2">
+                    <span class="flex flex-col text-gray-600 text-sm truncate w-full space-y-2">
                         {{ $slot }}
                     </span>
                 </span>

@@ -189,7 +189,7 @@
     </div>
 
     @if(__('app.status_descriptions')[$competition->status->value] ?? false)
-        <x-base.alert :color="$competition->status_color" class="mt-10">
+        <x-base.alert :color="$competition->status_color" class="mt-10 mx-5">
             <x-slot name="title">
                 {{ __('app.status') }}: {{ $competition->status->description }}
             </x-slot>
