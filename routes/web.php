@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CompetitionController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
@@ -11,7 +11,6 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
-use App\Http\Livewire\Competitions\Index as CompetitionIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('set-locale/{locale}', LocaleController::class)->name('set-locale');
@@ -25,6 +24,10 @@ Route::prefix('competitions')->group(function () {
 
 Route::prefix('events')->group(function () {
     Route::view('/', 'events.index')->name('events.index');
+});
+
+Route::prefix('athletes')->group(function () {
+    Route::get('/{athlete:slug}', [AthleteController::class, 'show'])->name('athletes.show');
 });
 
 Route::middleware('guest')->group(function () {

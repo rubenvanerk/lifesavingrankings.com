@@ -64,6 +64,18 @@ class Result extends Model
                 $query->where('id', $filter->competition->id);
             });
         }
+
+        if ($filter->athlete) {
+            $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
+                $query->where('id', $filter->athlete->id);
+            });
+        }
+
+        if ($filter->gender) {
+            $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
+                $query->where('gender', $filter->gender);
+            });
+        }
     }
 
     public function getTimeFormattedAttribute(): string

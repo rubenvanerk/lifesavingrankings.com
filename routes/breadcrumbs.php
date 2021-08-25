@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Athlete;
 use App\Models\Competition;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
@@ -21,4 +22,10 @@ Breadcrumbs::for('competitions.show', function (BreadcrumbTrail $trail, Competit
 Breadcrumbs::for('events.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push(trans_choice('app.events', 2), route('events.index'));
+});
+
+Breadcrumbs::for('athletes.show', function (BreadcrumbTrail $trail, Athlete $athlete) {
+    $trail->parent('home');
+    $trail->push(trans_choice('app.athletes', 2));
+    $trail->push($athlete->name, route('athletes.show', $athlete));
 });

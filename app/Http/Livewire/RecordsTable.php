@@ -13,6 +13,7 @@ class RecordsTable extends Component
     public bool $readyToLoad = false;
     public array $without = [];
     public ?int $competition = null;
+    public ?int $athlete = null;
     public ?int $limit = 1;
     public string $title = '';
     public string $filteredTitle = '';
@@ -30,21 +31,22 @@ class RecordsTable extends Component
         if ($this->competition) {
             $this->without = array_merge($this->without, ['date', 'competition']);
         }
+        if ($this->athlete) {
+            $this->without = array_merge($this->without, ['athlete']);
+        }
     }
 
     public function render(Records $records): \Illuminate\Contracts\View\View
     {
         Event::listen('filter.competition', fn() => $this->competition);
+        Event::listen('filter.athlete', fn() => $this->athlete);
 
         $filter = new \App\Services\Filter();
 
         View::share('filter', true);
 
         return view('livewire.records-table', [
-            'eventsByGender' => $this->readyToLoad ? $records->getRecords(limit: $this->limit) : [
-                strtolower(Gender::Women()->description) => array_fill(0, 7, null),
-                strtolower(Gender::Men()->description) => array_fill(0, 7, null),
-            ],
+            'eventsByGender' => $this->readyToLoad ? $records->getRecords(limit: $this->limit) : $records->getPlaceholder(),
             'filter' => $filter,
         ]);
     }

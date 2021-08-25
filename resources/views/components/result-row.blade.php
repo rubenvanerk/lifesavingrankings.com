@@ -13,7 +13,7 @@
         <x-table.cell>
             <div class="flex flex-col space-y-1">
                 @foreach($resultsByEvent as $result)
-                    <a href="#" class="inline-flex items-center space-x-1">
+                    <a href="{{ route('athletes.show', $resultsByEvent->first()->entrant) }}" class="inline-flex items-center space-x-1">
                         @foreach($result->entrant->nationalities ?? [] as $country)
                             <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
                                                  class="h-3.5"/>
