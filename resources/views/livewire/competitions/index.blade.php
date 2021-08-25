@@ -1,7 +1,3 @@
-@section('title')
-    {{ trans_choice('app.competitions', 2) }}
-@endsection
-
 <div>
     <x-table>
         <x-slot name="head">

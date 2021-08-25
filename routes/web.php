@@ -12,7 +12,6 @@ use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Competitions\Index as CompetitionIndex;
-use App\Http\Livewire\Events\Index as EventIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('set-locale/{locale}', LocaleController::class)->name('set-locale');
@@ -20,12 +19,12 @@ Route::get('set-locale/{locale}', LocaleController::class)->name('set-locale');
 Route::view('/', 'home')->name('home');
 
 Route::prefix('competitions')->group(function () {
-    Route::get('/', CompetitionIndex::class)->name('competitions.index');
+    Route::view('/', 'competitions.index')->name('competitions.index');
     Route::get('/{competition:slug}', [CompetitionController::class, 'show'])->name('competitions.show');
 });
 
 Route::prefix('events')->group(function () {
-    Route::view('/', 'events')->name('events.index');
+    Route::view('/', 'events.index')->name('events.index');
 });
 
 Route::middleware('guest')->group(function () {

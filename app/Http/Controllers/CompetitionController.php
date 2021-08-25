@@ -7,12 +7,6 @@ use Illuminate\Contracts\View\View;
 
 class CompetitionController extends Controller
 {
-    public function index(): View
-    {
-        $competitions = Competition::query()->select(['name', 'slug'])->get();
-        return view('competitions.index', compact('competitions'));
-    }
-
     public function show(Competition $competition): View
     {
         if (!$competition->exists) {
