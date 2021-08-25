@@ -1,5 +1,5 @@
 @unless ($breadcrumbs->isEmpty())
-    <nav class="flex text-white px-4 sm:px-6 lg:px-8" aria-label="Breadcrumb">
+    <nav class="flex text-white py-4" aria-label="Breadcrumb">
         <ol role="list" class="flex items-center space-x-4">
             @foreach ($breadcrumbs as $breadcrumb)
                 @if($loop->first)

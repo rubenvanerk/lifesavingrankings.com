@@ -1,9 +1,8 @@
 @extends('layouts.base')
 
 @section('body')
-
-    <div class="min-h-screen bg-gray-100">
-        <div class="bg-blue-800 pb-32">
+    <div class="min-h-screen bg-gray-100" wire:loading.class="cursor-wait">
+        <div class="bg-blue-800 pb-24 mb-6">
             <x-layout.menu/>
 
             <header class="py-10">
@@ -12,7 +11,12 @@
                         <h1 class="text-3xl font-bold text-white">
                             @yield('title')
                         </h1>
-                        <h2 class="text-xl font-bold text-white mt-3">@yield('subtitle')</h2>
+
+                        @hasSection('subtitle')
+                            <h2 class="text-xl font-bold text-white mt-3">@yield('subtitle')</h2>
+                        @endif
+
+                        {{ Breadcrumbs::render() }}
                     </div>
                 @endif
             </header>
@@ -20,8 +24,6 @@
 
         <main class="-mt-32">
             <div class="max-w-7xl mx-auto pb-12">
-                    @yield('breadcrumbs')
-
                     @yield('content')
 
                     @isset($slot)
@@ -36,5 +38,4 @@
     @endif
 
     <x-layout.footer/>
-
 @endsection

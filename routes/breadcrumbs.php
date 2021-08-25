@@ -8,17 +8,17 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('home'));
 });
 
-Breadcrumbs::for('competitions', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('competitions.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push(trans_choice('app.competitions', 2), route('competitions.index'));
 });
 
-Breadcrumbs::for('competition', function (BreadcrumbTrail $trail, Competition $competition) {
-    $trail->parent('competitions');
+Breadcrumbs::for('competitions.show', function (BreadcrumbTrail $trail, Competition $competition) {
+    $trail->parent('competitions.index');
     $trail->push($competition->name, route('competitions.show', $competition));
 });
 
-Breadcrumbs::for('events', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('events.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push(trans_choice('app.events', 2), route('events.index'));
 });
