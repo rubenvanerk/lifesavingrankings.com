@@ -16,7 +16,9 @@
                             <h2 class="text-xl font-bold text-white mt-3">@yield('subtitle')</h2>
                         @endif
 
-                        {{ Breadcrumbs::render() }}
+                        @if(!request()->routeIs('home'))
+                            {{ Breadcrumbs::render() }}
+                        @endif
                     </div>
                 @endif
             </header>
