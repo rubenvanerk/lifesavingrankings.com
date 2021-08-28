@@ -78,6 +78,18 @@ class Result extends Model
                 $query->where('gender', $filter->gender->value);
             });
         }
+
+        if ($filter->fromYearOfBirth) {
+            $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
+                $query->where('year_of_birth', '>=', $filter->fromYearOfBirth);
+            });
+        }
+
+        if ($filter->toYearOfBirth) {
+            $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
+                $query->where('year_of_birth', '<=', $filter->toYearOfBirth);
+            });
+        }
     }
 
     public function getTimeFormattedAttribute(): string

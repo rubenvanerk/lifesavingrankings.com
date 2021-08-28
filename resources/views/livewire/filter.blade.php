@@ -29,16 +29,22 @@
         <div class="py-4 px-6 text-white">
             <h2 class="text-lg font-bold pb-4">Filter results on this page</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                @if(!$filter->competition)
-                    <div>
-                        <x-buk-label for="from_date"/>
-                        <x-buk-input name="from_date" type="date" wire:model.lazy="fromDate"/>
-                    </div>
-                    <div>
-                        <x-buk-label for="to_date"/>
-                        <x-buk-input name="to_date" type="date" wire:model.lazy="toDate"/>
-                    </div>
-                @endif
+                <div>
+                    <x-buk-label for="from_date"/>
+                    <x-buk-input name="from_date" type="date" wire:model.lazy="fromDate"/>
+                </div>
+                <div>
+                    <x-buk-label for="to_date"/>
+                    <x-buk-input name="to_date" type="date" wire:model.lazy="toDate"/>
+                </div>
+                <div>
+                    <x-buk-label for="from_year_of_birth"/>
+                    <x-buk-input name="from_year_of_birth" type="number" wire:model.lazy="fromYearOfBirth"/>
+                </div>
+                <div>
+                    <x-buk-label for="to_year_of_birth"/>
+                    <x-buk-input name="to_year_of_birth" type="number" wire:model.lazy="toYearOfBirth"/>
+                </div>
             </div>
         </div>
     </div>
