@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\Countries;
 use App\Enums\CompetitionStatus;
+use App\Enums\Gender;
 use App\Traits\HasCachedCount;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class Athlete extends Model
 
     protected $casts = [
         'nationalities' => Countries::class,
+        'gender' => Gender::class,
     ];
 
     protected static function booted(): void

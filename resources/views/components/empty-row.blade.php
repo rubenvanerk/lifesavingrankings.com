@@ -1,5 +1,5 @@
 <x-table.row>
-    <x-table.cell colspan="{{ 5 - count($without) }}">
+    <x-table.cell colspan="{{ $colspan }}">
         <div class="w-full text-center leading-loose">
             No results, would you like to
             <button wire:click.prevent="resetFilter"

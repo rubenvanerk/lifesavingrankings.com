@@ -1,25 +1,54 @@
 <?php namespace App\Services;
 
+use App\Enums\EventType;
 use App\Enums\Gender;
 use App\Models\Athlete;
 use App\Models\Competition;
-use Event;
 
 class Filter
 {
     public ?string $fromDate;
     public ?string $toDate;
-    public ?Competition $competition;
-    public ?Athlete $athlete;
+    public ?Competition $competition = null;
+    public ?Athlete $athlete = null;
     public ?Gender $gender = null;
+    public ?EventType $eventType = null;
 
     public function __construct()
     {
         $filter = session('filter', []);
         $this->fromDate = $filter['from_date'] ?? null;
         $this->toDate = $filter['to_date'] ?? null;
-        $this->competition = Competition::find(Event::dispatch('filter.competition', halt: true));
-        $this->athlete = Athlete::find(Event::dispatch('filter.athlete', halt: true));
+    }
+
+    public static function add($value, $saveToSession = false): Filter
+    {
+        $filter = app(Filter::class);
+
+        if (is_null($value)) {
+            return $filter;
+        }
+
+        switch (get_class($value)) {
+            case Gender::class:
+                $filter->gender = $value;
+                break;
+            case EventType::class:
+                $filter->eventType = $value;
+                break;
+            case Athlete::class:
+                $filter->athlete = $value;
+                break;
+            case Competition::class:
+                $filter->competition = $value;
+                break;
+        }
+
+        if ($saveToSession) {
+            $filter->saveToSession();
+        }
+
+        return $filter;
     }
 
     public function set($fromDate = null, $toDate = null): void
@@ -50,8 +79,9 @@ class Filter
         return $activeFilters;
     }
 
-    public function reset(): void
+    public static function reset(): void
     {
-        $this->set();
+        $filter = app(Filter::class);
+        $filter->set();
     }
 }

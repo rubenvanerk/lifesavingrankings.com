@@ -5,5 +5,7 @@
 @endsection
 
 @section('content')
-    <livewire:records-table :athlete="$athlete->id"/>
+    <livewire:tables.events
+        :athlete="$athlete->id"
+        :event-type="\App\Enums\EventType::IndividualPool()"/>
 @endsection

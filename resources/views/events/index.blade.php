@@ -5,5 +5,15 @@
 @endsection
 
 @section('content')
-    <livewire:records-table :limit="3"/>
+    {{-- TODO: add titles --}}
+    {{-- TODO: show only 1 result per athlete --}}
+    <livewire:tables.events
+        :limit="3"
+        :event-type="\App\Enums\EventType::IndividualPool()"
+        :gender="\App\Enums\Gender::Women()"/>
+
+    <livewire:tables.events
+        :limit="3"
+        :event-type="\App\Enums\EventType::IndividualPool()"
+        :gender="\App\Enums\Gender::Men()"/>
 @endsection

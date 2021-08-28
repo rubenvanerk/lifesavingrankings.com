@@ -45,8 +45,10 @@ class Result extends Model
         return $this->morphTo()->withoutGlobalScope('published');
     }
 
-    public function scopeFilter(Builder $query, Filter $filter): void
+    public function scopeFilter(Builder $query): void
     {
+        $filter = app(Filter::class);
+
         if ($filter->fromDate) {
             $query->whereHas('competition', function (Builder $query) use ($filter) {
                 $query->whereDate('start_date', '>=', $filter->fromDate);
@@ -73,7 +75,7 @@ class Result extends Model
 
         if ($filter->gender) {
             $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
-                $query->where('gender', $filter->gender);
+                $query->where('gender', $filter->gender->value);
             });
         }
     }

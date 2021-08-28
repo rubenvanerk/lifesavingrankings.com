@@ -19,7 +19,18 @@
 @section('content')
     <x-home.stats/>
 
-    <livewire:records-table :title="__('app.world') . ' ' . __('app.records')" :filtered-title="__('app.records')"/>
+    <livewire:tables.events
+        :event-type="\App\Enums\EventType::IndividualPool()"
+        :gender="\App\Enums\Gender::Women()"
+        :title="__('app.world') . ' ' . __('app.records') . ' ' . strtolower(\App\Enums\Gender::Women()->description)"
+        :title-filtered="__('app.records') . ' ' . strtolower(\App\Enums\Gender::Women()->description)"
+    />
+
+    <livewire:tables.events
+        :event-type="\App\Enums\EventType::IndividualPool()"
+        :gender="\App\Enums\Gender::Men()"
+        :title="__('app.world') . ' ' . __('app.records') . ' ' . strtolower(\App\Enums\Gender::Men()->description)"
+        :title-filtered="__('app.records') . ' ' . strtolower(\App\Enums\Gender::Women()->description)"/>
 
     <x-home.call-to-action/>
 @endsection

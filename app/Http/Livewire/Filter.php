@@ -8,12 +8,14 @@ use Livewire\Component;
 
 class Filter extends Component
 {
+    // TODO: yob, age, nationality, pool length, ils sanctioned, timekeeping
+
     public $fromDate = null;
     public $toDate = null;
 
     protected $casts = ['fromDate' => Carbon::class];
 
-    protected $listeners = ['resetFilter' => '$refresh'];
+    protected $listeners = ['filtered' => '$refresh'];
 
     public function render(\App\Services\Filter $filter): View
     {
@@ -24,7 +26,9 @@ class Filter extends Component
 
     public function updated()
     {
-        (new \App\Services\Filter)->set(
+        $filter = app(\App\Services\Filter::class);
+
+        $filter->set(
             $this->fromDate,
             $this->toDate
         );
