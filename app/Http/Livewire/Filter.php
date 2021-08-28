@@ -42,4 +42,10 @@ class Filter extends Component
 
         $this->emit('filtered');
     }
+
+    public function clear()
+    {
+        app(\App\Services\Filter::class)->set();
+        $this->emit('filtered');
+    }
 }
