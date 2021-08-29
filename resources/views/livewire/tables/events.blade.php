@@ -1,4 +1,12 @@
-{{-- TODO: add option to hide columns --}}
+@php
+    $without = [];
+    if ($competition) {
+        $without[] = 'competition';
+    }
+    if ($athlete) {
+        $without[] = 'athlete';
+    }
+@endphp
 
 <div wire:init="loadEvents">
     @if ($title)
@@ -14,23 +22,36 @@
     <x-table>
         <x-slot name="head">
             <x-table.heading>{{ trans_choice('app.events', 1) }}</x-table.heading>
-            <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
-            <x-table.heading class="text-right">{{ trans_choice('app.time', 1) }}</x-table.heading>
-            <x-table.heading>{{ trans_choice('app.date', 1) }}</x-table.heading>
-            <x-table.heading class="hidden lg:block">{{ trans_choice('app.competitions', 1) }}</x-table.heading>
+            @if (!in_array('athlete', $without))
+                <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
+            @endif
+            <x-table.heading>{{ trans_choice('app.time', 1) }}</x-table.heading>
+            @if (!in_array('competition', $without))
+                <x-table.heading>{{ trans_choice('app.date', 1) }}</x-table.heading>
+                <x-table.heading class="hidden lg:block">{{ trans_choice('app.competitions', 1) }}</x-table.heading>
+            @endif
         </x-slot>
 
         <x-slot name="body">
             @if (is_null($events))
-                <x-table.placeholder-rows amount="7"/>
+                @for ($i = 0; $i < 7; $i++)
+                    <x-table.placeholder-row :without="$without"/>
+                @endfor
             @else
                 @forelse($events as $event)
                     <x-table.row>
-                        <x-table.columns.event :event="$event" :competition="$competition ?? null" :athlete="$athlete ?? null" :genderEnum="$genderEnum ?? $event->results->first()->entrant->gender"/>
-                        <x-table.columns.athletes :athletes="$event->results->pluck('entrant')"/>
-                        <x-table.columns.times :results="$event->results"/>
-                        <x-table.columns.dates :competitions="$event->results->pluck('competition')"/>
-                        <x-table.columns.competitions :competitions="$event->results->pluck('competition')"/>
+                        <x-table.columns.event :event="$event"
+                                               :competition="$competition ?? null"
+                                               :athlete="$athlete ?? null"
+                                               :genderEnum="$genderEnum ?? $event->results->first()->entrant->gender"/>
+                        @if (!in_array('athlete', $without))
+                            <x-table.columns.athletes :athletes="$event->results->pluck('entrant')"/>
+                        @endif
+                        <x-table.columns.times :results="$event->results" :athlete="$athlete ?? null"/>
+                        @if (!in_array('competition', $without))
+                            <x-table.columns.dates :competitions="$event->results->pluck('competition')"/>
+                            <x-table.columns.competitions :competitions="$event->results->pluck('competition')"/>
+                        @endif
                     </x-table.row>
                 @empty
                     <x-empty-row colspan="5"/>

@@ -1,4 +1,12 @@
-{{-- TODO: add option to hide columns --}}
+@php
+    $without = ['event'];
+    if ($competition) {
+        $without[] = 'competition';
+    }
+    if ($athlete) {
+        $without[] = 'athlete';
+    }
+@endphp
 
 <div wire:init="loadResults">
     @if ($title)
@@ -13,22 +21,32 @@
     @endif
     <x-table>
         <x-slot name="head">
-            <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
-            <x-table.heading class="text-right">{{ trans_choice('app.time', 1) }}</x-table.heading>
-            <x-table.heading>{{ trans_choice('app.date', 1) }}</x-table.heading>
-            <x-table.heading class="hidden lg:block">{{ trans_choice('app.competitions', 1) }}</x-table.heading>
+            @if (!in_array('athlete', $without))
+                <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
+            @endif
+            <x-table.heading>{{ trans_choice('app.time', 1) }}</x-table.heading>
+            @if (!in_array('competition', $without))
+                <x-table.heading>{{ trans_choice('app.date', 1) }}</x-table.heading>
+                <x-table.heading class="hidden lg:block">{{ trans_choice('app.competitions', 1) }}</x-table.heading>
+            @endif
         </x-slot>
 
         <x-slot name="body">
             @if (is_null($results))
-                <x-table.placeholder-rows amount="7"/>
+                @for ($i = 0; $i < 15; $i++)
+                    <x-table.placeholder-row :without="$without"/>
+                @endfor
             @else
                 @forelse($results as $result)
                     <x-table.row>
-                        <x-table.columns.athletes :athletes="[$result->entrant]"/>
+                        @if (!in_array('athlete', $without))
+                            <x-table.columns.athletes :athletes="[$result->entrant]"/>
+                        @endif
                         <x-table.columns.times :results="[$result]"/>
-                        <x-table.columns.dates :competitions="[$result->competition]"/>
-                        <x-table.columns.competitions :competitions="[$result->competition]"/>
+                        @if (!in_array('competition', $without))
+                            <x-table.columns.dates :competitions="[$result->competition]"/>
+                            <x-table.columns.competitions :competitions="[$result->competition]"/>
+                        @endif
                     </x-table.row>
                 @empty
                     <x-empty-row colspan="4"/>
