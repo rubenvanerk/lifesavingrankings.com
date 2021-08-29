@@ -5,6 +5,11 @@
                class="truncate">
                 {{ $event->name }}
             </a>
+        @elseif (!empty($team))
+            <a href="{{ route('teams.event', ['team' => $team, 'event' => $event->slug, 'gender' => $genderEnum->getSlug()]) }}"
+               class="truncate">
+                {{ $event->name }}
+            </a>
         @else
             <a href="{{ route('events.show', ['event' => $event, 'gender' => $genderEnum->getSlug()]) }}"
                class="truncate">

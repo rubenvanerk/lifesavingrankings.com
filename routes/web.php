@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\TeamController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -32,6 +33,12 @@ Route::prefix('events')->group(function () {
 Route::prefix('athletes')->group(function () {
     Route::get('/{athlete:slug}', [AthleteController::class, 'show'])->name('athletes.show');
     Route::get('/{athlete:slug}/events/{event}', [AthleteController::class, 'event'])->name('athletes.event');
+});
+
+Route::prefix('teams')->group(function () {
+    Route::view('/', 'teams.index')->name('teams.index');
+    Route::get('/{team:slug}', [TeamController::class, 'show'])->name('teams.show');
+    Route::get('/{team:slug}/events/{event}/{gender}', [TeamController::class, 'event'])->name('teams.event');
 });
 
 Route::middleware('guest')->group(function () {

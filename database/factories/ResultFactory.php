@@ -29,8 +29,8 @@ class ResultFactory extends Factory
             'status' => $this->faker->boolean(5) ? ResultStatus::getRandomValue() : null,
             'time' => $this->faker->numberBetween(2500, 25000),
             'event_id' => Event::where('type', EventType::IndividualPool)->inRandomOrder()->select('id')->first()->id,
-            'entrant_type' => Athlete::class,
-            'entrant_id' => Athlete::inRandomOrder()->select('id')->first()->id,
+//            'entrant_type' => Athlete::class,
+//            'entrant_id' => Athlete::inRandomOrder()->select('id')->first()->id,
         ];
     }
 }

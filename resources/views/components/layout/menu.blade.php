@@ -16,6 +16,9 @@
                         <x-layout.menu-item :active="request()->routeIs('events.*')" :url="route('events.index')">
                             {{ trans_choice('app.events', 2) }}
                         </x-layout.menu-item>
+                        <x-layout.menu-item :active="request()->routeIs('teams.*')" :url="route('teams.index')">
+                            {{ trans_choice('app.teams', 2) }}
+                        </x-layout.menu-item>
                     </div>
                 </div>
             </div>
@@ -71,6 +74,10 @@
 
             <x-layout.menu-item-mobile :active="request()->routeIs('events.*')" :url="route('events.index')">
                 {{ trans_choice('app.events', 2) }}
+            </x-layout.menu-item-mobile>
+
+            <x-layout.menu-item-mobile :active="request()->routeIs('teams.*')" :url="route('teams.index')">
+                {{ trans_choice('app.teams', 2) }}
             </x-layout.menu-item-mobile>
         </div>
         <div class="pt-4 pb-3 border-t border-blue-700">

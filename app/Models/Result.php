@@ -45,6 +45,11 @@ class Result extends Model
         return $this->morphTo()->withoutGlobalScope('published');
     }
 
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function scopeFilter(Builder $query): void
     {
         $filter = app(Filter::class);
@@ -82,6 +87,12 @@ class Result extends Model
         if ($filter->gender) {
             $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
                 $query->where('gender', $filter->gender->value);
+            });
+        }
+
+        if ($filter->team) {
+            $query->whereHas('team', function (Builder $query) use ($filter) {
+                $query->where('id', $filter->team->id);
             });
         }
 

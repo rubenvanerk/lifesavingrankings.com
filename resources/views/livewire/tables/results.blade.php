@@ -6,6 +6,9 @@
     if ($athlete) {
         $without[] = 'athlete';
     }
+    if ($team) {
+        $without[] = 'team';
+    }
 @endphp
 
 <div wire:init="loadResults">
@@ -24,6 +27,9 @@
             <x-table.heading>#</x-table.heading>
             @if (!in_array('athlete', $without))
                 <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
+            @endif
+            @if (!in_array('team', $without))
+                <x-table.heading>{{ trans_choice('app.teams', 1) }}</x-table.heading>
             @endif
             <x-table.heading>{{ trans_choice('app.time', 1) }}</x-table.heading>
             @if (!in_array('competition', $without))
@@ -47,6 +53,9 @@
                         @if (!in_array('athlete', $without))
                             <x-table.columns.athletes :athletes="[$result->entrant]"/>
                         @endif
+                        @if (!in_array('team', $without))
+                            <x-table.columns.teams :teams="[$result->team]"/>
+                        @endif
                         <x-table.columns.times :results="[$result]"/>
                         @if (!in_array('competition', $without))
                             <x-table.columns.dates :competitions="[$result->competition]"/>
@@ -54,7 +63,7 @@
                         @endif
                     </x-table.row>
                 @empty
-                    <x-empty-row colspan="4"/>
+                    <x-empty-row :colspan="7 - count($without)"/>
                 @endforelse
             @endif
         </x-slot>

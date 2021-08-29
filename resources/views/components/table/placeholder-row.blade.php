@@ -1,9 +1,11 @@
 <x-table.row>
-    <x-table.cell>
-        <div class="flex flex-col gap-y-1">
-            <div class="h-5 bg-gray-200 rounded w-10"></div>
-        </div>
-    </x-table.cell>
+    @if (!in_array('rank', $without))
+        <x-table.cell>
+            <div class="flex flex-col gap-y-1">
+                <div class="h-5 bg-gray-200 rounded w-10"></div>
+            </div>
+        </x-table.cell>
+    @endif
 
     @if (!in_array('event', $without))
         <x-table.cell class="max-w-0 w-full">
@@ -12,6 +14,14 @@
     @endif
 
     @if (!in_array('athlete', $without))
+        <x-table.cell>
+            <div class="flex flex-col gap-y-1">
+                <div class="h-5 bg-gray-200 rounded w-64"></div>
+            </div>
+        </x-table.cell>
+    @endif
+
+    @if (!in_array('team', $without))
         <x-table.cell>
             <div class="flex flex-col gap-y-1">
                 <div class="h-5 bg-gray-200 rounded w-64"></div>

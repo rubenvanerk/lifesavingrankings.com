@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Competition;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ class CreateResultsTable extends Migration
             $table->foreignIdFor(\App\Models\Event::class)->constrained()->onDelete('cascade');
             $table->tinyInteger('status')->unsigned()->nullable();
             $table->integer('time')->unsigned()->nullable()->index();
+            $table->foreignIdFor(Team::class)->nullable()->constrained()->onDelete('set null');
         });
     }
 

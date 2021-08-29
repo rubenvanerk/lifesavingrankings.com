@@ -5,6 +5,7 @@ use App\Enums\Gender;
 use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Event;
+use App\Models\Team;
 
 class Filter
 {
@@ -15,6 +16,7 @@ class Filter
     public ?Competition $competition = null;
     public ?Athlete $athlete = null;
     public ?Event $event = null;
+    public ?Team $team = null;
     public ?Gender $gender = null;
     public ?EventType $eventType = null;
 
@@ -50,6 +52,9 @@ class Filter
                 break;
             case Event::class:
                 $filter->event = $value;
+                break;
+            case Team::class:
+                $filter->team = $value;
                 break;
         }
 

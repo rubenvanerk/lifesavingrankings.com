@@ -7,6 +7,7 @@ use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Event;
 use App\Models\Result;
+use App\Models\Team;
 use App\Services\Filter;
 use App\Traits\WithFilter;
 use Livewire\Component;
@@ -19,6 +20,7 @@ class Results extends Component
     public bool $readyToLoad = false;
     public ?Athlete $athlete = null;
     public ?Competition $competition = null;
+    public ?Team $team = null;
     public ?Event $event = null;
     public mixed $gender = null;
     public string $title = '';
@@ -34,6 +36,7 @@ class Results extends Component
         Filter::add($this->event);
         Filter::add($this->competition);
         Filter::add($this->athlete);
+        Filter::add($this->team);
 
         $filter = app(Filter::class);
 
@@ -42,9 +45,9 @@ class Results extends Component
                 ->orderBy('time')
                 ->with(['competition', 'entrant']);
 
-            if (!$filter->competition && !$filter->athlete) {
+            if (!$filter->competition && !$filter->athlete && !$filter->team) {
                 $results = $results->whereRaw('(entrant_id, time) IN (select entrant_id, MIN(time) FROM results GROUP BY entrant_id)')->paginate(15);
-            } elseif ($filter->athlete) {
+            } elseif ($filter->athlete || $filter->team) {
                 $results = $results->paginate(15);
             } else {
                 $results = $results->get();

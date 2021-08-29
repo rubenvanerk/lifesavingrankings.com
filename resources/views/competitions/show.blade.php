@@ -200,22 +200,19 @@
     @endif
 
     @if ($competition->is_published)
-        {{-- TODO: add filtered title --}}
-        <div class="grid grid-cols-1 lg:grid-cols-2">
-            <livewire:tables.events
-                :event-type="\App\Enums\EventType::IndividualPool()"
-                :competition="$competition"
-                :limit="3"
-                :title="trans_choice('app.results', 2) . ' ' . strtolower(\App\Enums\Gender::Women()->description)"
-                :gender="\App\Enums\Gender::Women()"/>
+        <livewire:tables.events
+            :event-type="\App\Enums\EventType::IndividualPool()"
+            :competition="$competition"
+            :limit="3"
+            :title="trans_choice('app.results', 2) . ' ' . strtolower(\App\Enums\Gender::Women()->description)"
+            :gender="\App\Enums\Gender::Women()"/>
 
-            <livewire:tables.events
-                :event-type="\App\Enums\EventType::IndividualPool()"
-                :competition="$competition"
-                :limit="3"
-                :title="trans_choice('app.results', 2) . ' ' . strtolower(\App\Enums\Gender::Men()->description)"
-                :gender="\App\Enums\Gender::Men()"/>
-        </div>
+        <livewire:tables.events
+            :event-type="\App\Enums\EventType::IndividualPool()"
+            :competition="$competition"
+            :limit="3"
+            :title="trans_choice('app.results', 2) . ' ' . strtolower(\App\Enums\Gender::Men()->description)"
+            :gender="\App\Enums\Gender::Men()"/>
     @endif
 
 @endsection

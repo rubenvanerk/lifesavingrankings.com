@@ -7,6 +7,7 @@ use App\Enums\Gender;
 use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Event;
+use App\Models\Team;
 use App\Services\Filter;
 use App\Traits\WithFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,6 +27,7 @@ class Events extends Component
     public mixed $eventType = null;
     public ?Athlete $athlete = null;
     public ?Competition $competition = null;
+    public ?Team $team = null;
     public int $limit = 1;
 
     public function mount($gender = null, EventType $eventType = null): void
@@ -40,6 +42,7 @@ class Events extends Component
         Filter::add(EventType::coerce($this->eventType));
         Filter::add($this->athlete);
         Filter::add($this->competition);
+        Filter::add($this->team);
 
         // TODO: extract into service
         if ($this->readyToLoad) {

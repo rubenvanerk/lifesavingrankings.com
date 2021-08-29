@@ -8,7 +8,9 @@ use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Event;
 use App\Models\Result;
+use App\Models\Team;
 use App\Models\Venue;
+use DB;
 use Exception;
 use Illuminate\Database\Seeder;
 
@@ -22,10 +24,11 @@ class FakeSeeder extends Seeder
      */
     public function run()
     {
-        Athlete::factory(1000)->create();
+        Athlete::factory(500)->create();
+        Team::factory(25)->create();
 
-        Venue::factory(25)->create();
-        $competitionsFactory = Competition::factory(50);
+        Venue::factory(10)->create();
+        $competitionsFactory = Competition::factory(25);
 
         $events = Event::where('type', EventType::IndividualPool)->get();
         foreach ($events as $event) {
@@ -36,6 +39,9 @@ class FakeSeeder extends Seeder
                         return [
                             'event_id' => $event->id,
                             'competition_id' => $competition->id,
+                            'entrant_type' => Athlete::class,
+                            'entrant_id' => DB::table('athletes')->select(['id'])->inRandomOrder()->first()->id,
+                            'team_id' => DB::table('teams')->select(['id'])->inRandomOrder()->first()->id,
                         ];
                     })
             );

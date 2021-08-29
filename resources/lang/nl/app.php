@@ -13,6 +13,7 @@ return [
     'venues' => 'Locatie|Locaties',
     'time' => 'Tijd',
     'date' => 'Datum',
+    'teams' => 'Team|Teams',
 
     'timekeeping' => 'Tijdwaarneming',
     'original_files' => 'Originele bestanden',

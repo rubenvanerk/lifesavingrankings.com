@@ -51,9 +51,4 @@ class Venue extends Model
     {
         return $this->type->is(VenueType::Pool);
     }
-
-    public function getCountryCodeAttribute()
-    {
-        return strtolower($this->country->getIsoAlpha2());
-    }
 }

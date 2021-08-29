@@ -13,6 +13,7 @@ return [
     'venues' => 'Venue|Venues',
     'time' => 'Time',
     'date' => 'Date',
+    'teams' => 'Team|Teams',
 
     'timekeeping' => 'Timekeeping',
     'original_files' => 'Original files',

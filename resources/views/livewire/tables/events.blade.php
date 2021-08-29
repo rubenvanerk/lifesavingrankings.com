@@ -1,10 +1,13 @@
 @php
-    $without = [];
+    $without = ['rank'];
     if ($competition) {
         $without[] = 'competition';
     }
     if ($athlete) {
         $without[] = 'athlete';
+    }
+    if ($team) {
+        $without[] = 'team';
     }
 @endphp
 
@@ -25,6 +28,9 @@
             @if (!in_array('athlete', $without))
                 <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
             @endif
+            @if (!in_array('team', $without))
+                <x-table.heading>{{ trans_choice('app.teams', 1) }}</x-table.heading>
+            @endif
             <x-table.heading>{{ trans_choice('app.time', 1) }}</x-table.heading>
             @if (!in_array('competition', $without))
                 <x-table.heading>{{ trans_choice('app.date', 1) }}</x-table.heading>
@@ -42,10 +48,14 @@
                     <x-table.row>
                         <x-table.columns.event :event="$event"
                                                :competition="$competition ?? null"
+                                               :team="$team ?? null"
                                                :athlete="$athlete ?? null"
                                                :genderEnum="$genderEnum ?? $event->results->first()->entrant->gender"/>
                         @if (!in_array('athlete', $without))
                             <x-table.columns.athletes :athletes="$event->results->pluck('entrant')"/>
+                        @endif
+                        @if (!in_array('team', $without))
+                            <x-table.columns.teams :teams="$event->results->pluck('team')"/>
                         @endif
                         <x-table.columns.times :results="$event->results" :athlete="$athlete ?? null"/>
                         @if (!in_array('competition', $without))
@@ -54,7 +64,7 @@
                         @endif
                     </x-table.row>
                 @empty
-                    <x-empty-row colspan="5"/>
+                    <x-empty-row :colspan="7 - count($without)"/>
                 @endforelse
             @endif
         </x-slot>
