@@ -4,6 +4,7 @@ use App\Enums\EventType;
 use App\Enums\Gender;
 use App\Models\Athlete;
 use App\Models\Competition;
+use App\Models\Event;
 
 class Filter
 {
@@ -13,6 +14,7 @@ class Filter
     public ?string $toYearOfBirth;
     public ?Competition $competition = null;
     public ?Athlete $athlete = null;
+    public ?Event $event = null;
     public ?Gender $gender = null;
     public ?EventType $eventType = null;
 
@@ -45,6 +47,9 @@ class Filter
                 break;
             case Competition::class:
                 $filter->competition = $value;
+                break;
+            case Event::class:
+                $filter->event = $value;
                 break;
         }
 

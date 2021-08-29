@@ -4,6 +4,7 @@ use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CompetitionController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
@@ -24,6 +25,7 @@ Route::prefix('competitions')->group(function () {
 
 Route::prefix('events')->group(function () {
     Route::view('/', 'events.index')->name('events.index');
+    Route::get('/{event:slug}/{gender}', [EventController::class, 'show'])->name('events.show');
 });
 
 Route::prefix('athletes')->group(function () {

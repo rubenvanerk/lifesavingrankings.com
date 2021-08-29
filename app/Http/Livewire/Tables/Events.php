@@ -34,7 +34,6 @@ class Events extends Component
         $this->eventType = optional($eventType)->value;
         $this->athlete = optional($athlete)->id;
         $this->competition = optional($competition)->id;
-        View::share('filter', true);
     }
 
     public function render(): \Illuminate\Contracts\View\View
@@ -61,6 +60,7 @@ class Events extends Component
         return view('livewire.tables.events', [
             'events' => $events ?? null,
             'filter' => app(Filter::class),
+            'genderEnum' => $this->gender ? Gender::coerce($this->gender) : null,
         ]);
     }
 

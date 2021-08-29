@@ -27,7 +27,7 @@
                 <h2 class="text-lg font-bold pb-4 w-0 flex-grow">Filter results on this page</h2>
                 <span>
                     <x-base.button icon="s-refresh" wire:click="clear">
-                        Clear
+                        Reset
                     </x-base.button>
                     <x-base.button icon="s-x-circle" @click="filter = false">
                         Close

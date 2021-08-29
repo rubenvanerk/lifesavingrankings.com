@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\Countries;
 use App\Enums\CompetitionStatus;
 use App\Enums\Gender;
+use App\Services\Filter;
 use App\Traits\HasCachedCount;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,5 +42,14 @@ class Athlete extends Model
     public function results(): MorphMany
     {
         return $this->morphMany(Result::class, 'entrant');
+    }
+
+    public function scopeFilter($query): void
+    {
+        $filter = app(Filter::class);
+
+        if ($filter->gender) {
+            $query->where('gender', $filter->gender->value);
+        }
     }
 }
