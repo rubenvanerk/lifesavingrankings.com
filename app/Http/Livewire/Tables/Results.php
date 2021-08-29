@@ -33,18 +33,6 @@ class Results extends Component
         Filter::add(Gender::coerce($this->gender));
         Filter::add(Event::find($this->event));
 
-        // TODO: extract into service
-        if ($this->readyToLoad && false) {
-            $athletes = Athlete::filter()->whereHas('results', function (Builder $query) {
-                $query->filter();
-            })->with(['results' => function ($query) {
-//                $query->filter();
-                $query->orderBy('time');
-                $query->limit(1);
-                $query->with(['competition']);
-            }])->paginate(15);
-        }
-
         if ($this->readyToLoad) {
             $results = Result::filter()
                 ->whereRaw('(entrant_id, time) IN (select entrant_id, MIN(time) FROM results GROUP BY entrant_id)')
