@@ -3,6 +3,7 @@
 use App\Enums\Gender;
 use App\Models\Athlete;
 use App\Models\Competition;
+use App\Models\Event;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -18,6 +19,18 @@ Breadcrumbs::for('competitions.index', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('competitions.show', function (BreadcrumbTrail $trail, Competition $competition) {
     $trail->parent('competitions.index');
     $trail->push($competition->name, route('competitions.show', $competition));
+});
+
+Breadcrumbs::for('competitions.event', function (BreadcrumbTrail $trail, Competition $competition, $event, $gender) {
+    $gender = Gender::coerce(ucfirst($gender));
+    $event = Event::where('slug', $event)->first();
+
+    $trail->parent('competitions.show', $competition);
+    $trail->push($event->name . ' ' . strtolower($gender->description), route('competitions.event', [
+        'competition' => $competition,
+        'event' => $event,
+        'gender' => $gender->getSlug()
+    ]));
 });
 
 Breadcrumbs::for('events.index', function (BreadcrumbTrail $trail) {

@@ -46,7 +46,7 @@
             @endif
         </x-slot>
 
-        @if (!is_null($results))
+        @if (is_null($competition) && !is_null($results))
             <x-slot name="pagination">
                 {{ $results->links() }}
             </x-slot>

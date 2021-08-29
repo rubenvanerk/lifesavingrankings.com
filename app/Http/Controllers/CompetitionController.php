@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Gender;
 use App\Models\Competition;
+use App\Models\Event;
 use Illuminate\Contracts\View\View;
 
 class CompetitionController extends Controller
@@ -18,5 +20,17 @@ class CompetitionController extends Controller
         }]);
 
         return view('competitions.show', compact('competition'));
+    }
+
+    public function event(Competition $competition, $event, $gender)
+    {
+        $gender = Gender::coerce(ucfirst($gender));
+        $event = Event::where('slug', $event)->first();
+
+        if (!$event) {
+            abort(404);
+        }
+
+        return view('competitions.event', compact('competition', 'event', 'gender'));
     }
 }

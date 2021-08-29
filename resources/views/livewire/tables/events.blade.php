@@ -26,7 +26,7 @@
             @else
                 @forelse($events as $event)
                     <x-table.row>
-                        <x-table.columns.event :event="$event" :genderEnum="$genderEnum ?? $event->results->first()->entrant->gender"/>
+                        <x-table.columns.event :event="$event" :competition="$competition ?? null" :genderEnum="$genderEnum ?? $event->results->first()->entrant->gender"/>
                         <x-table.columns.athletes :athletes="$event->results->pluck('entrant')"/>
                         <x-table.columns.times :results="$event->results"/>
                         <x-table.columns.dates :competitions="$event->results->pluck('competition')"/>

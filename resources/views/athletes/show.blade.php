@@ -6,6 +6,6 @@
 
 @section('content')
     <livewire:tables.events
-        :athlete="$athlete->id"
+        :athlete="$athlete"
         :event-type="\App\Enums\EventType::IndividualPool()"/>
 @endsection

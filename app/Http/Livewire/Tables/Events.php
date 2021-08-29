@@ -24,24 +24,22 @@ class Events extends Component
     public bool $readyToLoad = false;
     public mixed $gender = null;
     public mixed $eventType = null;
-    public mixed $athlete = null;
-    public mixed $competition = null;
+    public ?Athlete $athlete = null;
+    public ?Competition $competition = null;
     public int $limit = 1;
 
-    public function mount($gender = null, EventType $eventType = null, Athlete $athlete = null, Competition $competition = null): void
+    public function mount($gender = null, EventType $eventType = null): void
     {
         $this->gender = optional($gender)->value;
         $this->eventType = optional($eventType)->value;
-        $this->athlete = optional($athlete)->id;
-        $this->competition = optional($competition)->id;
     }
 
     public function render(): \Illuminate\Contracts\View\View
     {
         Filter::add(Gender::coerce($this->gender));
         Filter::add(EventType::coerce($this->eventType));
-        Filter::add(Athlete::find($this->athlete));
-        Filter::add(Competition::find($this->competition));
+        Filter::add($this->athlete);
+        Filter::add($this->competition);
 
         // TODO: extract into service
         if ($this->readyToLoad) {
