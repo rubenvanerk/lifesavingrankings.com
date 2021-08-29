@@ -1,40 +1,41 @@
 <x-table.mobile-row>
-    @if ($event->results->count() === 1)
-        @php
-            $result = $event->results->first();
-        @endphp
-        <x-slot name="icon">
+    <x-slot name="icon">
+        @if ($rank)
+            <span>
+                #{{ $rank }}
+            </span>
+        @else
             @foreach($result->entrant->nationalities ?? [] as $country)
                 <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
                                      class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
             @endforeach
-        </x-slot>
-        <span class="flex flex-col text-sm truncate w-full leading-relaxed">
-            <a href="{{ route('athletes.show', $result->entrant) }}" class="truncate">{{ $result->entrant->name }}</a>
-            <a href="" class="truncate">{{ $result->event->name }}</a>
-            <span class="flex">
-                <span class="flex-grow font-medium">{{ $result->time_formatted }}</span>
+        @endif
+    </x-slot>
+    <span class="flex flex-col text-sm truncate w-full leading-relaxed">
+        <span class="flex space-x-2">
+            @if ($rank)
+                @foreach($result->entrant->nationalities ?? [] as $country)
+                    <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
+                                         class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
+                @endforeach
+            @endif
+            <a href="{{ route('athletes.show', $result->entrant) }}" class="truncate">
+                {{ $result->entrant->name }}
+            </a>
+            <sup>'{{ substr($result->entrant->year_of_birth, -2) }}
+        </span>
+        @if (!in_array('event', $without))
+            <a href="" class="truncate">{{ $result->event->name }}</sup></a>
+        @endif
+        <span class="flex">
+            <span class="flex-grow font-medium">{{ $result->time_formatted }}</span>
+            @if (!in_array('competition', $without))
                 <a href="{{ route('competitions.show', $result->competition) }}">
                     <time datetime="{{ $result->competition->start_date->format('Y-m-d') }}">
                         {{ $result->competition->start_date->isoFormat('LL') }}
                     </time>
                 </a>
-            </span>
+            @endif
         </span>
-    @else
-        <span class="flex flex-col text-sm truncate w-full leading-relaxed">
-            <a href="" class="truncate mb-2">{{ $event->name }}</a>
-
-            @foreach($event->results as $result)
-                <div class="flex space-x-1">
-                    @foreach($result->entrant->nationalities ?? [] as $country)
-                        <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                             class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
-                    @endforeach
-                    <a href="{{ route('athletes.show', $result->entrant) }}" class="flex-grow truncate">{{ $result->entrant->name }}</a>
-                    <span class="font-medium">{{ $result->time_formatted }}</span>
-                </div>
-            @endforeach
-        </span>
-    @endif
+    </span>
 </x-table.mobile-row>

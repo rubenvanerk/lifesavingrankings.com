@@ -49,7 +49,7 @@
                 @endphp
                 @forelse($results as $result)
                     <x-table.row>
-                        <x-table.cell>{{ $rank++ }}</x-table.cell>
+                        <x-table.cell>{{ $rank + $loop->index }}</x-table.cell>
                         @if (!in_array('athlete', $without))
                             <x-table.columns.athletes :athletes="[$result->entrant]"/>
                         @endif
@@ -72,8 +72,13 @@
             @if (is_null($results))
                 <x-table.placeholder-mobile-rows amount="7"/>
             @else
+                @php
+                    $rank = is_null($competition) ? $results->firstItem() : 1;
+                @endphp
                 @foreach($results as $result)
-                    {{--                    <x-result-row-mobile :athlete="$athlete"/>--}}
+                    <x-result-row-mobile :result="$result"
+                                         :rank="$rank + $loop->index"
+                                         :without="$without"/>
                 @endforeach
             @endif
         </x-slot>

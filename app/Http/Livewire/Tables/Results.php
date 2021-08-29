@@ -41,16 +41,22 @@ class Results extends Component
         $filter = app(Filter::class);
 
         if ($this->readyToLoad) {
-            $results = Result::filter()
-                ->orderBy('time')
+            $results = Result::orderBy('time')
                 ->with(['competition', 'entrant']);
 
             if (!$filter->competition && !$filter->athlete && !$filter->team) {
-                $results = $results->whereRaw('(entrant_id, time) IN (select entrant_id, MIN(time) FROM results GROUP BY entrant_id)')->paginate(15);
+                $sub = Result::filter()->selectRaw('entrant_id, MIN(time)')
+                    ->groupByRaw('event_id, entrant_id, entrant_type');
+
+                $results = $results
+                    ->withoutGlobalScope('published')
+                    ->whereRaw('(entrant_id, time) IN (' . $sub->toSql() . ')', $sub->getBindings())
+                    ->groupBy('entrant_id')
+                    ->paginate(15);
             } elseif ($filter->athlete || $filter->team) {
-                $results = $results->paginate(15);
+                $results = $results->filter()->paginate(15);
             } else {
-                $results = $results->get();
+                $results = $results->filter()->get();
             }
         }
 

@@ -29,7 +29,12 @@
         <x-slot name="mobileBody">
             @foreach($teams as $team)
                 <x-table.mobile-row :link="route('teams.show', $team)">
-                    {{ $team->name }}
+                    <div class="flex items-center space-x-2">
+                        <x-dynamic-component
+                            :component="'flag-4x3-' . $team->country_code"
+                            class="h-3.5 flex-none"/>
+                        <span>{{ $team->name }}</span>
+                    </div>
                 </x-table.mobile-row>
             @endforeach
         </x-slot>

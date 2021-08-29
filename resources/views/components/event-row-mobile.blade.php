@@ -23,7 +23,22 @@
         </span>
     @else
         <span class="flex flex-col text-sm truncate w-full leading-relaxed">
-            <a href="" class="truncate mb-2">{{ $event->name }}</a>
+            @if (!empty($competition))
+                <a href="{{ route('competitions.event', ['competition' => $competition, 'event' => $event->slug, 'gender' => $genderEnum->getSlug()]) }}"
+                   class="truncate mb-2">
+                    {{ $event->name }}
+                </a>
+            @elseif (!empty($team))
+                <a href="{{ route('teams.event', ['team' => $team, 'event' => $event->slug, 'gender' => $genderEnum->getSlug()]) }}"
+                   class="truncate mb-2">
+                    {{ $event->name }}
+                </a>
+            @else
+                <a href="{{ route('events.show', ['event' => $event, 'gender' => $genderEnum->getSlug()]) }}"
+                   class="truncate mb-2">
+                    {{ $event->name }}
+                </a>
+            @endif
 
             @foreach($event->results as $result)
                 <div class="flex space-x-1">

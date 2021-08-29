@@ -74,7 +74,11 @@
                 <x-table.placeholder-mobile-rows amount="7"/>
             @else
                 @foreach($events as $event)
-                    <x-event-row-mobile :event="$event"/>
+                    <x-event-row-mobile :event="$event"
+                                        :competition="$competition ?? null"
+                                        :team="$team ?? null"
+                                        :athlete="$athlete ?? null"
+                                        :genderEnum="$genderEnum ?? $event->results->first()->entrant->gender"/>
                 @endforeach
             @endif
         </x-slot>
