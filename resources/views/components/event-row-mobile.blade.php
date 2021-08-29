@@ -3,17 +3,22 @@
         @php
             $result = $event->results->first();
         @endphp
-        <x-slot name="icon">
-            @foreach($result->entrant->nationalities ?? [] as $country)
-                <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                     class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
-            @endforeach
-        </x-slot>
+        @if (!in_array('athlete', $without))
+            <x-slot name="icon">
+                @foreach($result->entrant->nationalities ?? [] as $country)
+                    <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
+                                         class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
+                @endforeach
+            </x-slot>
+        @endif
         <span class="flex flex-col text-sm truncate w-full leading-relaxed">
-            <a href="{{ route('athletes.show', $result->entrant) }}" class="truncate">{{ $result->entrant->name }}</a>
+            @if (!in_array('athlete', $without))
+                <a href="{{ route('athletes.show', $result->entrant) }}"
+                   class="truncate">{{ $result->entrant->name }}</a>
+            @endif
             <a href="" class="truncate">{{ $result->event->name }}</a>
             <span class="flex">
-                <span class="flex-grow font-medium">{{ $result->time_formatted }}</span>
+                <a class="flex-grow font-medium" href="{{ route('athletes.event', ['athlete' => $athlete, 'event' => $event->slug]) }}">{{ $result->time_formatted }}</a>
                 <a href="{{ route('competitions.show', $result->competition) }}">
                     <time datetime="{{ $result->competition->start_date->format('Y-m-d') }}">
                         {{ $result->competition->start_date->isoFormat('LL') }}
@@ -46,7 +51,8 @@
                         <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
                                              class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
                     @endforeach
-                    <a href="{{ route('athletes.show', $result->entrant) }}" class="flex-grow truncate">{{ $result->entrant->name }}</a>
+                    <a href="{{ route('athletes.show', $result->entrant) }}"
+                       class="flex-grow truncate">{{ $result->entrant->name }}</a>
                     <span class="font-medium">{{ $result->time_formatted }}</span>
                 </div>
             @endforeach
