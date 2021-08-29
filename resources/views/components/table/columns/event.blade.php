@@ -1,12 +1,17 @@
 <x-table.cell class="max-w-0 w-full">
     <span class="flex">
-        @if (empty($competition))
-            <a href="{{ route('events.show', ['event' => $event, 'gender' => $genderEnum->getSlug()]) }}"
+        @if (!empty($competition))
+            <a href="{{ route('competitions.event', ['competition' => $competition, 'event' => $event->slug, 'gender' => $genderEnum->getSlug()]) }}"
+               class="truncate">
+                {{ $event->name }}
+            </a>
+        @elseif(!empty($athlete))
+            <a href="{{ route('athletes.event', ['athlete' => $athlete, 'event' => $event->slug]) }}"
                class="truncate">
                 {{ $event->name }}
             </a>
         @else
-            <a href="{{ route('competitions.event', ['competition' => $competition, 'event' => $event->slug, 'gender' => $genderEnum->getSlug()]) }}"
+            <a href="{{ route('events.show', ['event' => $event, 'gender' => $genderEnum->getSlug()]) }}"
                class="truncate">
                 {{ $event->name }}
             </a>

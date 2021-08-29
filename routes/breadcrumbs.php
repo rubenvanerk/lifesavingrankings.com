@@ -49,3 +49,13 @@ Breadcrumbs::for('athletes.show', function (BreadcrumbTrail $trail, Athlete $ath
     $trail->push(trans_choice('app.athletes', 2));
     $trail->push($athlete->name, route('athletes.show', $athlete));
 });
+
+Breadcrumbs::for('athletes.event', function (BreadcrumbTrail $trail, Athlete $athlete, $event) {
+    $event = Event::where('slug', $event)->first();
+
+    $trail->parent('athletes.show', $athlete);
+    $trail->push($event->name, route('athletes.event', [
+        'athlete' => $athlete,
+        'event' => $event,
+    ]));
+});

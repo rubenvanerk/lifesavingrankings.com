@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Athlete;
+use App\Models\Event;
 use Illuminate\Contracts\View\View;
 
 class AthleteController extends Controller
@@ -14,5 +15,16 @@ class AthleteController extends Controller
         }
 
         return view('athletes.show', compact('athlete'));
+    }
+
+    public function event(Athlete $athlete, $event)
+    {
+        $event = Event::where('slug', $event)->first();
+
+        if (!$event->exists || !$athlete->exists) {
+            abort(404);
+        }
+
+        return view('athletes.event', compact('athlete', 'event'));
     }
 }
