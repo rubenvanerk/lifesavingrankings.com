@@ -42,7 +42,7 @@ class Results extends Component
 
         if ($this->readyToLoad) {
             $results = Result::orderBy('time')
-                ->with(['competition', 'entrant']);
+                ->with(['competition', 'entrant', 'team']);
 
             if (!$filter->competition && !$filter->athlete && !$filter->team) {
                 $sub = Result::filter()->selectRaw('entrant_id, MIN(time)')
