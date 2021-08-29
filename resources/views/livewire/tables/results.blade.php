@@ -21,6 +21,7 @@
     @endif
     <x-table>
         <x-slot name="head">
+            <x-table.heading>#</x-table.heading>
             @if (!in_array('athlete', $without))
                 <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
             @endif
@@ -37,8 +38,12 @@
                     <x-table.placeholder-row :without="$without"/>
                 @endfor
             @else
+                @php
+                    $rank = is_null($competition) ? $results->firstItem() : 1;
+                @endphp
                 @forelse($results as $result)
                     <x-table.row>
+                        <x-table.cell>{{ $rank++ }}</x-table.cell>
                         @if (!in_array('athlete', $without))
                             <x-table.columns.athletes :athletes="[$result->entrant]"/>
                         @endif
