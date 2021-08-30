@@ -57,7 +57,7 @@
                         @if (!in_array('team', $without))
                             <x-table.columns.teams :teams="$event->results->pluck('team')"/>
                         @endif
-                        <x-table.columns.times :results="$event->results" :athlete="$athlete ?? null"/>
+                        <x-table.columns.times :results="$event->results" :athlete="$athlete ?? null" :event="$event"/>
                         @if (!in_array('competition', $without))
                             <x-table.columns.dates :competitions="$event->results->pluck('competition')"/>
                             <x-table.columns.competitions :competitions="$event->results->pluck('competition')"/>

@@ -16,7 +16,7 @@
                 <a href="{{ route('athletes.show', $result->entrant) }}"
                    class="truncate">{{ $result->entrant->name }}</a>
             @endif
-            <a href="" class="truncate">{{ $result->event->name }}</a>
+            <a href="" class="truncate">{{ $event->name }}</a>
             <span class="flex">
                 @if (!empty($athlete))
                     <a class="flex-grow font-medium"
