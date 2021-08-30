@@ -18,7 +18,12 @@
             @endif
             <a href="" class="truncate">{{ $result->event->name }}</a>
             <span class="flex">
-                <a class="flex-grow font-medium" href="{{ route('athletes.event', ['athlete' => $athlete, 'event' => $event->slug]) }}">{{ $result->time_formatted }}</a>
+                @if (!empty($athlete))
+                    <a class="flex-grow font-medium"
+                       href="{{ route('athletes.event', ['athlete' => $athlete, 'event' => $event->slug]) }}">{{ $result->time_formatted }}</a>
+                @else
+                    {{ $result->time_formatted }}
+                @endif
                 <a href="{{ route('competitions.show', $result->competition) }}">
                     <time datetime="{{ $result->competition->start_date->format('Y-m-d') }}">
                         {{ $result->competition->start_date->isoFormat('LL') }}
