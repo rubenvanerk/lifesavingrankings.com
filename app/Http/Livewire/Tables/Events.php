@@ -50,7 +50,7 @@ class Events extends Component
                 $query->orderBy('time');
                 $query->filter();
                 $query->limit($this->limit);
-                $query->with(['entrant', 'competition']);
+                $query->with(['entrant', 'competition', 'team']);
             }])->get();
 
             $events = $events->filter(function ($event) {
