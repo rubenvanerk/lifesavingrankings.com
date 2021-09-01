@@ -50,6 +50,11 @@ class Result extends Model
         return $this->belongsTo(Team::class);
     }
 
+    public function scopeValid(Builder $query): void
+    {
+        $query->whereNull('status');
+    }
+
     public function scopeFilter(Builder $query): void
     {
         $filter = app(Filter::class);

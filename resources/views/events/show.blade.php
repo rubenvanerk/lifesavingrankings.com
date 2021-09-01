@@ -7,5 +7,6 @@
 @section('content')
     <livewire:tables.results
         :event="$event"
-        :gender="$gender"/>
+        :gender="$gender"
+        :valid="true"/>
 @endsection

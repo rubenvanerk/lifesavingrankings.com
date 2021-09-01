@@ -24,6 +24,7 @@ class Results extends Component
     public ?Event $event = null;
     public mixed $gender = null;
     public string $title = '';
+    public bool $valid;
 
     public function mount($gender = null): void
     {
@@ -43,6 +44,10 @@ class Results extends Component
         if ($this->readyToLoad) {
             $results = Result::orderBy('time')
                 ->with(['competition', 'entrant', 'team']);
+
+            if ($this->valid) {
+                $results->valid();
+            }
 
             if (!$filter->competition && !$filter->athlete && !$filter->team) {
                 $sub = Result::filter()->selectRaw('entrant_id, MIN(time)')

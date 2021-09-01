@@ -47,10 +47,11 @@ class Events extends Component
         // TODO: extract into service
         if ($this->readyToLoad) {
             $events = Event::query()->filter()->with(['results' => function (HasMany $query) {
-                $query->orderBy('time');
-                $query->filter();
-                $query->limit($this->limit);
-                $query->with(['entrant', 'competition', 'team']);
+                $query->valid()
+                    ->orderBy('time')
+                    ->filter()
+                    ->limit($this->limit)
+                    ->with(['entrant', 'competition', 'team']);
             }])->get();
 
             $events = $events->filter(function ($event) {

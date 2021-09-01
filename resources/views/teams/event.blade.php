@@ -8,5 +8,6 @@
     <livewire:tables.results
         :team="$team"
         :event="$event"
-        :gender="$gender"/>
+        :gender="$gender"
+        :valid="true"/>
 @endsection
