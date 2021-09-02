@@ -28,7 +28,7 @@ class AthleteFactory extends Factory
         $nationalities = [];
         while ($multipleNationalitiesChance > 1) {
             if ($this->faker->boolean($multipleNationalitiesChance)) {
-                $nationalities[] = $this->faker->countryCode;
+                $nationalities[] = $this->faker->countryCode();
             }
             $multipleNationalitiesChance /= 20;
         }

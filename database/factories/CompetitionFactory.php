@@ -29,11 +29,11 @@ class CompetitionFactory extends Factory
         return [
             'name' => ucfirst((string)$this->faker->words(asText: true)) . ' ' . $startDate->year,
             'start_date' => $startDate,
-            'end_date' => $this->faker->boolean ? $this->faker->dateTimeBetween($startDate->addDay(), $startDate->addDays(4)) : null,
+            'end_date' => $this->faker->boolean() ? $this->faker->dateTimeBetween($startDate->addDay(), $startDate->addDays(4)) : null,
             'timekeeping' => TimekeepingMethod::getRandomValue(),
             'published_at' => $status->is(CompetitionStatus::Published) ? $this->faker->dateTimeBetween($startDate) : null,
             'status' => $status->value,
-            'comment' => $this->faker->boolean ? $this->faker->text : null,
+            'comment' => $this->faker->boolean() ? $this->faker->text() : null,
             'ils_sanctioned' => $this->faker->boolean(20),
         ];
     }

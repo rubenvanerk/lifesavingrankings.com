@@ -22,8 +22,8 @@ class TeamFactory extends Factory
     public function definition()
     {
         return [
-            'name' => ucfirst($this->faker->word),
-            'country' => $this->faker->countryCode,
+            'name' => ucfirst($this->faker->word()),
+            'country' => $this->faker->countryCode(),
             'is_national_team' => $this->faker->boolean(5),
         ];
     }
