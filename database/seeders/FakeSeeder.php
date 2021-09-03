@@ -8,11 +8,13 @@ use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Event;
 use App\Models\Result;
+use App\Models\Split;
 use App\Models\Team;
 use App\Models\Venue;
 use DB;
 use Exception;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class FakeSeeder extends Seeder
 {
@@ -32,18 +34,12 @@ class FakeSeeder extends Seeder
 
         $events = Event::where('type', EventType::IndividualPool)->get();
         foreach ($events as $event) {
+            preg_match('/^\d+(?=m)/', $event->name, $matches);
+            $eventDistance = (int)Arr::first($matches);
+            $splitCount = $eventDistance / 50;
             $competitionsFactory = $competitionsFactory->has(
-                Result::factory()
-                    ->count(random_int(25, 50))
-                    ->state(function (array $attributes, Competition $competition) use ($event) {
-                        return [
-                            'event_id' => $event->id,
-                            'competition_id' => $competition->id,
-                            'entrant_type' => Athlete::class,
-                            'entrant_id' => DB::table('athletes')->select(['id'])->inRandomOrder()->first()->id,
-                            'team_id' => DB::table('teams')->select(['id'])->inRandomOrder()->first()->id,
-                        ];
-                    })
+                Result::factory()->count(random_int(25, 50))->competition($event)
+                    ->has(Split::factory()->count($splitCount)->result($splitCount))
             );
         }
 

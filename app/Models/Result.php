@@ -6,16 +6,18 @@ use App\Casts\Time;
 use App\Enums\CompetitionStatus;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
+use App\Traits\HasTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 class Result extends Model
 {
-    use HasFactory, HasCachedCount, HasEagerLimit;
+    use HasFactory, HasCachedCount, HasEagerLimit, HasTime;
 
     protected $casts = [
         'time' => Time::class,
@@ -48,6 +50,11 @@ class Result extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function splits(): HasMany
+    {
+        return $this->hasMany(Split::class);
     }
 
     public function scopeValid(Builder $query): void
@@ -112,20 +119,5 @@ class Result extends Model
                 $query->where('year_of_birth', '<=', $filter->toYearOfBirth);
             });
         }
-    }
-
-    public function getTimeFormattedAttribute(): string
-    {
-        if ($this->time->minutes) {
-            return sprintf('%s:%s.%s',
-                $this->time->minutes,
-                str_pad($this->time->seconds, 2, '0', STR_PAD_LEFT),
-                str_pad($this->time->microseconds / 10000, 2, '0', STR_PAD_LEFT)
-            );
-        }
-        return sprintf('%s.%s',
-            $this->time->seconds,
-            str_pad($this->time->microseconds / 10000, 2, '0', STR_PAD_LEFT)
-        );
     }
 }

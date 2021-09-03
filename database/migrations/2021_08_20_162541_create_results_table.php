@@ -24,7 +24,7 @@ class CreateResultsTable extends Migration
             $table->foreignIdFor(Competition::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Event::class)->constrained()->onDelete('cascade');
             $table->tinyInteger('status')->unsigned()->nullable();
-            $table->integer('time')->unsigned()->nullable()->index();
+            $table->mediumInteger('time')->unsigned()->nullable()->index();
             $table->foreignIdFor(Team::class)->nullable()->constrained()->onDelete('set null');
         });
     }
