@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSplitsTable extends Migration
+class CreateRelaySegmentResultTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,12 @@ class CreateSplitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('splits', function (Blueprint $table) {
+        Schema::create('relay_segment_result', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->foreignIdFor(Result::class)->constrained()->onDelete('cascade');
-            $table->mediumInteger('time')->nullable()->unsigned();
-            $table->smallInteger('distance')->unsigned();
+            $table->foreignIdFor(RelaySegment::class)->constrained();
+            $table->foreignIdFor(Result::class)->constrained();
+            $table->mediumInteger('time')->nullable();
+            $table->foreignIdFor(Athlete::class)->nullable()->constrained()->onDelete('set null');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateSplitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('splits');
+        Schema::dropIfExists('relay_segment_result');
     }
 }
