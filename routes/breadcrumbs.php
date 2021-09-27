@@ -78,3 +78,13 @@ Breadcrumbs::for('teams.event', function (BreadcrumbTrail $trail, Team $team, $e
     $trail->parent('teams.show', $team);
     $trail->push($event->name, route('teams.event', compact('team', 'event', 'gender')));
 });
+
+Breadcrumbs::for('login', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.auth.login'), route('login'));
+});
+
+Breadcrumbs::for('register', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.auth.register'), route('register'));
+});
