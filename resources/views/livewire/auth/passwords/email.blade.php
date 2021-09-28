@@ -3,11 +3,11 @@
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <a href="{{ route('home') }}">
-            <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
+            <x-logo class="w-auto h-16 mx-auto text-blue-800 hover:text-blue-700 transition ease-in-out duration-150"/>
         </a>
 
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">
-            Reset password
+            {{ __('auth.reset_password') }}
         </h2>
     </div>
 
@@ -33,7 +33,7 @@
                 <form wire:submit.prevent="sendResetPasswordLink">
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 leading-5">
-                            Email address
+                            {{ __('auth.email_label') }}
                         </label>
 
                         <div class="mt-1 rounded-md shadow-sm">
@@ -47,8 +47,9 @@
 
                     <div class="mt-6">
                         <span class="block w-full rounded-md shadow-sm">
-                            <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                                Send password reset link
+                            <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-800 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring-blue active:bg-blue-700 transition duration-150 ease-in-out">
+
+                                {{ __('auth.send_password_reset_link') }}
                             </button>
                         </span>
                     </div>

@@ -3,7 +3,7 @@
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <a href="{{ route('home') }}">
-            <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
+            <x-logo class="w-auto h-16 mx-auto text-blue-800 hover:text-blue-700 transition ease-in-out duration-150"/>
         </a>
 
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">
@@ -19,7 +19,7 @@
             <form wire:submit.prevent="confirm">
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 leading-5">
-                        Password
+                        {{ __('auth.password_label') }}
                     </label>
 
                     <div class="mt-1 rounded-md shadow-sm">
@@ -33,16 +33,16 @@
 
                 <div class="flex items-center justify-end mt-6">
                     <div class="text-sm leading-5">
-                        <a href="{{ route('password.request') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                            Forgot your password?
+                        <a href="{{ route('password.request') }}" class="font-medium text-blue-800 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                            {{ __('auth.forgot_password') }}
                         </a>
                     </div>
                 </div>
 
                 <div class="mt-6">
                     <span class="block w-full rounded-md shadow-sm">
-                        <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                            Confirm password
+                        <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-800 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                            {{ __('auth.confirm_password_label') }}
                         </button>
                     </span>
                 </div>

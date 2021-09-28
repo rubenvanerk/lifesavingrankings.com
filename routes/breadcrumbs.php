@@ -88,3 +88,18 @@ Breadcrumbs::for('register', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push(__('app.auth.register'), route('register'));
 });
+
+Breadcrumbs::for('password.request', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.auth.forgot_password'), route('password.request'));
+});
+
+Breadcrumbs::for('password.reset', function (BreadcrumbTrail $trail, $token) {
+    $trail->parent('home');
+    $trail->push(__('app.auth.reset_password'), route('password.reset', ['token' => $token]));
+});
+
+Breadcrumbs::for('verification.notice', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.auth.reset_password'), route('verification.notice'));
+});

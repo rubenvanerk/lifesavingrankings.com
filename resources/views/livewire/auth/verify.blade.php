@@ -1,19 +1,19 @@
-@section('title', 'Verify your email address')
+@section('title', __('auth.verify_your_email_address'))
 
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <a href="{{ route('home') }}">
-            <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
+            <x-logo class="w-auto h-16 mx-auto text-blue-800 hover:text-blue-700 transition ease-in-out duration-150"/>
         </a>
 
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">
-            Verify your email address
+            {{ __('auth.verify_your_email_address') }}
         </h2>
 
         <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
-            Or
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                sign out
+            {{ __('auth.or') }}
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                {{ strtolower(__('auth.sign_out')) }}
             </a>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -30,15 +30,15 @@
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
 
-                    <p>A fresh verification link has been sent to your email address.</p>
+                    <p>{{ __('auth.verification_link_sent') }}</p>
                 </div>
             @endif
 
             <div class="text-sm text-gray-700">
-                <p>Before proceeding, please check your email for a verification link.</p>
+                <p>{{ __('auth.check_your_email') }}</p>
 
                 <p class="mt-3">
-                    If you did not receive the email, <a wire:click="resend" class="text-indigo-700 cursor-pointer hover:text-indigo-600 focus:outline-none focus:underline transition ease-in-out duration-150">click here to request another</a>.
+                    {{ __('auth.verify_not_received') }} <a wire:click="resend" class="text-blue-800 cursor-pointer hover:text-blue-600 focus:outline-none focus:underline transition ease-in-out duration-150">{{ __('auth.request_new_verify') }}</a>.
                 </p>
             </div>
         </div>
