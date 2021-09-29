@@ -99,6 +99,11 @@ Breadcrumbs::for('password.reset', function (BreadcrumbTrail $trail, $token) {
     $trail->push(__('app.auth.reset_password'), route('password.reset', ['token' => $token]));
 });
 
+Breadcrumbs::for('password.confirm', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push(__('app.auth.confirm_password'), route('password.confirm'));
+});
+
 Breadcrumbs::for('verification.notice', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push(__('app.auth.reset_password'), route('verification.notice'));
