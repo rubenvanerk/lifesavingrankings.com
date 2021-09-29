@@ -48,20 +48,7 @@
                 </button>
             </div>
 
-            <div class="hidden lg:block lg:ml-4">
-                <div class="flex items-center">
-                    <div class="ml-3 relative flex-shrink-0">
-                        <div>
-                            <a class="bg-blue-900 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white"
-                               id="user-menu-button" aria-expanded="false" aria-haspopup="true"
-                               href="{{ route('login') }}">
-                                <span class="sr-only">{{ __('app.open_user_menu') }}</span>
-                                <x-heroicon-o-user class="h-8 w-8 p-1"/>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <x-base.account/>
 
             <x-base.locale-picker/>
 
