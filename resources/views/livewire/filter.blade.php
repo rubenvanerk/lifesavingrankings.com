@@ -2,7 +2,7 @@
     <button type="button" title="Filter"
             @click="filter = ! filter"
             x-show="!filter"
-            class="absolute z-10 bottom-0 right-0 block transform -translate-y-10 -translate-x-10 inline-flex items-center p-2 border border-transparent rounded-full text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none shadow-2xl transition ease-in-out duration-150">
+            class="absolute z-10 bottom-0 right-0 block transform -translate-y-10 -translate-x-10 inline-flex items-center p-2 border border-transparent rounded-full text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none shadow-2xl transition">
         <x-heroicon-s-filter class="h-12 w-12 p-2"/>
         @if ($filter->countActive())
             <span

@@ -5,5 +5,11 @@
 @endsection
 
 @section('content')
+    <div class="px-4 sm:px-6 lg:px-8">
+        <x-base.button href="{{ route('competitions.create') }}">
+            Add competition
+        </x-base.button>
+    </div>
+
     <livewire:competitions.index/>
 @endsection

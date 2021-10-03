@@ -22,7 +22,7 @@ class CompetitionController extends Controller
         return view('competitions.show', compact('competition'));
     }
 
-    public function event(Competition $competition, $event, $gender)
+    public function event(Competition $competition, $event, $gender): View
     {
         $gender = Gender::coerce(ucfirst($gender));
         $event = Event::where('slug', $event)->first();
@@ -32,5 +32,10 @@ class CompetitionController extends Controller
         }
 
         return view('competitions.event', compact('competition', 'event', 'gender'));
+    }
+
+    public function create(): View
+    {
+        return view('competitins.create');
     }
 }

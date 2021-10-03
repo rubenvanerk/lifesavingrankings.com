@@ -21,6 +21,7 @@ Route::view('/', 'home')->name('home');
 
 Route::prefix('competitions')->group(function () {
     Route::view('/', 'competitions.index')->name('competitions.index');
+    Route::get('/create', [CompetitionController::class, 'create'])->name('competitions.create');
     Route::get('/{competition:slug}', [CompetitionController::class, 'show'])->name('competitions.show');
     Route::get('/{competition:slug}/events/{event}/{gender}', [CompetitionController::class, 'event'])->name('competitions.event');
 });

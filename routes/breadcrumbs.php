@@ -17,6 +17,11 @@ Breadcrumbs::for('competitions.index', function (BreadcrumbTrail $trail) {
     $trail->push(trans_choice('app.competitions', 2), route('competitions.index'));
 });
 
+Breadcrumbs::for('competitions.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('competitions.index');
+    $trail->push('Add a competition', route('competitions.create'));
+});
+
 Breadcrumbs::for('competitions.show', function (BreadcrumbTrail $trail, Competition $competition) {
     $trail->parent('competitions.index');
     $trail->push($competition->name, route('competitions.show', $competition));
