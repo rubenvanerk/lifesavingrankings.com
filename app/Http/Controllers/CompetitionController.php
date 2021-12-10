@@ -36,6 +36,6 @@ class CompetitionController extends Controller
 
     public function create(): View
     {
-        return view('competitins.create');
+        return view('competitions.create');
     }
 }
