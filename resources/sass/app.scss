@@ -55,7 +55,7 @@
 }
 
 @layer base {
-    table a, .mobile-table a:not(.block) {
+    a, .mobile-table a:not(.block) {
         @apply text-blue-900 hover:text-blue-600 hover:underline;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\Country;
 use App\Enums\VenueType;
 use App\Traits\HasCountry;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,6 +35,16 @@ class Venue extends Model
             ->saveSlugsTo('slug');
     }
 
+    public function scopePool(Builder $query)
+    {
+        $query->where('type', VenueType::Pool());
+    }
+
+    public function scopeBeach(Builder $query)
+    {
+        $query->where('type', VenueType::Beach());
+    }
+
     public function getTypeColorAttribute(): string
     {
         if ($this->type->is(VenueType::Beach)) {
@@ -50,5 +61,10 @@ class Venue extends Model
     public function getIsPoolAttribute(): bool
     {
         return $this->type->is(VenueType::Pool);
+    }
+
+    public function getNameForSelectAttribute(): string
+    {
+        return $this->name . ' - ' . $this->city  . ', ' . $this->country_name;
     }
 }
