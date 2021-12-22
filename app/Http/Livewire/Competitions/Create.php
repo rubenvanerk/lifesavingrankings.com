@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Competitions;
 
 use App\Enums\TimekeepingMethod;
+use App\Enums\VenueType;
 use App\Models\Competition;
 use App\Models\Venue;
 use Illuminate\Contracts\View\View;
@@ -12,24 +13,28 @@ use Livewire\Component;
 class Create extends Component
 {
     public ?string $name = null;
-    public ?string $startDate = null;
-    public ?string $endDate = null;
-    public ?string $timekeeping = null;
-    public ?bool $ilsSanctioned = false;
+    public ?string $start_date = null;
+    public ?string $end_date = null;
+    public ?int $timekeeping = null;
+    public ?bool $ils_sanctioned = false;
     public bool $created = false;
     public Collection $pools;
     public Collection $beaches;
+    public ?string $venue_type = null;
+    public ?string $pool_name = null;
+    public ?string $pool_country = null;
+    public ?string $pool_city = null;
+    public ?int $pool_size = null;
+    public ?string $beach_name = null;
+    public ?string $beach_country = null;
+    public ?string $beach_city = null;
 
     protected array $rules = [
         'name' => ['required', 'max:255'],
         'start_date' => ['required', 'date'],
         'end_date' => ['required', 'date'],
-        'timekeeping' => ['required', 'enum_key:' . TimekeepingMethod::class],
-    ];
-
-    protected array $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'timekeeping' => ['required', 'enum_value:' . TimekeepingMethod::class],
+        'ils_sanctioned' => ['bool'],
     ];
 
     public function render(): View
@@ -47,11 +52,35 @@ class Create extends Component
     {
         $this->validate();
 
-        Competition::create([
+        $competition = Competition::create([
             'name' => $this->name,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
+            'timekeeping' => $this->timekeeping,
+            'ils_sanctioned' => $this->ils_sanctioned,
         ]);
+
+        if ($this->venue_type === 'pool' || $this->venue_type === 'both') {
+            $pool = Venue::create([
+                'name' => $this->pool_name,
+                'country' => $this->pool_country,
+                'city' => $this->pool_city,
+                'pool_size' => $this->pool_size,
+                'type' => VenueType::Pool,
+            ]);
+            $competition->venues()->attach($pool);
+        }
+
+        if ($this->venue_type === 'beach' || $this->venue_type === 'both') {
+            $beach = Venue::create([
+                'name' => $this->beach_name,
+                'country' => $this->beach_country,
+                'city' => $this->beach_city,
+                'type' => VenueType::Beach,
+            ]);
+
+            $competition->venues()->attach($beach);
+        }
 
         $this->created = true;
     }

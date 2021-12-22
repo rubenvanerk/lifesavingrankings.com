@@ -1,6 +1,5 @@
 <div class="px-4 py-5 sm:p-6">
-
-    <form class="space-y-8 divide-y divide-gray-200">
+    <form class="space-y-8 divide-y divide-gray-200" wire:submit.prevent="submit">
         <div class="space-y-8 divide-y divide-gray-200">
             <div>
                 <div>
@@ -19,9 +18,10 @@
                             Competition name
                         </label>
                         <div class="mt-1">
-                            <input id="name" name="email" type="email" required
+                            <input id="name" type="text" required
                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                    wire:model.defer="name">
+                            @error('name') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
@@ -29,10 +29,11 @@
                         <fieldset class="space-y-5 ">
                             <div class="relative flex items-start">
                                 <div class="flex items-center h-5">
-                                    <input id="ils-sanctioned" aria-describedby="ils-sanctioned" name="ils-sanctioned"
+                                    <input id="ils-sanctioned" aria-describedby="ils-sanctioned"
                                            type="checkbox"
-                                           wire:model.defer="ilsSanctioned"
+                                           wire:model.defer="ils_sanctioned"
                                            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                    @error('ils_sanctioned') <span class="error">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="ml-3 text-sm">
                                     <label for="ils-sanctioned" class="font-medium text-gray-700">
@@ -48,9 +49,10 @@
                             Start date
                         </label>
                         <div class="mt-1">
-                            <input type="date" name="start-date" id="start-date"
+                            <input type="date" id="start-date"
                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                   wire:model.defer="startDate">
+                                   wire:model.defer="start_date">
+                            @error('start_date') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
@@ -59,9 +61,10 @@
                             End date
                         </label>
                         <div class="mt-1">
-                            <input type="date" name="end-date" id="end-date" autocomplete="family-name"
+                            <input type="date" id="end-date"
                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                   wire:model.defer="endDate">
+                                   wire:model.defer="end_date">
+                            @error('end_date') <span class="error">{{ $message }}</span> @enderror
                         </div>
                     </div>
                 </div>
@@ -85,6 +88,7 @@
                                 </label>
                             </div>
                         @endforeach
+                        @error('timekeeping') <span class="error">{{ $message }}</span> @enderror
                     </div>
                 </fieldset>
 
@@ -102,8 +106,9 @@
                             <legend class="sr-only">Venues</legend>
                             <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                 <div class="flex items-center">
-                                    <input id="pool" name="competition-type" type="radio" checked value="pool"
+                                    <input id="pool" name="venue-type" type="radio" checked value="pool"
                                            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                           wire:model.defer="venue_type"
                                            x-model="type">
                                     <label for="pool" class="ml-3 block text-sm font-medium text-gray-700">
                                         Pool
@@ -111,8 +116,9 @@
                                 </div>
 
                                 <div class="flex items-center">
-                                    <input id="ocean" name="competition-type" type="radio" value="beach"
+                                    <input id="ocean" name="venue-type" type="radio" value="beach"
                                            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                           wire:model.defer="venue_type"
                                            x-model="type">
                                     <label for="ocean" class="ml-3 block text-sm font-medium text-gray-700">
                                         Beach
@@ -120,8 +126,9 @@
                                 </div>
 
                                 <div class="flex items-center">
-                                    <input id="both" name="competition-type" type="radio" value="both"
+                                    <input id="both" name="venue-type" type="radio" value="both"
                                            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                           wire:model.defer="venue_type"
                                            x-model="type">
                                     <label for="both" class="ml-3 block text-sm font-medium text-gray-700">
                                         Both
@@ -140,7 +147,7 @@
                                     <label for="pool-venue" class="block text-sm font-medium text-gray-700">
                                         Choose an existing venue
                                     </label>
-                                    <select id="pool-venue" name="pool_venue"
+                                    <select id="pool-venue"
                                             class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                         @foreach($pools as $pool)
                                             <option>{{ $pool->name_for_select }}</option>
@@ -162,9 +169,9 @@
                                             Name
                                         </label>
                                         <div class="mt-1">
-                                            <input id="pool-name" name="pool[name]" type="text" required
+                                            <input id="pool-name" type="text" required
                                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="poolName">
+                                                   wire:model.defer="pool_name">
                                         </div>
                                     </div>
 
@@ -172,23 +179,23 @@
                                         <label for="pool-country" class="block text-sm font-medium text-gray-700">
                                             Country
                                         </label>
-                                        <select id="pool-country" name="pool_country"
+                                        <select id="pool-country" wire:model.defer="pool_country"
                                                 class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                             @foreach(countries() as $country)
                                                 <option
-                                                    value="{{ $country['iso_3166_1_alpha3'] }}">{{ $country['name'] }}</option>
+                                                    value="{{ $country['iso_3166_1_alpha2'] }}">{{ $country['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
                                     <div>
-                                        <label for="pool-name" class="block text-sm font-medium text-gray-700">
+                                        <label for="pool-city" class="block text-sm font-medium text-gray-700">
                                             City
                                         </label>
                                         <div class="mt-1">
-                                            <input id="pool-name" name="pool[name]" type="text" required
+                                            <input id="pool-city" type="text" required
                                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="poolName">
+                                                   wire:model.defer="pool_city">
                                         </div>
                                     </div>
 
@@ -198,14 +205,14 @@
                                             <legend class="sr-only">Pool size</legend>
                                             <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                                 <div class="flex items-center">
-                                                    <input id="25m" name="pool-size" type="radio" checked class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                                    <input id="25m" type="radio" checked class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                                     <label for="25m" class="ml-3 block text-sm font-medium text-gray-700">
                                                         25m
                                                     </label>
                                                 </div>
 
                                                 <div class="flex items-center">
-                                                    <input id="50m" name="pool-size" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                                    <input id="50m" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                                     <label for="50m" class="ml-3 block text-sm font-medium text-gray-700">
                                                         50m
                                                     </label>
@@ -235,7 +242,7 @@
                                     <label for="pool-venue" class="block text-sm font-medium text-gray-700">
                                         Existing venue
                                     </label>
-                                    <select id="pool-venue" name="pool_venue"
+                                    <select id="pool-venue"
                                             class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                         @foreach($beaches as $beach)
                                             <option>{{ $beach->name_for_select }}</option>
@@ -253,37 +260,37 @@
 
                                 <div x-show="customBeach" class="space-y-8">
                                     <div>
-                                        <label for="pool-name" class="block text-sm font-medium text-gray-700">
+                                        <label for="beach-name" class="block text-sm font-medium text-gray-700">
                                             Name
                                         </label>
                                         <div class="mt-1">
-                                            <input id="pool-name" name="pool[name]" type="text" required
+                                            <input id="beach-name" type="text" required
                                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="poolName">
+                                                   wire:model.defer="beach_name">
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label for="pool-country" class="block text-sm font-medium text-gray-700">
+                                        <label for="beach-country" class="block text-sm font-medium text-gray-700">
                                             Country
                                         </label>
-                                        <select id="pool-country" name="pool_country"
+                                        <select id="beach-country" wire:model.defer="beach_country"
                                                 class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                             @foreach(countries() as $country)
                                                 <option
-                                                    value="{{ $country['iso_3166_1_alpha3'] }}">{{ $country['name'] }}</option>
+                                                    value="{{ $country['iso_3166_1_alpha2'] }}">{{ $country['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
                                     <div>
-                                        <label for="pool-name" class="block text-sm font-medium text-gray-700">
+                                        <label for="beach-city" class="block text-sm font-medium text-gray-700">
                                             City
                                         </label>
                                         <div class="mt-1">
-                                            <input id="pool-name" name="pool[name]" type="text" required
+                                            <input id="beach-city" type="text" required
                                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="poolName">
+                                                   wire:model.defer="beach_city">
                                         </div>
                                     </div>
 
