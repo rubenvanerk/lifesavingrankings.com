@@ -14,58 +14,19 @@
 
                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div class="sm:col-span-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700">
-                            Competition name
-                        </label>
-                        <div class="mt-1">
-                            <input id="name" type="text" required
-                                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                   wire:model.defer="name">
-                            @error('name') <span class="error">{{ $message }}</span> @enderror
-                        </div>
+                        <x-forms.input.with-label name="name" label="Competition name"/>
                     </div>
 
                     <div class="sm:col-span-4">
-                        <fieldset class="space-y-5 ">
-                            <div class="relative flex items-start">
-                                <div class="flex items-center h-5">
-                                    <input id="ils-sanctioned" aria-describedby="ils-sanctioned"
-                                           type="checkbox"
-                                           wire:model.defer="ils_sanctioned"
-                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                    @error('ils_sanctioned') <span class="error">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="ml-3 text-sm">
-                                    <label for="ils-sanctioned" class="font-medium text-gray-700">
-                                        ILS sanctioned competition
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
+                        <x-forms.checkbox.with-inline-label name="ils_sanctioned" label="ILS sanctioned competition"/>
                     </div>
 
                     <div class="sm:col-span-3">
-                        <label for="start-date" class="block text-sm font-medium text-gray-700">
-                            Start date
-                        </label>
-                        <div class="mt-1">
-                            <input type="date" id="start-date"
-                                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                   wire:model.defer="start_date">
-                            @error('start_date') <span class="error">{{ $message }}</span> @enderror
-                        </div>
+                        <x-forms.input.with-label name="start_date" label="Start date" type="date"/>
                     </div>
 
                     <div class="sm:col-span-3">
-                        <label for="end-date" class="block text-sm font-medium text-gray-700">
-                            End date
-                        </label>
-                        <div class="mt-1">
-                            <input type="date" id="end-date"
-                                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                   wire:model.defer="end_date">
-                            @error('end_date') <span class="error">{{ $message }}</span> @enderror
-                        </div>
+                        <x-forms.input.with-label name="end_date" label="End date" type="date"/>
                     </div>
                 </div>
 
@@ -78,17 +39,18 @@
                     <div class="mt-4 space-y-4">
                         @foreach(\App\Enums\TimekeepingMethod::getInstances() as $timekeeping)
                             <div class="flex items-center">
-                                <input id="timekeeping-{{ $timekeeping->value }}" name="timekeeping" type="radio"
-                                       value="{{ $timekeeping->value }}" required
-                                       class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                                       wire:model.defer="timekeeping">
-                                <label for="timekeeping-{{ $timekeeping->value }}"
-                                       class="ml-3 block text-sm font-medium text-gray-700">
+                                <x-forms.radio
+                                    name="timekeeping"
+                                    id="timekeeping-{{ $timekeeping->value }}"
+                                    :value="$timekeeping->value"
+                                    wire:model.defer="timekeeping"
+                                    required/>
+                                <x-forms.label class="ml-3" for="timekeeping-{{ $timekeeping->value }}">
                                     {{ $timekeeping->description }}
-                                </label>
+                                </x-forms.label>
                             </div>
                         @endforeach
-                        @error('timekeeping') <span class="error">{{ $message }}</span> @enderror
+                        <x-forms.error name="timekeeping"/>
                     </div>
                 </fieldset>
 
@@ -105,34 +67,25 @@
                         <fieldset class="mt-4">
                             <legend class="sr-only">Venues</legend>
                             <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-                                <div class="flex items-center">
-                                    <input id="pool" name="venue-type" type="radio" checked value="pool"
-                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                                           wire:model.defer="venue_type"
-                                           x-model="type">
-                                    <label for="pool" class="ml-3 block text-sm font-medium text-gray-700">
-                                        Pool
-                                    </label>
+                                <div class="flex items-center space-x-3">
+                                    <x-forms.radio id="pool" name="venue-type" value="pool"
+                                                   wire:model.defer="venue_type"
+                                                   x-model="type"/>
+                                    <x-forms.label for="pool">Pool</x-forms.label>
                                 </div>
 
-                                <div class="flex items-center">
-                                    <input id="ocean" name="venue-type" type="radio" value="beach"
-                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                                           wire:model.defer="venue_type"
-                                           x-model="type">
-                                    <label for="ocean" class="ml-3 block text-sm font-medium text-gray-700">
-                                        Beach
-                                    </label>
+                                <div class="flex items-center space-x-4">
+                                    <x-forms.radio id="beach" name="venue-type" value="beach"
+                                                   wire:model.defer="venue_type"
+                                                   x-model="type"/>
+                                    <x-forms.label for="beach">Beach</x-forms.label>
                                 </div>
 
-                                <div class="flex items-center">
-                                    <input id="both" name="venue-type" type="radio" value="both"
-                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                                           wire:model.defer="venue_type"
-                                           x-model="type">
-                                    <label for="both" class="ml-3 block text-sm font-medium text-gray-700">
-                                        Both
-                                    </label>
+                                <div class="flex items-center space-x-4">
+                                    <x-forms.radio id="both" name="venue-type" value="both"
+                                                   wire:model.defer="venue_type"
+                                                   x-model="type"/>
+                                    <x-forms.label for="both">Both</x-forms.label>
                                 </div>
                             </div>
                         </fieldset>
@@ -165,14 +118,7 @@
 
                                 <div x-show="customPool" class="space-y-8">
                                     <div>
-                                        <label for="pool-name" class="block text-sm font-medium text-gray-700">
-                                            Name
-                                        </label>
-                                        <div class="mt-1">
-                                            <input id="pool-name" type="text" required
-                                                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="pool_name">
-                                        </div>
+                                        <x-forms.input.with-label label="Name" name="pool_name" wire:model.defer="pool_name"/>
                                     </div>
 
                                     <div>
@@ -189,14 +135,7 @@
                                     </div>
 
                                     <div>
-                                        <label for="pool-city" class="block text-sm font-medium text-gray-700">
-                                            City
-                                        </label>
-                                        <div class="mt-1">
-                                            <input id="pool-city" type="text" required
-                                                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="pool_city">
-                                        </div>
+                                        <x-forms.input.with-label label="City" name="pool_city" wire:model.defer="pool_city"/>
                                     </div>
 
                                     <div>
@@ -205,15 +144,19 @@
                                             <legend class="sr-only">Pool size</legend>
                                             <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                                 <div class="flex items-center">
-                                                    <input id="25m" type="radio" checked class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                                                    <label for="25m" class="ml-3 block text-sm font-medium text-gray-700">
+                                                    <input id="25m" type="radio" checked
+                                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                                    <label for="25m"
+                                                           class="ml-3 block text-sm font-medium text-gray-700">
                                                         25m
                                                     </label>
                                                 </div>
 
                                                 <div class="flex items-center">
-                                                    <input id="50m" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                                                    <label for="50m" class="ml-3 block text-sm font-medium text-gray-700">
+                                                    <input id="50m" type="radio"
+                                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                                                    <label for="50m"
+                                                           class="ml-3 block text-sm font-medium text-gray-700">
                                                         50m
                                                     </label>
                                                 </div>
@@ -260,14 +203,7 @@
 
                                 <div x-show="customBeach" class="space-y-8">
                                     <div>
-                                        <label for="beach-name" class="block text-sm font-medium text-gray-700">
-                                            Name
-                                        </label>
-                                        <div class="mt-1">
-                                            <input id="beach-name" type="text" required
-                                                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="beach_name">
-                                        </div>
+                                        <x-forms.input.with-label label="Name" name="beach_name" wire:model.defer="beach_name"/>
                                     </div>
 
                                     <div>
@@ -284,14 +220,7 @@
                                     </div>
 
                                     <div>
-                                        <label for="beach-city" class="block text-sm font-medium text-gray-700">
-                                            City
-                                        </label>
-                                        <div class="mt-1">
-                                            <input id="beach-city" type="text" required
-                                                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                   wire:model.defer="beach_city">
-                                        </div>
+                                        <x-forms.input.with-label label="City" name="beach_city" wire:model.defer="beach_city"/>
                                     </div>
 
                                     <div class="mt-1">
