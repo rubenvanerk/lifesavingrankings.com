@@ -21,10 +21,12 @@ class Create extends Component
     public Collection $pools;
     public Collection $beaches;
     public ?string $venue_type = null;
+    public ?int $pool = null;
     public ?string $pool_name = null;
     public ?string $pool_country = null;
     public ?string $pool_city = null;
     public ?int $pool_size = null;
+    public ?int $beach = null;
     public ?string $beach_name = null;
     public ?string $beach_country = null;
     public ?string $beach_city = null;
@@ -61,23 +63,31 @@ class Create extends Component
         ]);
 
         if ($this->venue_type === 'pool' || $this->venue_type === 'both') {
-            $pool = Venue::create([
-                'name' => $this->pool_name,
-                'country' => $this->pool_country,
-                'city' => $this->pool_city,
-                'pool_size' => $this->pool_size,
-                'type' => VenueType::Pool,
-            ]);
+            if ($this->pool) {
+                $pool = Venue::find($this->pool);
+            } else {
+                $pool = Venue::create([
+                    'name' => $this->pool_name,
+                    'country' => $this->pool_country,
+                    'city' => $this->pool_city,
+                    'pool_size' => $this->pool_size,
+                    'type' => VenueType::Pool,
+                ]);
+            }
             $competition->venues()->attach($pool);
         }
 
         if ($this->venue_type === 'beach' || $this->venue_type === 'both') {
-            $beach = Venue::create([
-                'name' => $this->beach_name,
-                'country' => $this->beach_country,
-                'city' => $this->beach_city,
-                'type' => VenueType::Beach,
-            ]);
+            if ($this->beach) {
+                $beach = Venue::find($this->beach);
+            } else {
+                $beach = Venue::create([
+                    'name' => $this->beach_name,
+                    'country' => $this->beach_country,
+                    'city' => $this->beach_city,
+                    'type' => VenueType::Beach,
+                ]);
+            }
 
             $competition->venues()->attach($beach);
         }
