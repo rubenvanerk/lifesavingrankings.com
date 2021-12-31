@@ -14,19 +14,23 @@
 
                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div class="sm:col-span-4">
-                        <x-forms.input.with-label name="name" label="Competition name"/>
+                        <x-forms.input.with-label name="name" label="Competition name" required
+                                                  wire:model.defer="name"/>
                     </div>
 
                     <div class="sm:col-span-4">
-                        <x-forms.checkbox.with-inline-label name="ils_sanctioned" label="ILS sanctioned competition"/>
+                        <x-forms.checkbox.with-inline-label name="ils_sanctioned" label="ILS sanctioned competition"
+                                                            wire:model.defer="ils_sanctioned"/>
                     </div>
 
                     <div class="sm:col-span-3">
-                        <x-forms.input.with-label name="start_date" label="Start date" type="date"/>
+                        <x-forms.input.with-label name="start_date" label="Start date" type="date" required
+                                                  wire:model.defer="start_date"/>
                     </div>
 
                     <div class="sm:col-span-3">
-                        <x-forms.input.with-label name="end_date" label="End date" type="date"/>
+                        <x-forms.input.with-label name="end_date" label="End date" type="date"
+                                                  wire:model.defer="end_date"/>
                     </div>
                 </div>
 
@@ -118,7 +122,8 @@
 
                                 <div x-show="customPool" class="space-y-8">
                                     <div>
-                                        <x-forms.input.with-label label="Name" name="pool_name" wire:model.defer="pool_name"/>
+                                        <x-forms.input.with-label label="Name" name="pool_name"
+                                                                  wire:model.defer="pool_name"/>
                                     </div>
 
                                     <div>
@@ -135,7 +140,8 @@
                                     </div>
 
                                     <div>
-                                        <x-forms.input.with-label label="City" name="pool_city" wire:model.defer="pool_city"/>
+                                        <x-forms.input.with-label label="City" name="pool_city"
+                                                                  wire:model.defer="pool_city"/>
                                     </div>
 
                                     <div>
@@ -144,22 +150,15 @@
                                             <legend class="sr-only">Pool size</legend>
                                             <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                                 <div class="flex items-center">
-                                                    <input id="25m" type="radio" checked
-                                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                                                    <label for="25m"
-                                                           class="ml-3 block text-sm font-medium text-gray-700">
-                                                        25m
-                                                    </label>
+                                                    <x-forms.radio.with-inline-label name="pool_size"
+                                                                                     label="25m" value="25"
+                                                                                     wire:model.defer="pool_size"/>
                                                 </div>
 
                                                 <div class="flex items-center">
-                                                    <input id="50m" type="radio"
-                                                           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
-                                                    <label for="50m"
-                                                           class="ml-3 block text-sm font-medium text-gray-700">
-                                                        50m
-                                                    </label>
-                                                </div>
+                                                    <x-forms.radio.with-inline-label name="pool_size"
+                                                                                     label="50m" value="50"
+                                                                                     wire:model.defer="pool_size"/>                                                </div>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -203,7 +202,8 @@
 
                                 <div x-show="customBeach" class="space-y-8">
                                     <div>
-                                        <x-forms.input.with-label label="Name" name="beach_name" wire:model.defer="beach_name"/>
+                                        <x-forms.input.with-label label="Name" name="beach_name"
+                                                                  wire:model.defer="beach_name"/>
                                     </div>
 
                                     <div>
@@ -220,7 +220,8 @@
                                     </div>
 
                                     <div>
-                                        <x-forms.input.with-label label="City" name="beach_city" wire:model.defer="beach_city"/>
+                                        <x-forms.input.with-label label="City" name="beach_city"
+                                                                  wire:model.defer="beach_city"/>
                                     </div>
 
                                     <div class="mt-1">
