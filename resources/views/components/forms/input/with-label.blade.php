@@ -1,4 +1,4 @@
-<x-forms.label :for="$name">
+<x-forms.label :for="$name" :color-class="$labelClasses ?? ''">
     {{ $label }}
 </x-forms.label>
 

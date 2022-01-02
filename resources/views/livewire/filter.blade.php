@@ -37,20 +37,16 @@
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                    <x-forms.label for="from_date"/>From date</div>
-                    <x-buk-input name="from_date" type="date" wire:model="fromDate"/>
+                    <x-forms.input.with-label label="From date" name="from_date" labelClasses="text-white" wire:model="fromDate" type="date"/>
                 </div>
                 <div>
-                    <x-forms.label for="to_date"/>To date</div>
-                    <x-buk-input name="to_date" type="date" wire:model="toDate"/>
+                    <x-forms.input.with-label label="To date" name="to_date" labelClasses="text-white" wire:model="toDate" type="date"/>
                 </div>
                 <div>
-                    <x-forms.label for="from_year_of_birth"/>From year of birth</div>
-                    <x-buk-input name="from_year_of_birth" type="number" wire:model="fromYearOfBirth"/>
+                    <x-forms.input.with-label label="From year of birth" name="from_year_of_birth" labelClasses="text-white" wire:model="fromYearOfBirth" type="number" min="0"/>
                 </div>
                 <div>
-                    <x-forms.label for="to_year_of_birth">To year of birth</x-forms.label>
-                    <x-buk-input name="to_year_of_birth" type="number" wire:model="toYearOfBirth"/>
+                    <x-forms.input.with-label label="To year of birth" name="to_year_of_birth" labelClasses="text-white" wire:model="toYearOfBirth" type="number" min="0"/>
                 </div>
             </div>
         </div>
