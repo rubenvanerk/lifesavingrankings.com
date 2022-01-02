@@ -32,7 +32,7 @@
 
             <li class="sm:hidden">
                 <a href="{{ $parent->url }}"
-                   class="text-sm font-medium hover:text-yellow-300 flex items-center space-x-1">
+                   class="text-sm font-medium hover:text-yellow-300 text-gray-100 flex items-center space-x-1">
                     <x-heroicon-s-chevron-left class="flex-shrink-0 h-4 w-4 mt-0.5"/>
                     <span>
                         {{ $parent->title }}
