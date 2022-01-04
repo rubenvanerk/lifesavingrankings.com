@@ -1,11 +1,14 @@
-<nav class="bg-blue-800 border-b border-blue-300 border-opacity-25 lg:border-none" x-data="{ open: false }">
+<nav class="border-b border-blue-300 border-opacity-25 lg:border-none" x-data="{ open: false }">
     <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div
             class="relative h-16 flex items-center justify-between lg:border-b lg:border-blue-400 lg:border-opacity-25">
             <div class="px-2 flex items-center lg:px-0">
                 <div class="flex-shrink-0">
-                    <a href="{{ url('/') }}">
-                        <x-logo class="block h-8 w-8 text-white"/>
+                    <a href="{{ url('/') }}" class="flex space-x-2 group">
+                        <x-logo class="block h-8 w-8 text-white group-hover:text-gray-100 transition"/>
+                        <span class="text-white font-bold tracking-wide leading-4 group-hover:text-gray-100 transition hidden sm:block">
+                            Lifesaving<br/>Rankings {{-- TODO: vertically align text --}}
+                        </span>
                     </a>
                 </div>
                 <div class="hidden lg:block lg:ml-10">

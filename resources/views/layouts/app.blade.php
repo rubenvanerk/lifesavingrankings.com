@@ -2,7 +2,7 @@
 
 @section('body')
     <div class="min-h-screen bg-gray-100">
-        <div class="bg-blue-800 pb-24 mb-6">
+        <div class="bg-gradient-to-b from-blue-800 to-blue-900 pb-24 mb-6">
             <x-layout.menu/>
 
             <header class="py-10">
