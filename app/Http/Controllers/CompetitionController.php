@@ -6,6 +6,7 @@ use App\Enums\Gender;
 use App\Models\Competition;
 use App\Models\Event;
 use Illuminate\Contracts\View\View;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class CompetitionController extends Controller
 {
@@ -37,5 +38,10 @@ class CompetitionController extends Controller
     public function create(): View
     {
         return view('competitions.create');
+    }
+
+    public function download($competition, Media $mediaItem): Media
+    {
+        return $mediaItem;
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CompetitionController;
+use App\Http\Controllers\DownloadMediaController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\TeamController;
@@ -24,6 +25,7 @@ Route::prefix('competitions')->group(function () {
     Route::get('/create', [CompetitionController::class, 'create'])->name('competitions.create');
     Route::get('/{competition:slug}', [CompetitionController::class, 'show'])->name('competitions.show');
     Route::get('/{competition:slug}/events/{event}/{gender}', [CompetitionController::class, 'event'])->name('competitions.event');
+    Route::get('/{competition:slug}/download/{mediaItem:file_name}', [CompetitionController::class, 'download'])->name('competitions.download');
 });
 
 Route::prefix('events')->group(function () {

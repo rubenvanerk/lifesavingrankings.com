@@ -9,9 +9,12 @@ use App\Models\Venue;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use WithFileUploads;
+
     public ?string $name = null;
     public ?string $start_date = null;
     public ?string $end_date = null;
@@ -30,6 +33,9 @@ class Create extends Component
     public ?string $beach_name = null;
     public ?string $beach_country = null;
     public ?string $beach_city = null;
+
+    public $files;
+    public $file_link;
 
     protected array $rules = [
         'name' => ['required', 'max:255'],
@@ -61,6 +67,10 @@ class Create extends Component
             'timekeeping' => $this->timekeeping,
             'ils_sanctioned' => $this->ils_sanctioned,
         ]);
+
+        foreach ($this->files as $file) {
+            $competition->addMedia($file)->toMediaCollection('files');
+        }
 
         if ($this->venue_type === 'pool' || $this->venue_type === 'both') {
             if ($this->pool) {

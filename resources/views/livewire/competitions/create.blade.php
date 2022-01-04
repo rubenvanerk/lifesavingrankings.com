@@ -24,6 +24,27 @@
                         </div>
 
                         <div class="sm:col-span-4">
+                            <x-forms.label for="files">File</x-forms.label>
+                            <input type="file" wire:model="files" id="files" name="files" class="mt-1" multiple>
+
+                            <div wire:loading wire:target="files">Uploading...</div>
+
+                            <p class="mt-1 text-sm text-gray-500">
+                                If you can, please also provide a link to the source of the file.
+                            </p>
+                        </div>
+
+                        <div class="sm:col-span-4">
+                            <x-forms.input.with-label name="file_link" label="Link to file" wire:model.defer="file_link"/>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div>
+
+                    <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                        <div class="sm:col-span-4">
                             <x-forms.checkbox.with-inline-label name="ils_sanctioned" label="ILS sanctioned competition"
                                                                 wire:model.defer="ils_sanctioned"/>
                         </div>
@@ -62,7 +83,6 @@
                             <x-forms.error name="timekeeping"/>
                         </div>
                     </fieldset>
-
                 </div>
 
                 <div class="pt-8" x-data="{ type: 'pool' }">
