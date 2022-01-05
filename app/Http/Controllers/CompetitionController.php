@@ -44,4 +44,13 @@ class CompetitionController extends Controller
     {
         return $mediaItem;
     }
+
+    public function parse(Competition $competition): View
+    {
+        if (!$competition->exists) {
+            abort(404);
+        }
+
+        return view('competitions.parse', compact('competition'));
+    }
 }

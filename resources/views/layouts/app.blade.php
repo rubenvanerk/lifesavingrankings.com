@@ -26,11 +26,11 @@
 
         <main class="-mt-32">
             <div class="max-w-7xl mx-auto pb-12">
-                    @yield('content')
+                @yield('content')
 
-                    @isset($slot)
-                        {{ $slot }}
-                    @endisset
+                @isset($slot)
+                    {{ $slot }}
+                @endisset
             </div>
         </main>
     </div>

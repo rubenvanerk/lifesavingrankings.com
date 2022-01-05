@@ -27,6 +27,11 @@ Breadcrumbs::for('competitions.show', function (BreadcrumbTrail $trail, Competit
     $trail->push($competition->name, route('competitions.show', $competition));
 });
 
+Breadcrumbs::for('competitions.parse', function (BreadcrumbTrail $trail, Competition $competition) {
+    $trail->parent('competitions.show', $competition);
+    $trail->push('Parse', route('competitions.parse', $competition));
+});
+
 Breadcrumbs::for('competitions.event', function (BreadcrumbTrail $trail, Competition $competition, $event, $gender) {
     $gender = Gender::coerce(ucfirst($gender));
     $event = Event::where('slug', $event)->first();

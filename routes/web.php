@@ -24,6 +24,7 @@ Route::prefix('competitions')->group(function () {
     Route::view('/', 'competitions.index')->name('competitions.index');
     Route::get('/create', [CompetitionController::class, 'create'])->name('competitions.create');
     Route::get('/{competition:slug}', [CompetitionController::class, 'show'])->name('competitions.show');
+    Route::get('/{competition:slug}/parse', [CompetitionController::class, 'parse'])->name('competitions.parse')->middleware('permission:parse competitions');
     Route::get('/{competition:slug}/events/{event}/{gender}', [CompetitionController::class, 'event'])->name('competitions.event');
     Route::get('/{competition:slug}/download/{mediaItem:file_name}', [CompetitionController::class, 'download'])->name('competitions.download');
 });
