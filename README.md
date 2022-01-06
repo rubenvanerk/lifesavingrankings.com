@@ -18,5 +18,5 @@ npm install
 npm run dev
 ```
 
-Go to localhost  
-For mailhog (sent emails) go to localhost:8025
+Go to `localhost`  
+For mailhog (sent emails) go to `localhost:8025`
