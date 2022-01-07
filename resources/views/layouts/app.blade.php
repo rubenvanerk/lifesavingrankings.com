@@ -25,6 +25,7 @@
         </div>
 
         <main class="-mt-32">
+            @yield('wide-content')
             <div class="max-w-7xl mx-auto pb-12">
                 @yield('content')
 

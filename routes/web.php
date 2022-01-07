@@ -14,6 +14,7 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
+use App\Http\Livewire\Competitions\Parse;
 use Illuminate\Support\Facades\Route;
 
 Route::get('set-locale/{locale}', LocaleController::class)->name('set-locale');
