@@ -2,14 +2,12 @@
 
 namespace App\Interfaces;
 
-use App\Models\Competition;
+use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 interface ParserInterface
 {
-    public function getParsedCompetition(): Competition;
+    public function getParsedResults(Media $competitionFile): Collection;
 
     public function getRawText(Media $competitionFile): string;
-
-    public function getTable(): array;
 }

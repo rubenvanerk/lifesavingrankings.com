@@ -2,27 +2,25 @@
 
 namespace App\Services\Parsers;
 
-use App\Interfaces\ParserInterface;
-use App\Models\Competition;
+use Smalot\PdfParser\Config;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class PdfParser implements ParserInterface
+class PdfParser extends TextParser
 {
-    public function getParsedCompetition(): Competition
-    {
-        // TODO: Implement getParsedCompetition() method.
-    }
-
     public function getRawText(Media $competitionFile): string
     {
-        $parser = new \Smalot\PdfParser\Parser();
-//        dd($competitionFile->getUrl());
+        $config = new Config();
+        $config->setHorizontalOffset($this->translateQuoted("\t"));
+
+        $parser = new \Smalot\PdfParser\Parser([], $config);
         $pdf = $parser->parseFile($competitionFile->getPath());
         return $pdf->getText();
     }
 
-    public function getTable(): array
+    private function translateQuoted(string $string): string
     {
-        // TODO: Implement getTable() method.
+        $search = ['\\t', '\\n', '\\r'];
+        $replace = ["\t", "\n", "\r"];
+        return str_replace($search, $replace, $string);
     }
 }
