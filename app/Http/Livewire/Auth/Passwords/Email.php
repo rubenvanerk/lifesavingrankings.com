@@ -2,16 +2,15 @@
 
 namespace App\Http\Livewire\Auth\Passwords;
 
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Illuminate\Support\Facades\Password;
 
 class Email extends Component
 {
-    /** @var string */
-    public $email;
-
-    /** @var string|null */
-    public $emailSentMessage = false;
+    public string $email;
+    public string|bool|null $emailSentMessage = false;
 
     public function sendResetPasswordLink()
     {
@@ -32,15 +31,13 @@ class Email extends Component
 
     /**
      * Get the broker to be used during password reset.
-     *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
-    public function broker()
+    public function broker(): PasswordBroker
     {
         return Password::broker();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.auth.passwords.email')->extends('layouts.auth');
     }
