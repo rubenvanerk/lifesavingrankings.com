@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Password;
 
 class Email extends Component
 {
-    public string $email;
+    /** @var string */
+    public $email;
+
     public string|bool|null $emailSentMessage = false;
 
     public function sendResetPasswordLink()
