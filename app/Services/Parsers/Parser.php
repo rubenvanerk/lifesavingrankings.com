@@ -9,16 +9,22 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Parser implements ParserInterface
 {
+    /**
+     * @throws UnsupportedMimeTypeException
+     */
     protected function getConcreteParser(Media $competitionFile): ParserInterface
     {
-        try {
-            return match ($competitionFile->mime_type) {
-                'application/pdf' => new PdfParser(),
-                'text/plain' => new TextParser(),
-            };
-        } catch (\UnhandledMatchError $e) {
-            throw new UnsupportedMimeTypeException($competitionFile->mime_type);
+        $concreteParser = match ($competitionFile->mime_type) {
+            'application/pdf' => new PdfParser(),
+            'text/plain' => new TextParser(),
+            default => null,
+        };
+
+        if (is_null($concreteParser)) {
+            throw new UnsupportedMimeTypeException($competitionFile->mime_type . ' is currently not supported');
         }
+
+        return $concreteParser;
     }
 
     public function getParsedResults(Media $competitionFile): Collection
