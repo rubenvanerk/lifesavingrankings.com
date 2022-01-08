@@ -13,11 +13,11 @@ class EmailVerificationController extends Controller
 {
     public function __invoke(string $id, string $hash): RedirectResponse
     {
-        if (!hash_equals((string) $id, (string) Auth::user()->getKey())) {
+        if (!hash_equals($id, (string) Auth::user()->getKey())) {
             throw new AuthorizationException();
         }
 
-        if (!hash_equals((string) $hash, sha1(Auth::user()->getEmailForVerification()))) {
+        if (!hash_equals($hash, sha1(Auth::user()->getEmailForVerification()))) {
             throw new AuthorizationException();
         }
 
@@ -26,7 +26,9 @@ class EmailVerificationController extends Controller
         }
 
         if (Auth::user()->markEmailAsVerified()) {
-            event(new Verified(Auth::user()));
+            if (!is_null(Auth::user())) {
+                event(new Verified(Auth::user())); // @phpstan-ignore-line
+            }
         }
 
         return redirect(route('home'));
