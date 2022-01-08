@@ -2,10 +2,8 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
-
+    level: 2
     paths:
         - app
-
-    # The level 9 is the highest level
-    level: 2
-
+    ignoreErrors:
+        - '#(Access|Call) to an undefined (property|method) App\\Casts.*#'  # Custom casts are currently not supported: https://github.com/nunomaduro/larastan/issues/890

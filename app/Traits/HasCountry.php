@@ -9,7 +9,7 @@ trait HasCountry
         return $this->country->getTranslation($currentLocale)['common'];
     }
 
-    public function getCountryCodeAttribute()
+    public function getCountryCodeAttribute(): string
     {
         return strtolower($this->country->getIsoAlpha2());
     }

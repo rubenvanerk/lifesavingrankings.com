@@ -7,6 +7,7 @@ use App\Enums\Gender;
 use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Event;
+use App\Models\Result;
 use App\Models\Team;
 use App\Services\Filter;
 use App\Traits\WithFilter;
@@ -47,6 +48,7 @@ class Events extends Component
         // TODO: extract into service
         if ($this->readyToLoad) {
             $events = Event::query()->filter()->with(['results' => function (HasMany $query) {
+                /** @var Result $query */
                 $query->valid()
                     ->orderBy('time')
                     ->filter()
