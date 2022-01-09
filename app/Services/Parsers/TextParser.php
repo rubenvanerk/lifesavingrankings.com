@@ -3,9 +3,7 @@
 namespace App\Services\Parsers;
 
 use App\Interfaces\ParserInterface;
-use App\Models\Competition;
 use Illuminate\Support\Collection;
-use Smalot\PdfParser\Config;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class TextParser implements ParserInterface

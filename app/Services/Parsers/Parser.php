@@ -4,6 +4,7 @@ namespace App\Services\Parsers;
 
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Interfaces\ParserInterface;
+use App\Support\ParserOptions\Config;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 

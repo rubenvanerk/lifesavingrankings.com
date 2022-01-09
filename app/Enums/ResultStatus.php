@@ -5,9 +5,10 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static OptionOne()
- * @method static static OptionTwo()
- * @method static static OptionThree()
+ * @method static static WDR()
+ * @method static static DSQ()
+ * @method static static DNS()
+ * @method static static DNF()
  */
 final class ResultStatus extends Enum
 {

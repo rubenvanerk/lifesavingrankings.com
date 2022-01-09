@@ -2,6 +2,8 @@
 
 namespace App\Interfaces;
 
+use App\Services\Parsers\ParserConfig;
+use App\Support\ParserOptions\Config;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 

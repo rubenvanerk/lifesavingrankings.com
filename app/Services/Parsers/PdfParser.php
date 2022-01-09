@@ -10,10 +10,11 @@ class PdfParser extends TextParser
     public function getRawText(Media $competitionFile): string
     {
         $config = new Config();
-        $config->setHorizontalOffset($this->translateQuoted("\t"));
+        $config->setHorizontalOffset($this->translateQuoted($competitionFile->parser_config->horizontal_offset));
 
         $parser = new \Smalot\PdfParser\Parser([], $config);
         $pdf = $parser->parseFile($competitionFile->getPath());
+
         return $pdf->getText();
     }
 
