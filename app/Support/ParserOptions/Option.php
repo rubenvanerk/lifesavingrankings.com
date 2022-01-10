@@ -2,13 +2,19 @@
 
 namespace App\Support\ParserOptions;
 
-use App\Enums\ParserConfigOptionType;
-
 abstract class Option
 {
-    public ParserConfigOptionType $type;
+    public mixed $type;
     public string $name;
+    public string $label;
     public mixed $value;
+
+    public function __construct($value = null)
+    {
+        if (!is_null($value)) {
+            $this->value = $value;
+        }
+    }
 
     public abstract function renderInput();
 }

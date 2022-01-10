@@ -9,12 +9,14 @@ use function view;
 class HorizontalOffsetOption extends Option
 {
     public string $name = 'horizontal_offset';
-    public mixed $value = 'test';
+    public mixed $value = ' ';
     public string $label = 'Horizontal offset';
 
-    public function __construct()
+    public function __construct($value = null)
     {
         $this->type = ParserConfigOptionType::String();
+
+        return parent::__construct($value);
     }
 
     public function renderInput(): View

@@ -1,11 +1,18 @@
 <div class="grid grid-cols-3 gap-4">
     <x-layout.panel title="Config">
-        @foreach($media->parser_config->options as $option)
-            {{-- TODO: use $option->render function --}}
-            <x-forms.input.with-label wire:model="media.parser_config.{{ $option->name }}" name="media.parser_config.{{ $option->name }}" :label="$option->label"/>
-        @endforeach
+        <div class="flex flex-col gap-y-4">
 
-            <x-base.button wire:click="save">Save</x-base.button>
+            @foreach($media->parser_config->options as $option)
+                <div>
+                    {{-- TODO: use $option->render function --}}
+                    <x-forms.input.with-label wire:model="media.parser_config.options.{{ $option->name }}.value" name="media.parser_config.options.{{ $option->name }}.value" :label="$option->label"/>
+                </div>
+            @endforeach
+
+            <div>
+                <x-base.button wire:click="save">Save</x-base.button>
+            </div>
+        </div>
     </x-layout.panel>
 
     <div class="bg-white shadow overflow-hidden md:rounded-lg col-span-2">

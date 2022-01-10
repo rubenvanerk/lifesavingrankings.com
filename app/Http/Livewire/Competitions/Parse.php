@@ -13,7 +13,7 @@ class Parse extends Component
     public Media $media;
 
     protected array $rules = [
-        'media.parser_config.horizontal_offset' => 'required', // TODO: make dynamic
+        'media.parser_config.options.horizontal_offset.value' => 'nullable', // TODO: make dynamic
     ];
 
     public function render(): View
@@ -35,5 +35,10 @@ class Parse extends Component
     {
         $this->validate();
         $this->media->parser_config->save();
+    }
+
+    public function updated($name, $value)
+    {
+
     }
 }

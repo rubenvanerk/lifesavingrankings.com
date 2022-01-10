@@ -3,6 +3,7 @@
 namespace App\Casts;
 
 use App\Support\ParserOptions\HorizontalOffsetOption;
+use App\Support\ParserOptions\Option;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
 
@@ -26,7 +27,10 @@ class Options implements CastsAttributes
                 $option->value = $optionValues[get_class($option)];
             }
         }
-        return $options;
+
+        return $options->mapWithKeys(function (Option $option) {
+            return [$option->name => $option];
+        });
     }
 
     /**
