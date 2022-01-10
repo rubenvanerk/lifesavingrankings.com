@@ -2,6 +2,7 @@
 
 namespace App\Casts;
 
+use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\HorizontalOffsetOption;
 use App\Support\ParserOptions\Option;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
@@ -69,6 +70,8 @@ class Options implements CastsAttributes
 
     private function getDefaultTextOptions(): Collection
     {
-        return collect();
+        return collect([
+            new EventIndicator(),
+        ]);
     }
 }

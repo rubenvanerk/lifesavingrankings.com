@@ -7,6 +7,8 @@ use App\Interfaces\ParserInterface;
 use App\Support\ParserOptions\Config;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Regex\MatchResult;
+use Spatie\Regex\Regex;
 
 class Parser implements ParserInterface
 {
@@ -34,9 +36,31 @@ class Parser implements ParserInterface
         return $parser->getParsedResults(...func_get_args());
     }
 
-    public function getRawText(Media $competitionFile): string
+    public function getRawText(Media $competitionFile, $highlightRegex = null): string
     {
         $parser = $this->getConcreteParser($competitionFile);
-        return $parser->getRawText(...func_get_args());
+        $rawText = $parser->getRawText(...func_get_args());
+        if ($this->isValidRegex($highlightRegex) && $this->countMatches($competitionFile, $highlightRegex) < 5000) {
+            $rawText = Regex::replace($highlightRegex, function (MatchResult $result) {
+                return '<mark>' . $result->result() . '</mark>';
+            }, $rawText)->result();
+        }
+        return $rawText;
+    }
+
+    public function countMatches(Media $competitionFile, $highlightRegex = null): ?int
+    {
+        $parser = $this->getConcreteParser($competitionFile);
+        $rawText = $parser->getRawText(...func_get_args());
+        $matchCount = null;
+        if ($this->isValidRegex($highlightRegex)) {
+            $matchCount = count(Regex::matchAll($highlightRegex, $rawText)->results());
+        }
+        return $matchCount;
+    }
+
+    protected function isValidRegex($pattern): bool
+    {
+        return is_int(@preg_match($pattern, ''));
     }
 }

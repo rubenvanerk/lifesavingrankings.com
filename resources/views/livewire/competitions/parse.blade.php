@@ -4,8 +4,7 @@
 
             @foreach($media->parser_config->options as $option)
                 <div>
-                    {{-- TODO: use $option->render function --}}
-                    <x-forms.input.with-label wire:model="media.parser_config.options.{{ $option->name }}.value" name="media.parser_config.options.{{ $option->name }}.value" :label="$option->label"/>
+                    <x-parser-input :option="$option"/>
                 </div>
             @endforeach
 
@@ -26,6 +25,9 @@
                            :class="previewTab == 'text' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
                             <span>Text</span>
+                            @if(!is_null($matchCount))
+                                <x-base.badge class="ml-1">{{ $matchCount }} matches</x-base.badge>
+                            @endif
                             <span aria-hidden="true"
                                   x-show="previewTab == 'text'"
                                   class="bg-blue-800 absolute inset-x-0 bottom-0 h-0.5">
@@ -46,7 +48,7 @@
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8" x-show="previewTab == 'text'">
                         <x-well class="p-3 rounded-md">
-                            <pre class="overflow-scroll max-h-screen">{{ $rawText }}</pre>
+                            <pre class="overflow-scroll max-h-screen">{!! $rawText !!}</pre>
                         </x-well>
                     </div>
                     <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8" x-show="previewTab == 'table'">
