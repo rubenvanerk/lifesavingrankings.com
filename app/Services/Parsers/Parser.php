@@ -45,7 +45,10 @@ class Parser implements ParserInterface
                 return '<mark>' . $result->result() . '</mark>';
             }, $rawText)->result();
         }
-        return $rawText;
+
+        return collect(explode("\n", $rawText))->map(function ($line) {
+            return '<span>' . $line . '</span>';
+        })->implode("\n");
     }
 
     public function countMatches(Media $competitionFile, $highlightRegex = null): ?int

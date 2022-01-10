@@ -59,3 +59,20 @@
         @apply text-blue-900 hover:text-blue-600 hover:underline;
     }
 }
+
+pre {
+    counter-reset: line;
+}
+pre span {
+    display: block;
+}
+pre span:before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    padding: 0 .5em;
+    margin-right: .5em;
+    min-width: 50px;
+    color: #aaa;
+}
