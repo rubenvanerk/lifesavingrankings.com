@@ -40,12 +40,17 @@ class Parser implements ParserInterface
     {
         $parser = $this->getConcreteParser($competitionFile);
         $rawText = $parser->getRawText(...func_get_args());
+
+        // highlight regex
         if ($this->isValidRegex($highlightRegex) && $this->countMatches($competitionFile, $highlightRegex) < 5000) {
-            $rawText = Regex::replace($highlightRegex, function (MatchResult $result) {
-                return '<mark>' . $result->result() . '</mark>';
-            }, $rawText)->result();
+            $rawText = Regex::replace(
+                $highlightRegex,
+                fn (MatchResult $result) => '<mark>' . $result->result() . '</mark>',
+                $rawText
+            )->result();
         }
 
+        // wrap lines in spans, so line numbers can be shown
         return collect(explode("\n", $rawText))->map(function ($line) {
             return '<span>' . $line . '</span>';
         })->implode("\n");

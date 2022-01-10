@@ -4,10 +4,12 @@ namespace App\Casts;
 
 use App\Models\Event;
 use App\Models\ParserConfig;
+use App\Support\ParserOptions\AthleteMatcher;
 use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\EventMatcher;
 use App\Support\ParserOptions\HorizontalOffsetOption;
 use App\Support\ParserOptions\Option;
+use App\Support\ParserOptions\ResultIndicator;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
 
@@ -81,6 +83,9 @@ class Options implements CastsAttributes
     private function getDefaultGeneralOptions(): Collection
     {
         $options = collect();
+
+        $options->add(new ResultIndicator());
+        $options->add(new AthleteMatcher());
 
         foreach (Event::all() as $event) {
             $options->add(new EventMatcher($event));

@@ -34,7 +34,7 @@
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
                             <span>Text</span>
                             @if(!is_null($matchCount))
-                                <x-base.badge class="ml-1">{{ $matchCount }} regex matches</x-base.badge>
+                                <x-base.badge class="ml-1" wire:loading.class="animate-pulse">{{ $matchCount }} regex matches</x-base.badge>
                             @endif
                             <span aria-hidden="true"
                                   x-show="previewTab == 'text'"

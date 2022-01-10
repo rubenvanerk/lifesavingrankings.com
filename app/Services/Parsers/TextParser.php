@@ -2,9 +2,12 @@
 
 namespace App\Services\Parsers;
 
+use App\Enums\EventType;
 use App\Interfaces\ParserInterface;
+use App\Models\Athlete;
 use App\Models\Event;
 use App\Models\Media;
+use App\Models\Result;
 use App\Support\ParserOptions\Option;
 use Illuminate\Support\Collection;
 
@@ -21,24 +24,47 @@ class TextParser implements ParserInterface
     {
         $lines = explode("\n", $this->getRawText($competitionFile));
         $this->options = $competitionFile->parser_config->options;
+
+        $event = null;
+        $results = collect();
+
         foreach ($lines as $line) {
-            if ($this->options['event_indicator']->matches($line)) {
+            if ($this->options['event_indicator']->hasMatch($line)) {
                 $event = $this->getEventFromLine($line);
+            }
+            if ($event && $this->options['result_indicator']->hasMatch($line)) {
+                $results->add($this->getResultFromLine($line, $event));
             }
         }
 
-        return collect();
+        return $results;
     }
 
     private function getEventFromLine(string $line): ?Event
     {
         $eventMatchers = $this->options->where('group', Option::GROUP_EVENTS);
         foreach ($eventMatchers as $eventMatcher) {
-            if ($eventMatcher->matches($line)) {
+            if ($eventMatcher->hasMatch($line)) {
                 return $eventMatcher->event;
             }
         }
 
         return null;
+    }
+
+    private function getResultFromLine(string $line, Event $event): Result
+    {
+        if ($event->type->value & EventType::Individual()->value) {
+            $athlete = $this->getAthleteFromLine($line);
+        }
+
+        return Result::make();
+    }
+
+    private function getAthleteFromLine(string $line): Athlete
+    {
+        $athleteName = $this->options['athlete_matcher']->getMatch($line);
+
+        return Athlete::make();
     }
 }
