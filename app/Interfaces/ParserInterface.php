@@ -2,10 +2,8 @@
 
 namespace App\Interfaces;
 
-use App\Services\Parsers\ParserConfig;
-use App\Support\ParserOptions\Config;
+use App\Models\Media;
 use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 interface ParserInterface
 {

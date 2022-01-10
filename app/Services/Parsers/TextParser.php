@@ -3,8 +3,8 @@
 namespace App\Services\Parsers;
 
 use App\Interfaces\ParserInterface;
+use App\Models\Media;
 use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class TextParser implements ParserInterface
 {

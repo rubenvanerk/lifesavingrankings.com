@@ -3,7 +3,7 @@
 namespace App\Services\Parsers;
 
 use Smalot\PdfParser\Config;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\Media;
 
 class PdfParser extends TextParser
 {

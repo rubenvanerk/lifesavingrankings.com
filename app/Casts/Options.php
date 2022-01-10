@@ -2,6 +2,7 @@
 
 namespace App\Casts;
 
+use App\Models\ParserConfig;
 use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\HorizontalOffsetOption;
 use App\Support\ParserOptions\Option;
@@ -13,7 +14,7 @@ class Options implements CastsAttributes
     /**
      * Cast the given value.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param ParserConfig $model
      * @param string $key
      * @param mixed $value
      * @param array $attributes
@@ -37,7 +38,7 @@ class Options implements CastsAttributes
     /**
      * Prepare the given value for storage.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param ParserConfig $model
      * @param string $key
      * @param mixed $value
      * @param array $attributes

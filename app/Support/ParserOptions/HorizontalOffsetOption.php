@@ -16,7 +16,7 @@ class HorizontalOffsetOption extends Option
     {
         $this->type = ParserConfigOptionType::String();
 
-        return parent::__construct($value);
+        parent::__construct($value);
     }
 
     public function renderInput(): View
