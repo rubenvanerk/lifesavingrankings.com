@@ -36,9 +36,4 @@ class Parse extends Component
         $this->validate();
         $this->media->parser_config->save();
     }
-
-    public function updated($name, $value)
-    {
-
-    }
 }
