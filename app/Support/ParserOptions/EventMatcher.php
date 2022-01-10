@@ -3,19 +3,22 @@
 namespace App\Support\ParserOptions;
 
 use App\Enums\ParserConfigOptionType;
+use App\Models\Event;
 use Str;
 
 class EventMatcher extends Option
 {
-    public string $name = 'event_indicator';
+    public string $name;
     public string $label = '';
     public string $group = Option::GROUP_EVENTS;
+    public Event $event;
 
-    public function __construct($label = null)
+    public function __construct(Event $event = null)
     {
         $this->value = '';
-        $this->name = Str::slug($label, '_');
-        $this->label = $label;
+        $this->event = $event;
+        $this->name = Str::slug($event->name, '_');
+        $this->label = $event->name;
         $this->type = ParserConfigOptionType::Regex();
         parent::__construct();
     }

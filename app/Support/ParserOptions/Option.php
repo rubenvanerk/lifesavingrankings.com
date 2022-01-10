@@ -2,6 +2,9 @@
 
 namespace App\Support\ParserOptions;
 
+use Parser;
+use Spatie\Regex\Regex;
+
 abstract class Option
 {
     public mixed $type;
@@ -20,5 +23,14 @@ abstract class Option
         if (!is_null($value)) {
             $this->value = $value;
         }
+    }
+
+    public function matches($string): bool
+    {
+        if (!Parser::isValidRegex($this->value)) {
+            return false;
+        }
+
+        return Regex::match($this->value, $string)->hasMatch();
     }
 }

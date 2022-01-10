@@ -10,7 +10,6 @@
     <h2>
         <button
             x-on:click="expanded = !expanded"
-            @click.outside="expanded = false"
             :aria-expanded="expanded"
             class="flex items-center justify-between w-full text-xl px-6 py-3 text-gray-900"
         >

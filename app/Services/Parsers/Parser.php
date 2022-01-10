@@ -62,7 +62,7 @@ class Parser implements ParserInterface
         return $matchCount;
     }
 
-    protected function isValidRegex($pattern): bool
+    public function isValidRegex($pattern): bool
     {
         return is_int(@preg_match($pattern, ''));
     }

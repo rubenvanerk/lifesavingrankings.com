@@ -47,6 +47,6 @@ class Parse extends Component
     {
         return $this->media->parser_config->options->mapWithKeys(function ($option) {
             return ['media.parser_config.options.' . $option->name . '.value' => 'nullable'];
-        });
+        })->toArray();
     }
 }

@@ -83,7 +83,7 @@ class Options implements CastsAttributes
         $options = collect();
 
         foreach (Event::all() as $event) {
-            $options->add(new EventMatcher($event->name));
+            $options->add(new EventMatcher($event));
         }
 
         return $options;
