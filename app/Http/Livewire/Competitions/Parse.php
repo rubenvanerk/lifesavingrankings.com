@@ -14,17 +14,13 @@ class Parse extends Component
     public $currentRegex;
     public $currentRegexOptionName;
 
-    protected array $rules = [
-        'media.parser_config.options.horizontal_offset.value' => 'nullable', // TODO: make dynamic
-        'media.parser_config.options.event_indicator.value' => 'nullable', // TODO: make dynamic
-    ];
-
     public function render(): View
     {
         try {
             $data = [
                 'matchCount' => Parser::countMatches($this->media, $this->currentRegex),
                 'rawText' => Parser::getRawText($this->media, $this->currentRegex),
+                'results' => Parser::getParsedResults($this->media),
             ];
         } catch (UnsupportedMimeTypeException $e) {
             return view('livewire.competitions.parse_error', [
@@ -45,5 +41,12 @@ class Parse extends Component
     {
         $this->currentRegex = $regex;
         $this->currentRegexOptionName = $optionName;
+    }
+
+    public function rules()
+    {
+        return $this->media->parser_config->options->mapWithKeys(function ($option) {
+            return ['media.parser_config.options.' . $option->name . '.value' => 'nullable'];
+        });
     }
 }

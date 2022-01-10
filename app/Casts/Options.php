@@ -2,8 +2,10 @@
 
 namespace App\Casts;
 
+use App\Models\Event;
 use App\Models\ParserConfig;
 use App\Support\ParserOptions\EventIndicator;
+use App\Support\ParserOptions\EventMatcher;
 use App\Support\ParserOptions\HorizontalOffsetOption;
 use App\Support\ParserOptions\Option;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
@@ -71,8 +73,19 @@ class Options implements CastsAttributes
 
     private function getDefaultTextOptions(): Collection
     {
-        return collect([
+        return $this->getDefaultGeneralOptions()->merge(collect([
             new EventIndicator(),
-        ]);
+        ]));
+    }
+
+    private function getDefaultGeneralOptions(): Collection
+    {
+        $options = collect();
+
+        foreach (Event::all() as $event) {
+            $options->add(new EventMatcher($event->name));
+        }
+
+        return $options;
     }
 }

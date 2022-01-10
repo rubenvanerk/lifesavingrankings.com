@@ -9,12 +9,16 @@ abstract class Option
     public string $label;
     public mixed $value;
 
+    public string $group;
+
+    public const GROUP_EVENTS = 'events';
+    public const GROUP_PDF = 'pdf';
+    public const GROUP_TEXT = 'text';
+
     public function __construct($value = null)
     {
         if (!is_null($value)) {
             $this->value = $value;
         }
     }
-
-    public abstract function renderInput();
 }
