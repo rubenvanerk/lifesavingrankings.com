@@ -1,5 +1,4 @@
 @if ($option->type->value == \App\Enums\ParserConfigOptionType::Regex)
-    <code>
     <x-forms.input.with-label
         wire:model.debounce.500ms="media.parser_config.options.{{ $option->name }}.value"
         wire:input.debounce.500ms="highlight($event.target.value, '{{ $option->name }}')"
@@ -8,7 +7,6 @@
         :label="$option->label"
         :class="$this->currentRegexOptionName == $option->name ? 'ring-2 ring-yellow-400 border-yellow-400 font-mono' : 'font-mono'"/>
     {{-- TODO: install regex highlighter --}}
-    </code>
 @else
     <x-forms.input.with-label
         wire:model="media.parser_config.options.{{ $option->name }}.value"
