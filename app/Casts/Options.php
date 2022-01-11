@@ -29,8 +29,8 @@ class Options implements CastsAttributes
         $options = $this->getDefaultOptions($model->media->mime_type);
         $optionValues = json_decode($value, true);
         foreach ($options as $option) {
-            if (isset($optionValues[get_class($option)])) {
-                $option->value = $optionValues[get_class($option)];
+            if (isset($optionValues[$option->name])) {
+                $option->value = $optionValues[$option->name];
             }
         }
 
@@ -52,7 +52,7 @@ class Options implements CastsAttributes
     {
         $optionsToSave = [];
         foreach ($value as $option) {
-            $optionsToSave[get_class($option)] = $option->value;
+            $optionsToSave[$option->name] = $option->value;
         }
         return json_encode($optionsToSave);
     }
