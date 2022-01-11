@@ -40,20 +40,27 @@ class Parser implements ParserInterface
     {
         $parser = $this->getConcreteParser($competitionFile);
         $rawText = $parser->getRawText(...func_get_args());
+        $lines = collect(explode("\n", $rawText));
 
         // highlight regex
         if ($this->isValidRegex($highlightRegex) && $this->countMatches($competitionFile, $highlightRegex) < 5000) {
-            $rawText = Regex::replace(
-                $highlightRegex,
-                fn (MatchResult $result) => '<mark>' . $result->result() . '</mark>',
-                $rawText
-            )->result();
+            $lines = $lines->map(function ($line) use ($highlightRegex) {
+                return Regex::replace(
+                    $highlightRegex,
+                    fn (MatchResult $result) => '<mark>' . $result->result() . '</mark>',
+                    $line
+                )->result();
+            });
         }
 
-        // wrap lines in spans, so line numbers can be shown
-        return collect(explode("\n", $rawText))->map(function ($line) {
-            return '<span>' . $line . '</span>';
-        })->implode("\n");
+        if ($highlightRegex) {
+            // wrap lines in spans, so line numbers can be shown
+            $lines = $lines->map(function ($line) {
+                return '<span>' . $line . '</span>';
+            });
+        }
+
+        return $lines->implode("\n");
     }
 
     public function countMatches(Media $competitionFile, $highlightRegex = null): ?int
