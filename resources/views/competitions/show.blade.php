@@ -5,12 +5,6 @@
 @endsection
 
 @section('content')
-    @can('parse competitions')
-        <div class="md:mx-2 xl:mx-0 px-5">
-            <x-base.button href="{{ route('competitions.parse', $competition) }}">Parse</x-base.button>
-        </div>
-    @endcan
-
     <div class="grid grid-cols-2 md:grid-cols-3 gap-x-5 md:mx-2 xl:mx-0 p-5">
         <div class="bg-white shadow overflow-hidden md:rounded-lg col-span-2">
             <div class="border-t border-gray-200 py-5 px-4 sm:px-6 lg:px-8">
@@ -66,6 +60,10 @@
                                             </span>
                                         </div>
                                         <div class="ml-4 flex-shrink-0">
+                                            @can('parse competitions')
+                                                <a href="{{ route('competitions.parse', [$competition, $file]) }}"
+                                                   class="font-medium text-blue-700 hover:text-blue-500 mr-4">Parse</a>
+                                            @endcan
                                             <a href="{{ route('competitions.download', [$competition, $file]) }}"
                                                class="font-medium text-blue-700 hover:text-blue-500">
                                                 {{ __('app.download') }}

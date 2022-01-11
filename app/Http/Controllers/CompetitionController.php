@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\Gender;
 use App\Models\Competition;
 use App\Models\Event;
+use App\Models\Media;
 use Illuminate\Contracts\View\View;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class CompetitionController extends Controller
 {
@@ -45,12 +45,12 @@ class CompetitionController extends Controller
         return $mediaItem;
     }
 
-    public function parse(Competition $competition): View
+    public function parse(Competition $competition, Media $media): View
     {
         if (!$competition->exists) {
             abort(404);
         }
 
-        return view('competitions.parse', compact('competition'));
+        return view('competitions.parse', compact('competition', 'media'));
     }
 }

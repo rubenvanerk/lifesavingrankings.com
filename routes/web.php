@@ -4,7 +4,6 @@ use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CompetitionController;
-use App\Http\Controllers\DownloadMediaController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\TeamController;
@@ -14,7 +13,6 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
-use App\Http\Livewire\Competitions\Parse;
 use Illuminate\Support\Facades\Route;
 
 Route::get('set-locale/{locale}', LocaleController::class)->name('set-locale');
@@ -25,7 +23,7 @@ Route::prefix('competitions')->group(function () {
     Route::view('/', 'competitions.index')->name('competitions.index');
     Route::get('/create', [CompetitionController::class, 'create'])->name('competitions.create');
     Route::get('/{competition:slug}', [CompetitionController::class, 'show'])->name('competitions.show');
-    Route::get('/{competition:slug}/parse', [CompetitionController::class, 'parse'])->name('competitions.parse')->middleware('permission:parse competitions');
+    Route::get('/{competition:slug}/parse/{media:id}', [CompetitionController::class, 'parse'])->name('competitions.parse')->middleware('permission:parse competitions');
     Route::get('/{competition:slug}/events/{event}/{gender}', [CompetitionController::class, 'event'])->name('competitions.event');
     Route::get('/{competition:slug}/download/{mediaItem:file_name}', [CompetitionController::class, 'download'])->name('competitions.download');
 });
