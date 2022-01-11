@@ -55,4 +55,9 @@ class Event extends Model
             $query->where('type', $filter->eventType->value);
         }
     }
+
+    public function isType(EventType $type): bool
+    {
+        return (bool) ($this->type->value & $type->value);
+    }
 }

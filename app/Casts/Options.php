@@ -7,9 +7,13 @@ use App\Models\ParserConfig;
 use App\Support\ParserOptions\AthleteMatcher;
 use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\EventMatcher;
+use App\Support\ParserOptions\WomenMatcher;
 use App\Support\ParserOptions\HorizontalOffsetOption;
+use App\Support\ParserOptions\MenMatcher;
 use App\Support\ParserOptions\Option;
 use App\Support\ParserOptions\ResultIndicator;
+use App\Support\ParserOptions\TeamMatcher;
+use App\Support\ParserOptions\YearOfBirthMatcher;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Collection;
 
@@ -77,15 +81,18 @@ class Options implements CastsAttributes
     {
         return $this->getDefaultGeneralOptions()->merge(collect([
             new EventIndicator(),
+            new MenMatcher(),
+            new WomenMatcher(),
+            new ResultIndicator(),
+            new AthleteMatcher(),
+            new YearOfBirthMatcher(),
+            new TeamMatcher(),
         ]));
     }
 
     private function getDefaultGeneralOptions(): Collection
     {
         $options = collect();
-
-        $options->add(new ResultIndicator());
-        $options->add(new AthleteMatcher());
 
         foreach (Event::all() as $event) {
             $options->add(new EventMatcher($event));

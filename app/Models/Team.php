@@ -14,6 +14,8 @@ class Team extends Model
 {
     use HasFactory, HasCountry, HasSlug;
 
+    protected $guarded = ['id'];
+
     protected $casts = [
         'country' => Country::class,
     ];

@@ -4,11 +4,11 @@ namespace App\Support\ParserOptions;
 
 use App\Enums\ParserConfigOptionType;
 
-class EventIndicator extends Option
+class WomenMatcher extends Option
 {
-    public mixed $value = '/Event/';
-    public string $name = 'event_indicator';
-    public string $label = 'Event indicator';
+    public mixed $value = '';
+    public string $name = 'women_matcher';
+    public string $label = 'Women matcher';
     public string $group = Option::GROUP_EVENT;
 
     public function __construct($value = null)

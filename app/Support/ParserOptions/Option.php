@@ -16,8 +16,9 @@ abstract class Option
 
     public const GROUP_EVENTS = 'events';
     public const GROUP_PDF = 'pdf';
-    public const GROUP_TEXT = 'text';
+    public const GROUP_EVENT = 'event';
     public const GROUP_RESULT = 'result';
+    const GROUP_ENTRANT = 'entrant';
 
     public function __construct($value = null)
     {
@@ -26,7 +27,7 @@ abstract class Option
         }
     }
 
-    public function hasMatch($string): bool
+    public function hasMatch(string $string): bool
     {
         if (!Parser::isValidRegex($this->value)) {
             return false;
@@ -35,12 +36,12 @@ abstract class Option
         return Regex::match($this->value, $string)->hasMatch();
     }
 
-    public function getMatch($string): ?string
+    public function getMatch(string $string): mixed
     {
         if (!Parser::isValidRegex($this->value)) {
             return null;
         }
 
-        return Regex::match($this->value, $string)->result();
+        return trim(Regex::match($this->value, $string)->result());
     }
 }
