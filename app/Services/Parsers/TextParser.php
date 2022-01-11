@@ -58,13 +58,13 @@ class TextParser implements ParserInterface
             $athlete = $this->getAthleteFromLine($line);
         }
 
-        return Result::make();
+        return new Result();
     }
 
     private function getAthleteFromLine(string $line): Athlete
     {
         $athleteName = $this->options['athlete_matcher']->getMatch($line);
 
-        return Athlete::make();
+        return new Athlete();
     }
 }

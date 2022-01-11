@@ -6,4 +6,6 @@ parameters:
     paths:
         - app
     ignoreErrors:
-        - '#(Access|Call) to an undefined (property|method) App\\Casts.*#'  # Custom casts are currently not supported: https://github.com/nunomaduro/larastan/issues/890
+        # Custom casts are currently not supported: https://github.com/nunomaduro/larastan/issues/890
+        - '#(Access|Call) to an undefined (property|method) App\\Casts.*#'
+        - '#Property .* does not accept App\\Casts.*#'

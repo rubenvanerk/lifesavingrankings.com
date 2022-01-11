@@ -38,7 +38,7 @@ abstract class Option
     public function getMatch($string): ?string
     {
         if (!Parser::isValidRegex($this->value)) {
-            return false;
+            return null;
         }
 
         return Regex::match($this->value, $string)->result();
