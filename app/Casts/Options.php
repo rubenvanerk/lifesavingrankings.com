@@ -5,6 +5,7 @@ namespace App\Casts;
 use App\Models\Event;
 use App\Models\ParserConfig;
 use App\Support\ParserOptions\AthleteMatcher;
+use App\Support\ParserOptions\CategoryMatcher;
 use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\EventMatcher;
 use App\Support\ParserOptions\WomenMatcher;
@@ -81,6 +82,7 @@ class Options implements CastsAttributes
     {
         return $this->getDefaultGeneralOptions()->merge(collect([
             new EventIndicator(),
+            new CategoryMatcher(),
             new MenMatcher(),
             new WomenMatcher(),
             new ResultIndicator(),

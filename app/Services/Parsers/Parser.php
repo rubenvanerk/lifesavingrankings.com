@@ -68,6 +68,7 @@ class Parser implements ParserInterface
         $parser = $this->getConcreteParser($competitionFile);
         $rawText = $parser->getRawText(...func_get_args());
         $matchCount = null;
+        // TODO: fix count for ^ and $
         if ($this->isValidRegex($highlightRegex)) {
             $matchCount = count(Regex::matchAll($highlightRegex, $rawText)->results());
         }

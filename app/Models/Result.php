@@ -19,6 +19,8 @@ class Result extends Model
 {
     use HasFactory, HasCachedCount, HasEagerLimit, HasTime;
 
+    protected $guarded = ['id'];
+
     protected $casts = [
         'time' => Time::class,
     ];
@@ -35,6 +37,11 @@ class Result extends Model
     public function competition(): BelongsTo
     {
         return $this->belongsTo(Competition::class);
+    }
+
+    public function competition_category(): BelongsTo
+    {
+        return $this->belongsTo(CompetitionCategory::class);
     }
 
     public function event(): BelongsTo

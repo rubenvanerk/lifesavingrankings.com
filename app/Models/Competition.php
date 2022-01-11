@@ -45,6 +45,11 @@ class Competition extends Model implements HasMedia
         return $this->hasMany(Result::class);
     }
 
+    public function categories(): HasMany
+    {
+        return $this->hasMany(CompetitionCategory::class);
+    }
+
     public function venues(): BelongsToMany
     {
         return $this->belongsToMany(Venue::class);

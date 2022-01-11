@@ -20,7 +20,7 @@ class AthleteMatcher extends Option
 
     public function getMatch(string $string): ?string
     {
-        $name = trim(parent::getMatch($string));
+        $name = parent::getMatch($string);
 
         if (Str::contains($name, ',')) {
             $parts = explode(',', $name);
