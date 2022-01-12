@@ -37,7 +37,7 @@ class CreateCompetitionCategoriesTable extends Migration
         Schema::dropIfExists('competition_categories');
 
         Schema::table('results', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('competition_category_id');
+            $table->dropConstrainedForeignId('results_competition_category_id_foreign');
         });
     }
 }

@@ -126,5 +126,11 @@ class Result extends Model
                 $query->where('year_of_birth', '<=', $filter->toYearOfBirth);
             });
         }
+
+        if ($filter->competitionCategory) {
+            $query->whereHas('competition_category', function (Builder $query) use ($filter) {
+                $query->where('id', $filter->competitionCategory->id);
+            });
+        }
     }
 }

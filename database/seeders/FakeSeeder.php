@@ -6,6 +6,7 @@ use App\Enums\EventType;
 use App\Enums\VenueType;
 use App\Models\Athlete;
 use App\Models\Competition;
+use App\Models\CompetitionCategory;
 use App\Models\Event;
 use App\Models\Result;
 use App\Models\Split;
@@ -33,14 +34,17 @@ class FakeSeeder extends Seeder
         $competitionsFactory = Competition::factory(25);
 
         $events = Event::where('type', EventType::IndividualPool)->get();
+        $competitionsFactory = $competitionsFactory->has(CompetitionCategory::factory()->count(random_int(2, 5)), 'categories');
         foreach ($events as $event) {
             preg_match('/^\d+(?=m)/', $event->name, $matches);
             $eventDistance = (int)Arr::first($matches);
             $splitCount = $eventDistance / 50;
-            $competitionsFactory = $competitionsFactory->has(
-                Result::factory()->count(random_int(25, 50))->competition($event)
-                    ->has(Split::factory()->count($splitCount)->result($splitCount))
-            );
+            $competitionsFactory = $competitionsFactory
+                ->has(Result::factory()->count(random_int(25, 50))
+                    ->competition($event)
+                    ->has(Split::factory()->count($splitCount)->result($splitCount)
+                    )
+                );
         }
 
         $competitions = $competitionsFactory->create();
