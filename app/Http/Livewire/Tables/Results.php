@@ -24,7 +24,7 @@ class Results extends Component
     public ?Event $event = null;
     public mixed $gender = null;
     public string $title = '';
-    public bool $valid;
+    public ?bool $valid = null;
 
     public function mount($gender = null): void
     {
