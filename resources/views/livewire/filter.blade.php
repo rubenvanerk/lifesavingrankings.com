@@ -36,17 +36,18 @@
 
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {{-- TODO: Dynamically show filters based on $fields and visibility --}}
                 <div>
-                    <x-forms.input.with-label label="From date" name="from_date" labelClasses="text-white" wire:model="fromDate" type="date"/>
+                    <x-forms.input.with-label label="From date" name="from_date" labelClasses="text-white" wire:model="fields.from_date.value" type="date"/>
                 </div>
                 <div>
-                    <x-forms.input.with-label label="To date" name="to_date" labelClasses="text-white" wire:model="toDate" type="date"/>
+                    <x-forms.input.with-label label="To date" name="to_date" labelClasses="text-white" wire:model="fields.to_date.value" type="date"/>
                 </div>
                 <div>
-                    <x-forms.input.with-label label="From year of birth" name="from_year_of_birth" labelClasses="text-white" wire:model="fromYearOfBirth" type="number" min="0"/>
+                    <x-forms.input.with-label label="From year of birth" name="from_year_of_birth" labelClasses="text-white" wire:model="fields.from_year_of_birth.value" type="number" min="0"/>
                 </div>
                 <div>
-                    <x-forms.input.with-label label="To year of birth" name="to_year_of_birth" labelClasses="text-white" wire:model="toYearOfBirth" type="number" min="0"/>
+                    <x-forms.input.with-label label="To year of birth" name="to_year_of_birth" labelClasses="text-white" wire:model="fields.to_year_of_birth.value"  type="number" min="0"/>
                 </div>
             </div>
         </div>

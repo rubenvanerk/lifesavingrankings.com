@@ -73,57 +73,57 @@ class Result extends Model
     {
         $filter = app(Filter::class);
 
-        if ($filter->fromDate) {
+        if ($filter->getValue('from_date')) {
             $query->whereHas('competition', function (Builder $query) use ($filter) {
-                $query->whereDate('start_date', '>=', $filter->fromDate);
+                $query->whereDate('start_date', '>=', $filter->getValue('from_date'));
             });
         }
 
-        if ($filter->toDate) {
+        if ($filter->getValue('to_date')) {
             $query->whereHas('competition', function (Builder $query) use ($filter) {
-                $query->whereDate('start_date', '<=', $filter->toDate);
+                $query->whereDate('start_date', '<=', $filter->getValue('to_date'));
             });
         }
 
-        if ($filter->competition) {
+        if ($filter->getValue('competition')) {
             $query->whereHas('competition', function (Builder $query) use ($filter) {
-                $query->where('id', $filter->competition->id);
+                $query->where('id', $filter->getValue('competition'));
             });
         }
 
-        if ($filter->event) {
+        if ($filter->getValue('event')) {
             $query->whereHas('event', function (Builder $query) use ($filter) {
-                $query->where('id', $filter->event->id);
+                $query->where('id', $filter->getValue('event'));
             });
         }
 
-        if ($filter->athlete) {
+        if ($filter->getValue('athlete')) {
             $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
-                $query->where('id', $filter->athlete->id);
+                $query->where('id', $filter->getValue('athlete'));
             });
         }
 
-        if ($filter->gender) {
+        if ($filter->getValue('gender')) {
             $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
-                $query->where('gender', $filter->gender->value);
+                $query->where('gender', $filter->getValue('gender'));
             });
         }
 
-        if ($filter->team) {
+        if ($filter->getValue('team')) {
             $query->whereHas('team', function (Builder $query) use ($filter) {
-                $query->where('id', $filter->team->id);
+                $query->where('id', $filter->getValue('team'));
             });
         }
 
-        if ($filter->fromYearOfBirth) {
+        if ($filter->getValue('from_year_of_birth')) {
             $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
-                $query->where('year_of_birth', '>=', $filter->fromYearOfBirth);
+                $query->where('year_of_birth', '>=', $filter->getValue('from_year_of_birth'));
             });
         }
 
-        if ($filter->toYearOfBirth) {
+        if ($filter->getValue('to_year_of_birth')) {
             $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
-                $query->where('year_of_birth', '<=', $filter->toYearOfBirth);
+                $query->where('year_of_birth', '<=', $filter->getValue('to_year_of_birth'));
             });
         }
     }

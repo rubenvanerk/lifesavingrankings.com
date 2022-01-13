@@ -51,8 +51,8 @@ class Event extends Model
     {
         $filter = app(Filter::class);
 
-        if ($filter->eventType) {
-            $query->where('type', $filter->eventType->value);
+        if ($filter->getValue('event_type')) {
+            $query->where('type', $filter->getValue('event_type'));
         }
     }
 

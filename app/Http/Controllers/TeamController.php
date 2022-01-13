@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Enums\Gender;
 use App\Models\Event;
 use App\Models\Team;
+use App\Services\Filter;
 use Illuminate\Contracts\View\View;
 
 class TeamController extends Controller
 {
+    public function __construct()
+    {
+        app(Filter::class)->hide('team');
+    }
+
     public function show(Team $team): View
     {
         if (!$team->exists) {

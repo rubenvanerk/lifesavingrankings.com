@@ -39,11 +39,12 @@ class Events extends Component
 
     public function render(): \Illuminate\Contracts\View\View
     {
-        Filter::add(Gender::coerce($this->gender));
-        Filter::add(EventType::coerce($this->eventType));
-        Filter::add($this->athlete);
-        Filter::add($this->competition);
-        Filter::add($this->team);
+        $filter = app(Filter::class);
+        $filter->set('gender', Gender::coerce($this->gender));
+        $filter->set('event_type', EventType::coerce($this->eventType));
+        $filter->set('athlete', $this->athlete);
+        $filter->set('competition', $this->competition);
+        $filter->set('team', $this->team);
 
         // TODO: extract into service
         if ($this->readyToLoad) {

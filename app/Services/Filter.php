@@ -6,106 +6,82 @@ use App\Models\Athlete;
 use App\Models\Competition;
 use App\Models\Event;
 use App\Models\Team;
+use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Filter
 {
-    public ?string $fromDate;
-    public ?string $toDate;
-    public ?string $fromYearOfBirth;
-    public ?string $toYearOfBirth;
-    public ?Competition $competition = null;
-    public ?Athlete $athlete = null;
-    public ?Event $event = null;
-    public ?Team $team = null;
-    public ?Gender $gender = null;
-    public ?EventType $eventType = null;
+    public Collection $fields;
 
     public function __construct()
     {
         $filter = session('filter', []);
-        $this->fromDate = $filter['from_date'] ?? null;
-        $this->toDate = $filter['to_date'] ?? null;
-        $this->fromYearOfBirth = $filter['from_year_of_birth'] ?? null;
-        $this->toYearOfBirth = $filter['to_year_of_birth'] ?? null;
+
+        $this->fields = collect([
+            'from_date' => new FilterField($filter['from_date'] ?? null, true, true),
+            'to_date' => new FilterField($filter['to_date'] ?? null, true, true),
+            'from_year_of_birth' => new FilterField($filter['from_year_of_birth'] ?? null, true, true),
+            'to_year_of_birth' => new FilterField($filter['to_year_of_birth'] ?? null, true, true),
+            'competition' => new FilterField(null, false, true, Competition::class),
+            'athlete' => new FilterField(null, false, true, Athlete::class),
+            'event' => new FilterField(null, false, true, Event::class),
+            'team' => new FilterField(null, true, true, Team::class),
+            'gender' => new FilterField(null, false, true, Gender::class),
+            'event_type' => new FilterField(null, false, true, EventType::class),
+        ]);
     }
 
-    public static function add($value, $saveToSession = false): Filter
+    public function set(string $name, mixed $value)
     {
-        $filter = app(Filter::class);
-
-        if (is_null($value)) {
-            return $filter;
+        $field = $this->getFieldByName($name);
+        if ($value instanceof Model) {
+            $value = $value->id;
         }
-
-        switch (get_class($value)) {
-            case Gender::class:
-                $filter->gender = $value;
-                break;
-            case EventType::class:
-                $filter->eventType = $value;
-                break;
-            case Athlete::class:
-                $filter->athlete = $value;
-                break;
-            case Competition::class:
-                $filter->competition = $value;
-                break;
-            case Event::class:
-                $filter->event = $value;
-                break;
-            case Team::class:
-                $filter->team = $value;
-                break;
-        }
-
-        if ($saveToSession) {
-            $filter->saveToSession();
-        }
-
-        return $filter;
-    }
-
-    public function set($fromDate = null, $toDate = null, $fromYearOfBirth = null, $toYearOfBirth = null): void
-    {
-        $this->fromDate = $fromDate;
-        $this->toDate = $toDate;
-        $this->fromYearOfBirth = $fromYearOfBirth;
-        $this->toYearOfBirth = $toYearOfBirth;
-
+        $field->value = $value;
         $this->saveToSession();
     }
 
-    private function saveToSession(): void
+    public function hide(string $name)
     {
-        session()->put('filter', [
-            'from_date' => $this->fromDate,
-            'to_date' => $this->toDate,
-            'from_year_of_birth' => $this->fromYearOfBirth,
-            'to_year_of_birth' => $this->toYearOfBirth,
-        ]);
+        $field = $this->getFieldByName($name);
+        $field->visible = false;
+    }
+
+    public function getValue($fieldName): mixed
+    {
+        return $this->getFieldByName($fieldName)->value;
+    }
+
+    private function getFieldByName($name): FilterField
+    {
+        $field = $this->fields->filter(fn(FilterField $field, string $key) => $key == $name)->first();
+        if (!$field) {
+            throw new Exception(sprintf('Filter field %s type not known', $name));
+        }
+        return $field;
+    }
+
+    public function saveToSession(): void
+    {
+        $fieldsToSave = $this->fields->filter(fn(FilterField $field) => $field->saveToSession);
+
+        session()->put('filter',
+            $fieldsToSave->mapWithKeys(fn(FilterField $field, $key) => [$key => $field->value])
+        );
     }
 
     public function countActive(): int
     {
-        $activeFilters = 0;
-        if ($this->fromDate && !$this->competition) {
-            $activeFilters++;
-        }
-        if ($this->toDate && !$this->competition) {
-            $activeFilters++;
-        }
-        if ($this->fromYearOfBirth) {
-            $activeFilters++;
-        }
-        if ($this->toYearOfBirth) {
-            $activeFilters++;
-        }
-        return $activeFilters;
+        return $this->fields->filter(fn(FilterField $field) => $field->visible && !empty($field->value))->count();
     }
 
     public static function reset(): void
     {
         $filter = app(Filter::class);
-        $filter->set();
+        $filter->fields->filter(fn(FilterField $field) => $field->saveToSession)->each(function (FilterField $field) {
+            $field->value = null;
+        });
+        $filter->saveToSession();
     }
 }

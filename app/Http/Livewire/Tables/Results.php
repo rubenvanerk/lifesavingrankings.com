@@ -10,6 +10,7 @@ use App\Models\Result;
 use App\Models\Team;
 use App\Services\Filter;
 use App\Traits\WithFilter;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -33,13 +34,13 @@ class Results extends Component
 
     public function render()
     {
-        Filter::add(Gender::coerce($this->gender));
-        Filter::add($this->event);
-        Filter::add($this->competition);
-        Filter::add($this->athlete);
-        Filter::add($this->team);
-
         $filter = app(Filter::class);
+        $filter->set('gender', Gender::coerce($this->gender));
+        $filter->set('event', $this->event);
+        $filter->set('competition', $this->competition);
+        $filter->set('athlete', $this->athlete);
+        $filter->set('team', $this->team);
+
 
         if ($this->readyToLoad) {
             $results = Result::orderBy('time')
@@ -49,7 +50,7 @@ class Results extends Component
                 $results->valid();
             }
 
-            if (!$filter->competition && !$filter->athlete && !$filter->team) {
+            if (!$filter->getValue('competition') && !$filter->getValue('athlete') && !$filter->getValue('team')) {
                 $sub = Result::filter()->selectRaw('entrant_id, MIN(time)')
                     ->groupByRaw('event_id, entrant_id, entrant_type');
 
@@ -58,7 +59,7 @@ class Results extends Component
                     ->whereRaw('(entrant_id, time) IN (' . $sub->toSql() . ')', $sub->getBindings())
                     ->groupBy('entrant_id')
                     ->paginate(15);
-            } elseif ($filter->athlete || $filter->team) {
+            } elseif ($filter->getValue('athlete') || $filter->getValue('team')) {
                 $results = $results->filter()->paginate(15);
             } else {
                 $results = $results->filter()->get();
