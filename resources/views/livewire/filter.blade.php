@@ -12,7 +12,7 @@
         @endif
     </button>
 
-    <div class="bg-blue-800 lg:rounded-lg shadow-2xl border-2 border-blue-900 lg:mx-5 xl:mx-0"
+    <div class="bg-blue-800 lg:rounded-lg shadow-2xl lg:mx-5 xl:mx-0"
          @click.away="filter = false"
          x-show="filter"
          x-transition:enter="transition ease-in-out duration-300"
@@ -47,7 +47,16 @@
                     <x-forms.input.with-label label="From year of birth" name="from_year_of_birth" labelClasses="text-white" wire:model="fields.from_year_of_birth.value" type="number" min="0"/>
                 </div>
                 <div>
-                    <x-forms.input.with-label label="To year of birth" name="to_year_of_birth" labelClasses="text-white" wire:model="fields.to_year_of_birth.value"  type="number" min="0"/>
+                    <x-forms.input.with-label label="To year of birth" name="to_year_of_birth" labelClasses="text-white" wire:model="fields.to_year_of_birth.value" type="number" min="0"/>
+                </div>
+                <div>
+                    <x-forms.label for="category" color-class="text-white">Category</x-forms.label>
+                    <select wire:model="fields.competition_category.value" name="competition_category" id="category" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md text-gray-900">
+                        <option value="">---</option>
+                        @foreach($this->options['competition_category'] ?? [] as $key => $option)
+                            <option value="{{ $key }}">{{ $option }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>

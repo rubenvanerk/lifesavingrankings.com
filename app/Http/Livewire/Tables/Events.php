@@ -11,6 +11,7 @@ use App\Models\Result;
 use App\Models\Team;
 use App\Services\Filter;
 use App\Traits\WithFilter;
+use Arr;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -44,6 +45,15 @@ class Events extends Component
         $filter->set('event_type', EventType::coerce($this->eventType));
         $filter->set('athlete', $this->athlete);
         $filter->set('competition', $this->competition);
+        if ($this->competition) {
+            $options = $this->competition->categories->pluck('name', 'id')->toArray();
+            $filter->options('competition_category', $options);
+            if (!Arr::has($options, $filter->getValue('competition_category'))) {
+                $filter->set('competition_category');
+            }
+        } else {
+            $filter->disable('competition_category');
+        }
         $filter->set('team', $this->team);
 
         // TODO: extract into service

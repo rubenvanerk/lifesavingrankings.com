@@ -4,6 +4,7 @@ use App\Enums\EventType;
 use App\Enums\Gender;
 use App\Models\Athlete;
 use App\Models\Competition;
+use App\Models\CompetitionCategory;
 use App\Models\Event;
 use App\Models\Team;
 use Exception;
@@ -16,14 +17,15 @@ class Filter
 
     public function __construct()
     {
-        $filter = session('filter', []);
+        $filterInSession = session('filter', []);
 
         $this->fields = collect([
-            'from_date' => new FilterField($filter['from_date'] ?? null, true, true),
-            'to_date' => new FilterField($filter['to_date'] ?? null, true, true),
-            'from_year_of_birth' => new FilterField($filter['from_year_of_birth'] ?? null, true, true),
-            'to_year_of_birth' => new FilterField($filter['to_year_of_birth'] ?? null, true, true),
+            'from_date' => new FilterField($filterInSession['from_date'] ?? null, true, true),
+            'to_date' => new FilterField($filterInSession['to_date'] ?? null, true, true),
+            'from_year_of_birth' => new FilterField($filterInSession['from_year_of_birth'] ?? null, true, true),
+            'to_year_of_birth' => new FilterField($filterInSession['to_year_of_birth'] ?? null, true, true),
             'competition' => new FilterField(null, false, true, Competition::class),
+            'competition_category' => new FilterField($filterInSession['competition_category'] ?? null, true, true, CompetitionCategory::class),
             'athlete' => new FilterField(null, false, true, Athlete::class),
             'event' => new FilterField(null, false, true, Event::class),
             'team' => new FilterField(null, true, true, Team::class),
@@ -32,7 +34,7 @@ class Filter
         ]);
     }
 
-    public function set(string $name, mixed $value)
+    public function set(string $name, mixed $value = null)
     {
         $field = $this->getFieldByName($name);
         if ($value instanceof Model) {
@@ -48,9 +50,17 @@ class Filter
         $field->visible = false;
     }
 
+    public function disable(string $name)
+    {
+        $field = $this->getFieldByName($name);
+        $field->enabled = false;
+        $field->visible = false;
+    }
+
     public function getValue($fieldName): mixed
     {
-        return $this->getFieldByName($fieldName)->value;
+        $field = $this->getFieldByName($fieldName);
+        return $field->enabled ? $this->getFieldByName($fieldName)->value : null;
     }
 
     private function getFieldByName($name): FilterField
@@ -83,5 +93,12 @@ class Filter
             $field->value = null;
         });
         $filter->saveToSession();
+    }
+
+    public function options(string $fieldName, array $options)
+    {
+        $field = $this->getFieldByName($fieldName);
+
+        $field->options = $options;
     }
 }

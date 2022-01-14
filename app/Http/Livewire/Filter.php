@@ -13,12 +13,22 @@ class Filter extends Component
     // TODO: add option to disable certain filters
 
     public Collection $fields;
+    public Collection $options;
 
     protected $listeners = ['filtered' => '$refresh'];
 
     public function render(\App\Services\Filter $filter): View
     {
         $this->fields = $filter->fields;
+
+        if (!isset($this->options)) {
+            $this->options = collect();
+            $filter->fields->filter(fn(FilterField $filterField) => !empty($filterField->options))
+                ->each(function (FilterField $filterField, $fieldName) {
+                    $this->options->put($fieldName, $filterField->options);
+                });
+        }
+
         return view('livewire.filter', compact('filter'));
     }
 
