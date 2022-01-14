@@ -5,7 +5,7 @@
         wire:click="highlight($event.target.value, '{{ $option->name }}')"
         name="media.parser_config.options.{{ $option->name }}.value"
         :label="$option->label"
-        :class="$this->currentRegexOptionName == $option->name ? 'ring-2 ring-yellow-400 border-yellow-400 font-mono' : 'font-mono'"/>
+        :class="$this->currentRegexOptionName == $option->name ? 'ring-2 ring-amber-400 border-amber-400 font-mono' : 'font-mono'"/>
     {{-- TODO: install regex highlighter --}}
 @else
     <x-forms.input.with-label

@@ -1,7 +1,7 @@
 <div x-data="{ accountOpen: false }" @click.away="accountOpen = false" class="relative">
     <div class="hidden lg:block lg:ml-4">
         <div class="flex items-center">
-            <div class="ml-3 relative flex-shrink-0">
+            <div class="ml-3 relative shrink-0">
                 <div>
                     <a
                         class="bg-blue-900 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white"
@@ -23,11 +23,11 @@
     @if (auth()->check())
         <div x-show="accountOpen"
              x-transition:enter="transition ease-out duration-100"
-             x-transition:enter-start="transform opacity-0 scale-95"
-             x-transition:enter-end="transform opacity-100 scale-100"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
              x-transition:leave="transition ease-in duration-75"
-             x-transition:leave-start="transform opacity-100 scale-100"
-             x-transition:leave-end="transform opacity-0 scale-95"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95"
              class="origin-top-right absolute right-0 mt-2 w-44 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
              x-ref="menu-items"
              role="menu" aria-orientation="vertical"

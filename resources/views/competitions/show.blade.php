@@ -54,12 +54,12 @@
                                 @forelse($competition->getMedia('files') as $file)
                                     <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                                         <div class="w-0 flex-1 flex items-center">
-                                            <x-heroicon-s-paper-clip class="flex-shrink-0 h-5 w-5 text-gray-400"/>
+                                            <x-heroicon-s-paper-clip class="shrink-0 h-5 w-5 text-gray-400"/>
                                             <span class="ml-2 flex-1 w-0 truncate">
                                                 {{ $file->file_name }}
                                             </span>
                                         </div>
-                                        <div class="ml-4 flex-shrink-0">
+                                        <div class="ml-4 shrink-0">
                                             @can('parse competitions')
                                                 <a href="{{ route('competitions.parse', [$competition, $file]) }}"
                                                    class="font-medium text-blue-700 hover:text-blue-500 mr-4">Parse</a>
@@ -91,31 +91,31 @@
                             <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
                                 <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                                     <div class="w-0 flex-1 flex items-center">
-                                        <x-heroicon-s-video-camera class="flex-shrink-0 h-5 w-5 text-gray-400"/>
+                                        <x-heroicon-s-video-camera class="shrink-0 h-5 w-5 text-gray-400"/>
                                         <span class="ml-2 flex-1 w-0 truncate">
                                             Day 1
                                         </span>
                                     </div>
-                                    <div class="ml-4 flex-shrink-0">
+                                    <div class="ml-4 shrink-0">
                                         <a href="#"
                                            class="font-medium text-blue-700 hover:text-blue-500 flex items-center">
                                             <span class="mr-1 flex-1 truncate">{{ __('app.watch') }}</span>
-                                            <x-heroicon-s-external-link class="flex-shrink-0 h-4 w-4"/>
+                                            <x-heroicon-s-external-link class="shrink-0 h-4 w-4"/>
                                         </a>
                                     </div>
                                 </li>
                                 <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                                     <div class="w-0 flex-1 flex items-center">
-                                        <x-heroicon-s-video-camera class="flex-shrink-0 h-5 w-5 text-gray-400"/>
+                                        <x-heroicon-s-video-camera class="shrink-0 h-5 w-5 text-gray-400"/>
                                         <span class="ml-2 flex-1 w-0 truncate">
                                             Day 2
                                         </span>
                                     </div>
-                                    <div class="ml-4 flex-shrink-0">
+                                    <div class="ml-4 shrink-0">
                                         <a href="#"
                                            class="font-medium text-blue-700 hover:text-blue-500 flex items-center">
                                             <span class="mr-1 flex-1 truncate">{{ __('app.watch') }}</span>
-                                            <x-heroicon-s-external-link class="flex-shrink-0 h-4 w-4"/>
+                                            <x-heroicon-s-external-link class="shrink-0 h-4 w-4"/>
                                         </a>
                                     </div>
                                 </li>

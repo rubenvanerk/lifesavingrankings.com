@@ -1,6 +1,6 @@
 <div class="px-4 py-5 sm:p-6">
     @if($this->created)
-        <x-base.alert color="green">
+        <x-base.alert color="emerald">
             Thanks for adding the competition! It will be processed as soon as possible.
         </x-base.alert>
     @else

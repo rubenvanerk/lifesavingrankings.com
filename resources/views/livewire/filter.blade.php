@@ -2,7 +2,7 @@
     <button type="button" title="Filter"
             @click="filter = ! filter"
             x-show="!filter"
-            class="absolute z-10 bottom-0 right-0 block transform -translate-y-10 -translate-x-10 inline-flex items-center p-2 border border-transparent rounded-full text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none shadow-2xl transition">
+            class="absolute z-10 bottom-0 right-0 block -translate-y-10 -translate-x-10 inline-flex items-center p-2 border border-transparent rounded-full text-white bg-amber-500 hover:bg-amber-600 focus:outline-none shadow-2xl transition">
         <x-heroicon-s-filter class="h-12 w-12 p-2"/>
         @if ($filter->countActive())
             <span
@@ -16,15 +16,15 @@
          @click.away="filter = false"
          x-show="filter"
          x-transition:enter="transition ease-in-out duration-300"
-         x-transition:enter-start="opacity-0 transform scale-y-0 translate-y-64"
-         x-transition:enter-end="opacity-100 transform scale-y-100 translate-y-0"
+         x-transition:enter-start="opacity-0 scale-y-0 translate-y-64"
+         x-transition:enter-end="opacity-100 scale-y-100 translate-y-0"
          x-transition:leave="transition ease-in-out duration-300"
-         x-transition:leave-start="opacity-100 transform scale-y-100 translate-y-0"
-         x-transition:leave-end="opacity-0 transform scale-y-0 translate-y-64">
+         x-transition:leave-start="opacity-100 scale-y-100 translate-y-0"
+         x-transition:leave-end="opacity-0 scale-y-0 translate-y-64">
 
         <div class="py-4 px-6 text-white">
             <div class="flex">
-                <h2 class="text-lg font-bold pb-4 w-0 flex-grow">Filter results on this page</h2>
+                <h2 class="text-lg font-bold pb-4 w-0 grow">Filter results on this page</h2>
                 <span>
                     <x-base.button icon="s-refresh" wire:click="clear">
                         Reset

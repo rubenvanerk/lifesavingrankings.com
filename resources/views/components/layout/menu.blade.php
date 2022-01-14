@@ -3,7 +3,7 @@
         <div
             class="relative h-16 flex items-center justify-between lg:border-b lg:border-blue-400 lg:border-opacity-25">
             <div class="px-2 flex items-center lg:px-0">
-                <div class="flex-shrink-0">
+                <div class="shrink-0">
                     <a href="{{ url('/') }}" class="flex space-x-2 group">
                         <x-logo class="block h-8 w-8 text-white group-hover:text-gray-100 transition"/>
                         <span class="text-white font-bold tracking-wide leading-4 group-hover:text-gray-100 transition hidden sm:block">
@@ -34,7 +34,7 @@
                             <x-heroicon-s-search class="h-5 w-5"/>
                         </div>
                         <input id="search"
-                               class="block w-full bg-white py-2 pl-10 pr-3 border border-transparent rounded-md leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-yellow-300 focus:border-white sm:text-sm"
+                               class="block w-full bg-white py-2 pl-10 pr-3 border border-transparent rounded-md leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-amber-300 focus:border-white sm:text-sm"
                                placeholder="{{ __('app.search') }}..." type="search" name="search">
                     </div>
                 </div>

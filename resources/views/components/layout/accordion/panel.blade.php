@@ -16,7 +16,7 @@
             <span class="flex items-center truncate space-x-3">
                 <span>{{ $title }}</span>
             @if ($active)
-                    <span class="w-2.5 h-2.5 flex-shrink-0 rounded-full bg-yellow-400"></span>
+                    <span class="w-2.5 h-2.5 shrink-0 rounded-full bg-amber-400"></span>
                 @endif
             </span>
             <span x-show="expanded" aria-hidden="true" class="ml-4 font-bold">&minus;</span>

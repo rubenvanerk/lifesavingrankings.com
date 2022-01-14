@@ -9,7 +9,7 @@
 @endsection
 
 @section('subtitle')
-    {!! __('app.tagline', ['style_open' => '<span class="text-yellow-300 font-extrabold">', 'style_close' => '</span>']) !!}
+    {!! __('app.tagline', ['style_open' => '<span class="text-amber-300 font-extrabold">', 'style_close' => '</span>']) !!}
 @endsection
 
 @section('meta-breadcrumbs')

@@ -48,7 +48,7 @@ class Venue extends Model
     public function getTypeColorAttribute(): string
     {
         if ($this->type->is(VenueType::Beach)) {
-            return 'yellow';
+            return 'amber';
         }
         return 'blue';
     }

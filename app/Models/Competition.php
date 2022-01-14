@@ -59,7 +59,7 @@ class Competition extends Model implements HasMedia
     {
         return match ($this->timekeeping->value) {
             TimekeepingMethod::ByHand => 'blue',
-            TimekeepingMethod::Electronic => 'yellow',
+            TimekeepingMethod::Electronic => 'amber',
             default => 'gray',
         };
     }
@@ -67,10 +67,10 @@ class Competition extends Model implements HasMedia
     public function getStatusColorAttribute(): string
     {
         return match ($this->status->value) {
-            CompetitionStatus::Wanted => 'yellow',
-            CompetitionStatus::ScheduledForImport => 'purple',
+            CompetitionStatus::Wanted => 'amber',
+            CompetitionStatus::ScheduledForImport => 'violet',
             CompetitionStatus::UnableToImport => 'red',
-            CompetitionStatus::Published => 'green',
+            CompetitionStatus::Published => 'emerald',
             default => 'gray',
         };
     }

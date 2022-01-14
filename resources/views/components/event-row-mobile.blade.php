@@ -7,7 +7,7 @@
             <x-slot name="icon">
                 @foreach($result->entrant->nationalities ?? [] as $country)
                     <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                         class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
+                                         class="shrink-0 h-3.5 rounded shadow mt-1"/>
                 @endforeach
             </x-slot>
         @endif
@@ -19,7 +19,7 @@
             <a href="" class="truncate">{{ $event->name }}</a>
             <span class="flex">
                 @if (!empty($athlete))
-                    <a class="flex-grow font-medium"
+                    <a class="grow font-medium"
                        href="{{ route('athletes.event', ['athlete' => $athlete, 'event' => $event->slug]) }}">{{ $result->time_formatted }}</a>
                 @else
                     {{ $result->time_formatted }}
@@ -54,10 +54,10 @@
                 <div class="flex space-x-1">
                     @foreach($result->entrant->nationalities ?? [] as $country)
                         <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                             class="flex-shrink-0 h-3.5 rounded shadow mt-1"/>
+                                             class="shrink-0 h-3.5 rounded shadow mt-1"/>
                     @endforeach
                     <a href="{{ route('athletes.show', $result->entrant) }}"
-                       class="flex-grow truncate">{{ $result->entrant->name }}</a>
+                       class="grow truncate">{{ $result->entrant->name }}</a>
                     <span class="font-medium">{{ $result->time_formatted }}</span>
                 </div>
             @endforeach
