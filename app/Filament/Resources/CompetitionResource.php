@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Enums\CompetitionStatus;
 use App\Enums\TimekeepingMethod;
 use App\Filament\Resources\CompetitionResource\Pages;
-use App\Filament\Resources\CompetitionResource\RelationManagers;
 use App\Models\Competition;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -25,7 +24,8 @@ class CompetitionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required()->columnSpan(2),
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('slug')->required(),
                 Forms\Components\Toggle::make('ils_sanctioned')->label('ILS sanctioned')
                     ->columnSpan(2)
                     ->onIcon('heroicon-s-badge-check')
@@ -47,7 +47,7 @@ class CompetitionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('status_name')->label('Status'),
-                Tables\Columns\TextColumn::make('title')
+                Tables\Columns\TextColumn::make('View')
                     ->default('View')
                     ->url(fn (Competition $record): string => route('competitions.show', ['competition' => $record]))
                     ->openUrlInNewTab()

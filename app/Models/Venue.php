@@ -20,7 +20,6 @@ class Venue extends Model
 
     protected $casts = [
         'type' => VenueType::class,
-        'country' => Country::class,
     ];
 
     public function competitions(): BelongsToMany
@@ -53,9 +52,14 @@ class Venue extends Model
         return 'blue';
     }
 
+    public function getTypeNameAttribute(): string
+    {
+        return $this->type->description;
+    }
+
     public function getPoolSizeLabelAttribute(): string
     {
-        return $this->pool_size . 'm';
+        return $this->pool_size ? $this->pool_size . 'm' : '';
     }
 
     public function getIsPoolAttribute(): bool
@@ -65,6 +69,6 @@ class Venue extends Model
 
     public function getNameForSelectAttribute(): string
     {
-        return $this->name . ' - ' . $this->city  . ', ' . $this->country_name;
+        return $this->name . ' - ' . $this->city . ', ' . $this->country_name;
     }
 }

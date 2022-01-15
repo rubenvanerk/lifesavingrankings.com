@@ -16,10 +16,6 @@ class Team extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'country' => Country::class,
-    ];
-
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

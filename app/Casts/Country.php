@@ -32,9 +32,9 @@ class Country implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes): string
     {
-        if (is_string($value)) {
-            return $value;
+        if ($value instanceof \Rinvex\Country\Country) {
+            return $value->getIsoAlpha2();
         }
-        return $value->getIsoAlpha2();
+        return $value;
     }
 }
