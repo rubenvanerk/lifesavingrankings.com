@@ -35,6 +35,9 @@ class CompetitionResource extends Resource
                 Forms\Components\Radio::make('timekeeping')->options(TimekeepingMethod::asSelectArray()),
                 Forms\Components\Radio::make('status')->options(CompetitionStatus::asSelectArray()),
                 Forms\Components\Textarea::make('comment')->columnSpan(2),
+                Forms\Components\SpatieMediaLibraryFileUpload::make('files')
+                    ->collection('files')
+                    ->preserveFilenames(true),
             ]);
     }
 

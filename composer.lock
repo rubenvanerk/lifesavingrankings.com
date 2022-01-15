@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43b57b8f1f71803ab84a71b5f34e017a",
+    "content-hash": "b849be755aec49b1474c762e0165bc96",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1277,6 +1277,43 @@
                 "source": "https://github.com/laravel-filament/filament"
             },
             "time": "2022-01-14T21:08:03+00:00"
+        },
+        {
+            "name": "filament/spatie-laravel-media-library-plugin",
+            "version": "v2.8.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-filament/spatie-laravel-media-library-plugin.git",
+                "reference": "5a5afda0906ca6f5b086a7f7065034d47e643092"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-filament/spatie-laravel-media-library-plugin/zipball/5a5afda0906ca6f5b086a7f7065034d47e643092",
+                "reference": "5a5afda0906ca6f5b086a7f7065034d47e643092",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.6",
+                "php": "^8.0",
+                "spatie/laravel-medialibrary": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Filament\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Filament support for `spatie/laravel-medialibrary`.",
+            "homepage": "https://github.com/laravel-filament/filament",
+            "support": {
+                "issues": "https://github.com/laravel-filament/filament/issues",
+                "source": "https://github.com/laravel-filament/filament"
+            },
+            "time": "2022-01-10T23:21:56+00:00"
         },
         {
             "name": "filament/tables",
