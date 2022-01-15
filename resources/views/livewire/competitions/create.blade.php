@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="sm:col-span-4">
-                            <x-forms.label for="files">File</x-forms.label>
+                            <x-forms.label for="files">File(s)</x-forms.label>
                             <input type="file" wire:model="files" id="files" name="files" class="mt-1" multiple>
 
                             <div wire:loading wire:target="files">Uploading...</div>
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="sm:col-span-4">
-                            <x-forms.input.with-label name="file_link" label="Link to file" wire:model.defer="file_link"/>
+                            <x-forms.input.with-label name="file_link" label="Link to file" wire:model.defer="competition.file_link"/>
                         </div>
 
                     </div>

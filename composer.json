@@ -11,6 +11,7 @@
         "blade-ui-kit/blade-ui-kit": "^0.3.1",
         "diglactic/laravel-breadcrumbs": "^7.0",
         "fideloper/proxy": "^4.4",
+        "filament/filament": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
@@ -58,6 +59,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan filament:upgrade"
         ]
     },
     "extra": {

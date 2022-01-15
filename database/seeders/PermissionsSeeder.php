@@ -18,5 +18,6 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         Permission::create(['name' => 'parse competitions']);
+        Permission::create(['name' => 'edit competitions']);
     }
 }

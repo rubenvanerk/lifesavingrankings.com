@@ -5,6 +5,14 @@
 @endsection
 
 @section('content')
+    @can('edit competitions')
+        <div class="md:mx-2 xl:mx-0 px-5">
+            <x-base.button href="/admin/competitions/{{ $competition->id }}/edit"> {{-- TODO: use route generator --}}
+                Edit
+            </x-base.button>
+        </div>
+    @endcan
+
     <div class="grid grid-cols-2 md:grid-cols-3 gap-x-5 md:mx-2 xl:mx-0 p-5">
         <div class="bg-white shadow overflow-hidden md:rounded-lg col-span-2">
             <div class="border-t border-gray-200 py-5 px-4 sm:px-6 lg:px-8">

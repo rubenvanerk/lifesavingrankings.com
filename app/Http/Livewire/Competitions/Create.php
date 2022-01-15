@@ -66,6 +66,7 @@ class Create extends Component
             'end_date' => $this->end_date,
             'timekeeping' => $this->timekeeping,
             'ils_sanctioned' => $this->ils_sanctioned,
+            'file_link' => $this->file_link,
         ]);
 
         foreach ($this->files as $file) {

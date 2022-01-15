@@ -75,6 +75,11 @@ class Competition extends Model implements HasMedia
         };
     }
 
+    public function getStatusNameAttribute()
+    {
+        return $this->status->description;
+    }
+
     public function getIsPublishedAttribute(): bool
     {
         return $this->status->is(CompetitionStatus::Published());

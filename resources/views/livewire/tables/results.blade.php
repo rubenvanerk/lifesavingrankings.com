@@ -28,13 +28,13 @@
             @if (!in_array('athlete', $without))
                 <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
             @endif
-            @if (!in_array('team', $without))
-                <x-table.heading>{{ trans_choice('app.teams', 1) }}</x-table.heading>
-            @endif
             <x-table.heading>{{ trans_choice('app.time', 1) }}</x-table.heading>
             @if (!in_array('competition', $without))
                 <x-table.heading>{{ trans_choice('app.date', 1) }}</x-table.heading>
                 <x-table.heading class="hidden lg:block">{{ trans_choice('app.competitions', 1) }}</x-table.heading>
+            @endif
+            @if (!in_array('team', $without))
+                <x-table.heading>{{ trans_choice('app.teams', 1) }}</x-table.heading>
             @endif
         </x-slot>
 
@@ -53,13 +53,13 @@
                         @if (!in_array('athlete', $without))
                             <x-table.columns.athletes :athletes="[$result->entrant]"/>
                         @endif
-                        @if (!in_array('team', $without))
-                            <x-table.columns.teams :teams="[$result->team]"/>
-                        @endif
                         <x-table.columns.times :results="[$result]"/>
                         @if (!in_array('competition', $without))
                             <x-table.columns.dates :competitions="[$result->competition]"/>
                             <x-table.columns.competitions :competitions="[$result->competition]"/>
+                        @endif
+                        @if (!in_array('team', $without))
+                            <x-table.columns.teams :teams="[$result->team]"/>
                         @endif
                     </x-table.row>
                 @empty
