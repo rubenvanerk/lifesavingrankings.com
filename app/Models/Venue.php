@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\Country;
 use App\Enums\VenueType;
 use App\Traits\HasCountry;
 use Illuminate\Database\Eloquent\Builder;

@@ -26,8 +26,10 @@ class CompetitionResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('slug')->required(),
+                Forms\Components\BelongsToManyMultiSelect::make('venues')
+                    ->relationship('venues', 'name'),
                 Forms\Components\Toggle::make('ils_sanctioned')->label('ILS sanctioned')
-                    ->columnSpan(2)
+                    ->inline(false)
                     ->onIcon('heroicon-s-badge-check')
                     ->offIcon('heroicon-s-x-circle'),
                 Forms\Components\DatePicker::make('start_date')->required(),
@@ -49,7 +51,7 @@ class CompetitionResource extends Resource
                 Tables\Columns\TextColumn::make('status_name')->label('Status'),
                 Tables\Columns\TextColumn::make('View')
                     ->default('View')
-                    ->url(fn (Competition $record): string => route('competitions.show', ['competition' => $record]))
+                    ->url(fn(Competition $record): string => route('competitions.show', ['competition' => $record]))
                     ->openUrlInNewTab()
             ])
             ->filters([
