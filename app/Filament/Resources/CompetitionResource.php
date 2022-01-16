@@ -40,6 +40,11 @@ class CompetitionResource extends Resource
                 Forms\Components\SpatieMediaLibraryFileUpload::make('files')
                     ->collection('files')
                     ->preserveFilenames(true),
+                Forms\Components\Repeater::make('videos')
+                    ->schema([
+                        Forms\Components\TextInput::make('title')->required(),
+                        Forms\Components\TextInput::make('url')->url()->required(),
+                    ])
             ]);
     }
 

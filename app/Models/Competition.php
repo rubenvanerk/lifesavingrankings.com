@@ -24,6 +24,7 @@ class Competition extends Model implements HasMedia
     protected $casts = [
         'status' => CompetitionStatus::class,
         'timekeeping' => TimekeepingMethod::class,
+        'videos' => 'array',
     ];
 
     protected static function booted(): void
