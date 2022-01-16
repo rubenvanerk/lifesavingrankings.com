@@ -89,6 +89,12 @@ class Result extends Model
             $query->whereHas('competition', function (Builder $query) use ($filter) {
                 $query->where('id', $filter->getValue('competition'));
             });
+
+            if ($filter->getValue('competition_category')) {
+                $query->whereHas('competition_category', function (Builder $query) use ($filter) {
+                    $query->where('id', $filter->getValue('competition_category'));
+                });
+            }
         }
 
         if ($filter->getValue('event')) {
@@ -124,12 +130,6 @@ class Result extends Model
         if ($filter->getValue('to_year_of_birth')) {
             $query->whereHasMorph('entrant', [Athlete::class], function (Builder $query) use ($filter) {
                 $query->where('year_of_birth', '<=', $filter->getValue('to_year_of_birth'));
-            });
-        }
-
-        if ($filter->getValue('competition_category')) {
-            $query->whereHas('competition_category', function (Builder $query) use ($filter) {
-                $query->where('id', $filter->getValue('competition_category'));
             });
         }
     }
