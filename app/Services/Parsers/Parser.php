@@ -69,10 +69,12 @@ class Parser implements ParserInterface
     {
         $parser = $this->getConcreteParser($competitionFile);
         $rawText = $parser->getRawText(...func_get_args());
-        $matchCount = null;
-        // TODO: fix count for ^ and $
+        $matchCount = 0;
         if ($this->isValidRegex($highlightRegex)) {
-            $matchCount = count(Regex::matchAll($highlightRegex, $rawText)->results());
+            $lines = collect(explode("\n", $rawText));
+            $lines->map(function ($line) use ($highlightRegex, &$matchCount) {
+                $matchCount += count(Regex::matchAll($highlightRegex, $line)->results());
+            });
         }
         return $matchCount;
     }
