@@ -15,7 +15,7 @@ class Index extends Component
     {
         $competitions = Competition::select(['id', 'name', 'slug', 'start_date', 'end_date', 'status', 'ils_sanctioned'])
             ->with(['venues' => function ($query) {
-                $query->select(['city', 'type', 'pool_size', 'country'])->orderBy('type');
+                $query->select(['city', 'type', 'pool_size', 'country_code'])->orderBy('type');
             }])
             ->latest('start_date')
             ->paginate(15);

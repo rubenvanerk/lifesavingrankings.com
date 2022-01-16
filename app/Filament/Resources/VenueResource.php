@@ -22,7 +22,7 @@ class VenueResource extends Resource
     public static function form(Form $form): Form
     {
         $countryOptions = collect(countries())->pluck('name', 'iso_3166_1_alpha2');
-        $countryOptions = $countryOptions->mapWithKeys(fn($countryName, $countryCode) => [strtolower($countryCode) => $countryName]);
+        $countryOptions = $countryOptions->mapWithKeys(fn($countryName, $countryCode) => [strtolower((string)$countryCode) => $countryName]);
 
         return $form
             ->schema([

@@ -48,8 +48,8 @@ class Athlete extends Model
     {
         $filter = app(Filter::class);
 
-        if ($filter->gender) {
-            $query->where('gender', $filter->gender->value);
+        if ($filter->getValue('gender')) {
+            $query->where('gender', $filter->getValue('gender'));
         }
     }
 }

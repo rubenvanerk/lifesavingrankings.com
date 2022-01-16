@@ -10,10 +10,9 @@ use App\Models\CompetitionCategory;
 use App\Models\Event;
 use App\Models\Media;
 use App\Models\Result;
-use App\Models\Team;
+use App\Support\ParserOptions\EventMatcher;
 use App\Support\ParserOptions\Option;
 use Illuminate\Support\Collection;
-use MongoDB\BSON\Regex;
 
 class TextParser implements ParserInterface
 {
@@ -55,6 +54,7 @@ class TextParser implements ParserInterface
 
     private function getEventFromLine(string $line): ?Event
     {
+        /** @var Collection<EventMatcher> $eventMatchers */
         $eventMatchers = $this->options->where('group', Option::GROUP_EVENTS);
         foreach ($eventMatchers as $eventMatcher) {
             if ($eventMatcher->hasMatch($line)) {
@@ -67,14 +67,18 @@ class TextParser implements ParserInterface
 
     private function getResultFromLine(string $line, Event $event, Gender $gender, ?CompetitionCategory $category): Result
     {
+        $entrant = null;
+        $team = null;
+
         if ($event->isType(EventType::Individual())) {
-            $athlete = $this->getAthleteFromLine($line, $gender);
+            $entrant = $this->getAthleteFromLine($line, $gender);
             $team = $this->options['team_matcher']->getMatch($line);
         }
 
         return new Result([
-            'athlete_id' => $athlete->id,
-            'team_id' => $team->id,
+            'entrant_id' => $entrant?->id,
+            'entrant_type' => get_class($entrant),
+            'team_id' => $team?->id,
             'category_id' => $category?->id,
         ]);
     }
