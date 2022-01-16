@@ -7,6 +7,7 @@ use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use App\Models\Event;
 use App\Models\Team;
+use App\Models\Venue;
 use Arr;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,7 @@ class Filter
             'team' => new FilterField(null, true, true, Team::class),
             'gender' => new FilterField(null, false, true, Gender::class),
             'event_type' => new FilterField(null, false, true, EventType::class),
+            'venue' => new FilterField($filterInSession['venue'] ?? null, true, true, Venue::class),
         ]);
     }
 
