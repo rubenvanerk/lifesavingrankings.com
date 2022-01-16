@@ -45,7 +45,7 @@ class TextParser implements ParserInterface
                 $results->add($this->getResultFromLine($line, $event, $gender, $category));
             }
             if ($this->options['category_matcher']->hasMatch($line)) {
-                $category = $this->getCategoryFromLine($line);
+                $category = $this->options['category_matcher']->getMatch($line);
             }
         }
 
@@ -109,17 +109,5 @@ class TextParser implements ParserInterface
         }
 
         return null;
-    }
-
-    private function getCategoryFromLine(string $line): CompetitionCategory
-    {
-        $categoryName = $this->options['category_matcher']->getMatch($line);
-
-        /** @var CompetitionCategory $category */
-        $category = CompetitionCategory::query()->firstOrNew([
-            'name' => $categoryName,
-        ]);
-
-        return $category;
     }
 }
