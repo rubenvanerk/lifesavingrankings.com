@@ -38,10 +38,15 @@ class Parser implements ParserInterface
     public function getRawText(Media $competitionFile, $highlightRegex = null): string
     {
         $parser = $this->getConcreteParser($competitionFile);
-        $rawText = $parser->getRawText(...func_get_args());
+        return $parser->getRawText(...func_get_args());
+    }
+
+    public function getHighlightedRawText(Media $competitionFile, $highlightRegex = null): string
+    {
+        $rawText = $this->getRawText($competitionFile);
+
         $lines = collect(explode("\n", $rawText));
 
-        // highlight regex
         if ($this->isValidRegex($highlightRegex) && $this->countMatches($competitionFile, $highlightRegex) < 5000) {
             $lines = $lines->map(function ($line) use ($highlightRegex) {
                 return Regex::replace(
@@ -52,12 +57,10 @@ class Parser implements ParserInterface
             });
         }
 
-        if ($highlightRegex) {
-            // wrap lines in spans, so line numbers can be shown
-            $lines = $lines->map(function ($line) {
-                return '<span>' . $line . '</span>';
-            });
-        }
+        // wrap lines in spans, so line numbers can be shown
+        $lines = $lines->map(function ($line) {
+            return '<span>' . $line . '</span>';
+        });
 
         return $lines->implode("\n");
     }

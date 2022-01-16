@@ -1,5 +1,5 @@
 @php
-    $colorClasses = match($color) {
+    $colorClasses = match($color ?? 'blue') {
         'amber' => 'bg-amber-100 text-amber-800',
         'blue' => 'bg-blue-100 text-blue-800',
         'red' => 'bg-red-100 text-red-800',
