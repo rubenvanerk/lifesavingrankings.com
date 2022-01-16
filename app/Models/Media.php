@@ -13,7 +13,7 @@ class Media extends \Spatie\MediaLibrary\MediaCollections\Models\Media
         return $this->hasOne(ParserConfig::class);
     }
 
-    public function getParserConfigAttribute($value): Model
+    public function getParserConfigAttribute($value): ParserConfig
     {
         if ($value instanceof ParserConfig) {
             return $value;
