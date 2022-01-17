@@ -29,7 +29,7 @@ class Results extends Component
 
     public function mount($gender = null): void
     {
-        $this->gender = optional($gender)->value;
+        $this->gender = $gender?->value;
     }
 
     public function render()
@@ -40,7 +40,6 @@ class Results extends Component
         $filter->set('competition', $this->competition);
         $filter->set('athlete', $this->athlete);
         $filter->set('team', $this->team);
-
 
         if ($this->readyToLoad) {
             $results = Result::orderBy('time')

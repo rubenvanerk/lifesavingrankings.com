@@ -34,8 +34,8 @@ class Events extends Component
 
     public function mount($gender = null, EventType $eventType = null): void
     {
-        $this->gender = optional($gender)->value;
-        $this->eventType = optional($eventType)->value;
+        $this->gender = $gender?->value;
+        $this->eventType = $eventType?->value;
     }
 
     public function render(): \Illuminate\Contracts\View\View
