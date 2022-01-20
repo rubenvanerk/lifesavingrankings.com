@@ -1,10 +1,12 @@
-<div class="shadow sm:hidden">
-    <ul class="mobile-table mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
-        {{ $mobileBody }}
-    </ul>
+@if (isset($mobileBody))
+    <div class="shadow sm:hidden">
+        <ul class="mobile-table mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+            {{ $mobileBody }}
+        </ul>
 
-    {{ $pagination ?? '' }}
-</div>
+        {{ $pagination ?? '' }}
+    </div>
+@endif
 
 <div class="hidden sm:block">
     <div class="w-full mx-auto p-5">

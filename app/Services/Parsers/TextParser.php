@@ -10,6 +10,7 @@ use App\Models\CompetitionCategory;
 use App\Models\Event;
 use App\Models\Media;
 use App\Models\Result;
+use App\Services\AthleteFinder;
 use App\Support\ParserOptions\EventMatcher;
 use App\Support\ParserOptions\Option;
 use Illuminate\Support\Collection;
@@ -75,27 +76,28 @@ class TextParser implements ParserInterface
             $team = $this->options['team_matcher']->getMatch($line);
         }
 
-        return new Result([
+        $result = new Result([
             'entrant_id' => $entrant?->id,
             'entrant_type' => get_class($entrant),
             'team_id' => $team?->id,
             'category_id' => $category?->id,
+            'event_id' => $event->id
         ]);
+
+        $result->entrant = $entrant;
+        $result->team = $team;
+        $result->category = $category;
+        $result->event = $event;
+
+        return $result;
     }
 
     private function getAthleteFromLine(string $line, Gender $gender): Athlete
     {
-        $athleteName = $this->options['athlete_matcher']->getMatch($line);
+        $name = $this->options['athlete_matcher']->getMatch($line);
         $yearOfBirth = $this->options['year_of_birth_matcher']->getMatch($line);
 
-        /** @var Athlete $athlete */
-        $athlete = Athlete::query()->firstOrNew([
-            'name' => $athleteName,
-            'year_of_birth' => $yearOfBirth,
-            'gender' => $gender,
-        ]);
-
-        return $athlete;
+        return AthleteFinder::findOrNewAthlete($name, $gender, $yearOfBirth);
     }
 
     private function getGenderFromLine(string $line): ?Gender

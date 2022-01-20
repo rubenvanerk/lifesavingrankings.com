@@ -34,7 +34,9 @@
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
                             <span>Text</span>
                             @if(!is_null($matchCount))
-                                <x-base.badge class="ml-1" wire:loading.class="animate-pulse">{{ $matchCount }} regex matches</x-base.badge>
+                                <x-base.badge class="ml-1" wire:loading.class="animate-pulse">{{ $matchCount }} regex
+                                    matches
+                                </x-base.badge>
                             @endif
                             <span aria-hidden="true"
                                   x-show="previewTab == 'text'"
@@ -63,7 +65,28 @@
                     </div>
                     <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8"
                          x-show="previewTab == 'table'">
-                        Table
+                        <x-table>
+                            <x-slot name="head">
+                                <x-table.heading>Name</x-table.heading>
+                                <x-table.heading>YoB</x-table.heading>
+                                <x-table.heading>Gender</x-table.heading>
+                                <x-table.heading>Team</x-table.heading>
+                                <x-table.heading>Category</x-table.heading>
+                                <x-table.heading>Event</x-table.heading>
+                            </x-slot>
+                            <x-slot name="body">
+                                @foreach($results as $result)
+                                    <x-table.row>
+                                        <x-table.cell>{{ $result->entrant?->name }}</x-table.cell>
+                                        <x-table.cell>{{ $result->entrant?->year_of_birth }}</x-table.cell>
+                                        <x-table.cell>{{ $result->entrant?->gender?->description }}</x-table.cell>
+                                        <x-table.cell>{{ $result->team?->name }}</x-table.cell>
+                                        <x-table.cell>{{ $result->category?->name }}</x-table.cell>
+                                        <x-table.cell>{{ $result->event?->name }}</x-table.cell>
+                                    </x-table.row>
+                                @endforeach
+                            </x-slot>
+                        </x-table>
                     </div>
                 </div>
             </div>
