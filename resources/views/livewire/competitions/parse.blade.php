@@ -54,6 +54,17 @@
                                   class="bg-blue-800 absolute inset-x-0 bottom-0 h-0.5">
                         </span>
                         </a>
+                        <a href="#"
+                           @click.prevent="previewTab = 'events'"
+                           :class="previewTab == 'events' ? 'text-gray-900' : 'text-gray-500'"
+                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
+                            <span>Events</span>
+                            <x-base.badge class="ml-1">{{ $events->count() }}</x-base.badge>
+                            <span aria-hidden="true"
+                                  x-show="previewTab == 'events'"
+                                  class="bg-blue-800 absolute inset-x-0 bottom-0 h-0.5">
+                        </span>
+                        </a>
                     </nav>
                 </div>
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -87,6 +98,14 @@
                                 @endforeach
                             </x-slot>
                         </x-table>
+                    </div>
+                    <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8"
+                         x-show="previewTab == 'events'">
+                        <ul>
+                            @foreach($events as $event)
+                                <li>{{ $event }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>

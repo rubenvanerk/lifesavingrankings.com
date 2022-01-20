@@ -7,8 +7,14 @@ use App\Models\Media;
 
 class PdfParser extends TextParser
 {
+    protected string $rawText;
+
     public function getRawText(Media $competitionFile): string
     {
+        if (isset($this->rawText)) {
+            return $this->rawText;
+        }
+
         $config = new Config();
         $parserOptions = $competitionFile->parser_config->options;
         $config->setHorizontalOffset($this->translateQuoted($parserOptions['horizontal_offset']->value));

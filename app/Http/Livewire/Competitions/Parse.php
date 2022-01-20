@@ -30,6 +30,7 @@ class Parse extends Component
                 'matchCount' => Parser::countMatches($this->media, $this->currentRegex),
                 'rawText' => Parser::getHighlightedRawText($this->media, $this->currentRegex),
                 'results' => Parser::getParsedResults($this->media),
+                'events' => Parser::getIndicatedEvents($this->media),
             ];
         } catch (UnsupportedMimeTypeException $e) {
             return view('livewire.competitions.parse_error', [

@@ -4,8 +4,9 @@ namespace App\Services\Parsers;
 
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Interfaces\ParserInterface;
+use App\Models\Media;
+use App\Support\ParserOptions\EventIndicator;
 use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
 
@@ -35,10 +36,10 @@ class Parser implements ParserInterface
         return $parser->getParsedResults(...func_get_args());
     }
 
-    public function getRawText(Media $competitionFile, $highlightRegex = null): string
+    public function getRawText(Media $competitionFile): string
     {
         $parser = $this->getConcreteParser($competitionFile);
-        return $parser->getRawText(...func_get_args());
+        return $parser->getRawText($competitionFile);
     }
 
     public function getHighlightedRawText(Media $competitionFile, $highlightRegex = null): string
@@ -68,7 +69,7 @@ class Parser implements ParserInterface
     public function countMatches(Media $competitionFile, $highlightRegex = null): ?int
     {
         $parser = $this->getConcreteParser($competitionFile);
-        $rawText = $parser->getRawText(...func_get_args());
+        $rawText = $parser->getRawText($competitionFile);
         $matchCount = 0;
         if ($this->isValidRegex($highlightRegex)) {
             $lines = collect(explode("\n", $rawText));
@@ -82,5 +83,17 @@ class Parser implements ParserInterface
     public function isValidRegex($pattern): bool
     {
         return is_int(@preg_match($pattern, ''));
+    }
+
+    public function getIndicatedEvents(Media $competitionFile): Collection
+    {
+        $parser = $this->getConcreteParser($competitionFile);
+        $rawText = $parser->getRawText($competitionFile);
+        $lines = collect(explode("\n", $rawText));
+        /** @var EventIndicator $eventIndicator */
+        $eventIndicator = $competitionFile->parser_config->options['event_indicator'];
+        return $lines->filter(function ($line) use ($eventIndicator) {
+            return $eventIndicator->hasMatch($line);
+        });
     }
 }
