@@ -5,50 +5,55 @@ namespace App\Services\Parsers;
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Interfaces\ParserInterface;
 use App\Models\Media;
+use App\Models\ParserConfig;
 use App\Support\ParserOptions\EventIndicator;
 use Illuminate\Support\Collection;
 use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
 
-class Parser implements ParserInterface
+class ParserService
 {
+    private ParserInterface $concreteParser;
+    private string $rawText;
+
+    public function __construct(protected Media $competitionFile, protected ?ParserConfig $parserConfig)
+    {
+        if (empty($this->parserConfig)) {
+            $this->parserConfig = $this->competitionFile->parser_config;
+        }
+
+        $this->concreteParser = $this->getConcreteParser();
+        $this->rawText = $this->concreteParser->getRawText($this->competitionFile);
+    }
+
     /**
      * @throws UnsupportedMimeTypeException
      */
-    protected function getConcreteParser(Media $competitionFile): ParserInterface
+    protected function getConcreteParser(): ParserInterface
     {
-        $concreteParser = match ($competitionFile->mime_type) {
+        $concreteParser = match ($this->competitionFile->mime_type) {
             'application/pdf' => new PdfParser(),
             'text/plain' => new TextParser(),
             default => null,
         };
 
         if (is_null($concreteParser)) {
-            throw new UnsupportedMimeTypeException($competitionFile->mime_type . ' is currently not supported');
+            throw new UnsupportedMimeTypeException($this->competitionFile->mime_type . ' is currently not supported');
         }
 
         return $concreteParser;
     }
 
-    public function getParsedResults(Media $competitionFile): Collection
+    public function getParsedResults(): Collection
     {
-        $parser = $this->getConcreteParser($competitionFile);
-        return $parser->getParsedResults(...func_get_args());
+        return $this->concreteParser->getParsedResults($this->competitionFile);
     }
 
-    public function getRawText(Media $competitionFile): string
+    public function getHighlightedRawText($highlightRegex = null): string
     {
-        $parser = $this->getConcreteParser($competitionFile);
-        return $parser->getRawText($competitionFile);
-    }
+        $lines = collect(explode("\n", $this->rawText));
 
-    public function getHighlightedRawText(Media $competitionFile, $highlightRegex = null): string
-    {
-        $rawText = $this->getRawText($competitionFile);
-
-        $lines = collect(explode("\n", $rawText));
-
-        if ($this->isValidRegex($highlightRegex) && $this->countMatches($competitionFile, $highlightRegex) < 5000) {
+        if ($this->isValidRegex($highlightRegex) && $this->countMatches($highlightRegex) < 5000) {
             $lines = $lines->map(function ($line) use ($highlightRegex) {
                 return Regex::replace(
                     $highlightRegex,
@@ -66,10 +71,9 @@ class Parser implements ParserInterface
         return $lines->implode("\n");
     }
 
-    public function countMatches(Media $competitionFile, $highlightRegex = null): ?int
+    public function countMatches($highlightRegex = null): ?int
     {
-        $parser = $this->getConcreteParser($competitionFile);
-        $rawText = $parser->getRawText($competitionFile);
+        $rawText = $this->concreteParser->getRawText($this->competitionFile);
         $matchCount = 0;
         if ($this->isValidRegex($highlightRegex)) {
             $lines = collect(explode("\n", $rawText));
@@ -80,18 +84,16 @@ class Parser implements ParserInterface
         return $matchCount;
     }
 
-    public function isValidRegex($pattern): bool
+    public static function isValidRegex($pattern): bool
     {
         return is_int(@preg_match($pattern, ''));
     }
 
-    public function getIndicatedEvents(Media $competitionFile): Collection
+    public function getIndicatedEvents(): Collection
     {
-        $parser = $this->getConcreteParser($competitionFile);
-        $rawText = $parser->getRawText($competitionFile);
-        $lines = collect(explode("\n", $rawText));
+        $lines = collect(explode("\n", $this->rawText));
         /** @var EventIndicator $eventIndicator */
-        $eventIndicator = $competitionFile->parser_config->options['event_indicator'];
+        $eventIndicator = $this->parserConfig->options['event_indicator'];
         return $lines->filter(function ($line) use ($eventIndicator) {
             return $eventIndicator->hasMatch($line);
         });

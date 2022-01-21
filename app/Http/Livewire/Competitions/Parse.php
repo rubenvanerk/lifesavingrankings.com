@@ -5,11 +5,9 @@ namespace App\Http\Livewire\Competitions;
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Models\Media;
 use App\Models\ParserConfig;
-use App\Support\ParserOptions\Option;
+use App\Services\Parsers\ParserService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Livewire\Component;
-use Parser;
 
 class Parse extends Component
 {
@@ -25,12 +23,14 @@ class Parse extends Component
 
     public function render(): View
     {
+        $parser = new ParserService($this->media, $this->parser_config);
+
         try {
             $data = [
-                'matchCount' => Parser::countMatches($this->media, $this->currentRegex),
-                'rawText' => Parser::getHighlightedRawText($this->media, $this->currentRegex),
-                'results' => Parser::getParsedResults($this->media),
-                'events' => Parser::getIndicatedEvents($this->media),
+                'matchCount' => $parser->countMatches($this->currentRegex),
+                'rawText' => $parser->getHighlightedRawText($this->currentRegex),
+                'results' => $parser->getParsedResults(),
+                'events' => $parser->getIndicatedEvents(),
             ];
         } catch (UnsupportedMimeTypeException $e) {
             return view('livewire.competitions.parse_error', [

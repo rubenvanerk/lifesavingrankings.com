@@ -2,6 +2,7 @@
 
 namespace App\Support\ParserOptions;
 
+use App\Services\Parsers\ParserService;
 use Parser;
 use Spatie\Regex\Regex;
 
@@ -29,7 +30,7 @@ abstract class Option
 
     public function hasMatch(string $string): bool
     {
-        if (!Parser::isValidRegex($this->value)) {
+        if (!ParserService::isValidRegex($this->value)) {
             return false;
         }
 
@@ -38,7 +39,7 @@ abstract class Option
 
     public function getMatch(string $string): mixed
     {
-        if (!Parser::isValidRegex($this->value)) {
+        if (!ParserService::isValidRegex($this->value)) {
             return null;
         }
 
