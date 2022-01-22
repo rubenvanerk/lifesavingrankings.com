@@ -10,12 +10,16 @@ use App\Support\ParserOptions\EventIndicator;
 use Illuminate\Support\Collection;
 use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class ParserService
 {
     private ParserInterface $concreteParser;
     private string $rawText;
 
+    /**
+     * @throws UnsupportedMimeTypeException
+     */
     public function __construct(protected Media $competitionFile, protected ?ParserConfig $parserConfig)
     {
         if (empty($this->parserConfig)) {
@@ -44,9 +48,9 @@ class ParserService
         return $concreteParser;
     }
 
-    public function getParsedResults(): Collection
+    public function getParsedResults(): EloquentCollection
     {
-        return $this->concreteParser->getParsedResults($this->competitionFile);
+        return $this->concreteParser->getParsedResults($this->competitionFile, $this->parserConfig);
     }
 
     public function getHighlightedRawText($highlightRegex = null): string
@@ -73,10 +77,9 @@ class ParserService
 
     public function countMatches($highlightRegex = null): ?int
     {
-        $rawText = $this->concreteParser->getRawText($this->competitionFile);
         $matchCount = 0;
         if ($this->isValidRegex($highlightRegex)) {
-            $lines = collect(explode("\n", $rawText));
+            $lines = collect(explode("\n", $this->rawText));
             $lines->map(function ($line) use ($highlightRegex, &$matchCount) {
                 $matchCount += count(Regex::matchAll($highlightRegex, $line)->results());
             });

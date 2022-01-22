@@ -9,11 +9,13 @@ use App\Models\Athlete;
 use App\Models\CompetitionCategory;
 use App\Models\Event;
 use App\Models\Media;
+use App\Models\ParserConfig;
 use App\Models\Result;
 use App\Services\AthleteFinder;
 use App\Support\ParserOptions\EventMatcher;
 use App\Support\ParserOptions\Option;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class TextParser implements ParserInterface
 {
@@ -27,15 +29,15 @@ class TextParser implements ParserInterface
         return file_get_contents($competitionFile->getPath());
     }
 
-    public function getParsedResults(Media $competitionFile): Collection
+    public function getParsedResults(Media $competitionFile, ?ParserConfig $parserConfig = null): EloquentCollection
     {
         $lines = explode("\n", $this->getRawText($competitionFile));
-        $this->options = $competitionFile->parser_config->options;
+        $this->options = $parserConfig?->options ?: $competitionFile->parser_config->options;
 
         $event = null;
         $gender = null;
         $category = null;
-        $results = collect();
+        $results = new EloquentCollection;
 
         foreach ($lines as $line) {
             if ($this->options['event_indicator']->hasMatch($line)) {

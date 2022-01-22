@@ -1,7 +1,7 @@
 @if ($option->type->value == \App\Enums\ParserConfigOptionType::Regex)
     <x-forms.input.with-label
-        wire:model.debounce.500ms="parser_config.options.{{ $option->name }}.value"
-        wire:input.debounce.500ms="highlight($event.target.value, '{{ $option->name }}')"
+        wire:model="parser_config.options.{{ $option->name }}.value"
+        wire:input="highlight($event.target.value, '{{ $option->name }}')"
         wire:click="highlight($event.target.value, '{{ $option->name }}')"
         name="parser_config.options.{{ $option->name }}.value"
         :label="$option->label"

@@ -17,7 +17,10 @@
             </x-layout.accordion>
 
             <div>
-                <x-base.button wire:click="save">Save</x-base.button>
+                <x-base.button wire:click="save">
+                    <x-heroicon-s-refresh wire:loading class="animate-spin h-4 w-4 mr-3 transform rotate-180" wire:target="save"/>
+                    Save
+                </x-base.button>
             </div>
         </div>
     </x-layout.panel>
@@ -74,8 +77,15 @@
                             <pre class="numbered overflow-scroll max-h-screen leading-4">{!! $rawText !!}</pre>
                         </x-well>
                     </div>
-                    <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8"
+                    <div class="py-5 px-4 sm:px-6 lg:px-8"
                          x-show="previewTab == 'table'">
+                        <div class="ml-5 flex-col space-y-3">
+                            <x-base.button wire:click="refreshResults" wire:loading.attr="disabled" wire:target="refreshResults">
+                                <x-heroicon-s-refresh wire:loading class="animate-spin h-4 w-4 mr-3 transform rotate-180"/>
+                                Load table
+                            </x-base.button>
+                            <x-forms.checkbox.with-inline-label label="Autoload" wire:model="autoloadTable" name="autoloadTable"/>
+                        </div>
                         <x-table>
                             <x-slot name="head">
                                 <x-table.heading>Name</x-table.heading>
