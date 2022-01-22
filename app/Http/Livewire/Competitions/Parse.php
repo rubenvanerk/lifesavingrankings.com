@@ -19,6 +19,13 @@ class Parse extends Component
     public EloquentCollection $results;
     public bool $autoloadTable = false;
     public bool $loadTable = false;
+    public string $currentTab = self::TAB_TEXT;
+
+    public const TAB_TEXT = 'text';
+    public const TAB_TABLE = 'table';
+    public const TAB_EVENTS = 'events';
+
+    protected $queryString = ['currentTab' => ['except' => self::TAB_TEXT]];
 
     public function mount()
     {
@@ -28,21 +35,28 @@ class Parse extends Component
 
     public function render(): View
     {
+        $data = [];
+
         try {
             $parser = new ParserService($this->media, $this->parser_config);
 
-            if ($this->loadTable || $this->autoloadTable) {
-                $this->results = $parser->getParsedResults();
-                $this->loadTable = false;
-            } else {
-                $this->results = new EloquentCollection;
+            switch ($this->currentTab) {
+                case self::TAB_TEXT:
+                    $data['matchCount'] = $parser->countMatches($this->currentRegex);
+                    $data['rawText'] = $parser->getHighlightedRawText($this->currentRegex);
+                    break;
+                case self::TAB_TABLE:
+                    if ($this->loadTable || $this->autoloadTable) {
+                        $this->results = $parser->getParsedResults();
+                        $this->loadTable = false;
+                    } else {
+                        $this->results = new EloquentCollection;
+                    }
+                    break;
+                case self::TAB_EVENTS:
+                    $data['events'] = $parser->getIndicatedEvents();
+                    break;
             }
-
-            $data = [
-                'matchCount' => $parser->countMatches($this->currentRegex),
-                'rawText' => $parser->getHighlightedRawText($this->currentRegex),
-                'events' => $parser->getIndicatedEvents(),
-            ];
         } catch (UnsupportedMimeTypeException $e) {
             return view('livewire.competitions.parse_error', [
                 'message' => $e->getMessage(),
@@ -74,5 +88,12 @@ class Parse extends Component
     public function refreshResults()
     {
         $this->loadTable = true;
+    }
+
+    public function updatedCurrentTab()
+    {
+        if ($this->currentTab == self::TAB_TABLE) {
+            $this->refreshResults();
+        }
     }
 }

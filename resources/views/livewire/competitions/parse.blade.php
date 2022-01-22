@@ -18,7 +18,8 @@
 
             <div>
                 <x-base.button wire:click="save">
-                    <x-heroicon-s-refresh wire:loading class="animate-spin h-4 w-4 mr-3 transform rotate-180" wire:target="save"/>
+                    <x-heroicon-s-refresh wire:loading class="animate-spin h-4 w-4 mr-3 transform rotate-180"
+                                          wire:target="save"/>
                     Save
                 </x-base.button>
             </div>
@@ -27,18 +28,19 @@
 
     <div class="bg-white shadow overflow-hidden md:rounded-lg col-span-2">
         <div class="border-t border-gray-200 h-full">
-            <div x-data="{ previewTab: 'text' }"
+            <div x-data="{ previewTab: '{{ $currentTab }}' }"
                  class="bg-white shadow overflow-hidden md:rounded-lg col-span-2 md:col-span-1 mt-4 md:mt-0 h-full">
                 <div>
                     <nav class="relative z-0 shadow flex divide-x divide-gray-200">
                         <a href="#"
-                           @click.prevent="previewTab = 'text'"
+                           @click="previewTab = 'text'"
+                           wire:click.prevent="$set('currentTab', '{{ self::TAB_TEXT }}')"
                            :class="previewTab == 'text' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
                             <span>Text</span>
-                            @if(!is_null($matchCount))
-                                <x-base.badge class="ml-1" wire:loading.class="animate-pulse">{{ $matchCount }} regex
-                                    matches
+                            @if($currentTab == self::TAB_TEXT && !is_null($matchCount))
+                                <x-base.badge class="ml-1" wire:loading.class="animate-pulse">
+                                    {{ $matchCount }} regex matches
                                 </x-base.badge>
                             @endif
                             <span aria-hidden="true"
@@ -47,22 +49,28 @@
                         </span>
                         </a>
                         <a href="#"
-                           @click.prevent="previewTab = 'table'"
+                           @click="previewTab = 'table'"
+                           wire:click.prevent="$set('currentTab', '{{ self::TAB_TABLE }}')"
                            :class="previewTab == 'table' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
                             <span>Table</span>
-                            <x-base.badge class="ml-1">{{ $results->count() }}</x-base.badge>
+                            @if($currentTab == self::TAB_TABLE)
+                                <x-base.badge class="ml-1">{{ $results?->count() }}</x-base.badge>
+                            @endif
                             <span aria-hidden="true"
                                   x-show="previewTab == 'table'"
                                   class="bg-blue-800 absolute inset-x-0 bottom-0 h-0.5">
                         </span>
                         </a>
                         <a href="#"
-                           @click.prevent="previewTab = 'events'"
+                           @click="previewTab = 'events'"
+                           wire:click.prevent="$set('currentTab', '{{ self::TAB_EVENTS }}')"
                            :class="previewTab == 'events' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
                             <span>Events</span>
-                            <x-base.badge class="ml-1">{{ $events->count() }}</x-base.badge>
+                            @if($currentTab == self::TAB_EVENTS)
+                                <x-base.badge class="ml-1">{{ $events?->count() }}</x-base.badge>
+                            @endif
                             <span aria-hidden="true"
                                   x-show="previewTab == 'events'"
                                   class="bg-blue-800 absolute inset-x-0 bottom-0 h-0.5">
@@ -73,18 +81,23 @@
                 <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                     <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8"
                          x-show="previewTab == 'text'">
-                        <x-well class="p-3 rounded-md">
-                            <pre class="numbered overflow-scroll max-h-screen leading-4">{!! $rawText !!}</pre>
-                        </x-well>
+                        @if ($currentTab == self::TAB_TEXT)
+                            <x-well class="p-3 rounded-md">
+                                <pre class="numbered overflow-scroll max-h-screen leading-4">{!! $rawText !!}</pre>
+                            </x-well>
+                        @endif
                     </div>
                     <div class="py-5 px-4 sm:px-6 lg:px-8"
                          x-show="previewTab == 'table'">
                         <div class="ml-5 flex-col space-y-3">
-                            <x-base.button wire:click="refreshResults" wire:loading.attr="disabled" wire:target="refreshResults">
-                                <x-heroicon-s-refresh wire:loading class="animate-spin h-4 w-4 mr-3 transform rotate-180"/>
+                            <x-base.button wire:click="refreshResults" wire:loading.attr="disabled"
+                                           wire:target="refreshResults">
+                                <x-heroicon-s-refresh wire:loading
+                                                      class="animate-spin h-4 w-4 mr-3 transform rotate-180"/>
                                 Load table
                             </x-base.button>
-                            <x-forms.checkbox.with-inline-label label="Autoload" wire:model="autoloadTable" name="autoloadTable"/>
+                            <x-forms.checkbox.with-inline-label label="Autoload" wire:model.defer="autoloadTable"
+                                                                name="autoloadTable"/>
                         </div>
                         <x-table>
                             <x-slot name="head">
@@ -111,11 +124,13 @@
                     </div>
                     <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8"
                          x-show="previewTab == 'events'">
-                        <ul>
-                            @foreach($events as $event)
-                                <li>{{ $event }}</li>
-                            @endforeach
-                        </ul>
+                        @if($currentTab == self::TAB_EVENTS)
+                            <ul>
+                                @foreach($events as $event)
+                                    <li>{{ $event }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </div>
