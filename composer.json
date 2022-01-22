@@ -1,21 +1,26 @@
 {
-    "name": "laravel/laravel",
+    "name": "rubenvanerk/lifesavingrankings.com",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "LifesavingRankings.com",
+    "keywords": ["laravel", "lifesaving", "results"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Ruben van Erk",
+            "email": "ruben@lifesavingrankings.com"
+        }
+    ],
     "require": {
-        "php": "^8.0",
-        "bensampo/laravel-enum": "^3.4",
+        "php": "^8.1",
+        "bensampo/laravel-enum": "^4.0",
         "blade-ui-kit/blade-heroicons": "^1.2",
         "blade-ui-kit/blade-ui-kit": "^0.3.1",
         "diglactic/laravel-breadcrumbs": "^7.0",
-        "fideloper/proxy": "^4.4",
         "filament/filament": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.40",
+        "laravel/framework": "^8.75",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
         "rinvex/countries": "^7.3",
@@ -28,15 +33,15 @@
         "stijnvanouplines/blade-country-flags": "^1.0"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
-        "barryvdh/laravel-ide-helper": "^2.10",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.12",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^5.10",
+        "phpunit/phpunit": "^9.5.10",
+        "barryvdh/laravel-debugbar": "^3.6",
+        "barryvdh/laravel-ide-helper": "^2.10",
         "nunomaduro/larastan": "^1.0",
-        "phpunit/phpunit": "^9.3.3"
+        "laravel/sail": "^1.0.1"
     },
     "autoload": {
         "psr-4": {
@@ -74,9 +79,6 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
-        "platform": {
-            "php": "8.0.8"
-        },
         "allow-plugins": {
             "composer/package-versions-deprecated": true
         }
