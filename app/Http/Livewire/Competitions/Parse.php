@@ -16,7 +16,7 @@ class Parse extends Component
     public ParserConfig $parser_config;
     public ?string $currentRegex = null;
     public ?string $currentRegexOptionName = null;
-    public EloquentCollection $results;
+    public ?EloquentCollection $results = null;
     public bool $autoloadTable = false;
     public bool $loadTable = false;
     public string $currentTab = self::TAB_TEXT;
@@ -30,7 +30,6 @@ class Parse extends Component
     public function mount()
     {
         $this->parser_config = $this->media->parser_config;
-        $this->results = new EloquentCollection;
     }
 
     public function render(): View
@@ -50,7 +49,7 @@ class Parse extends Component
                         $this->results = $parser->getParsedResults();
                         $this->loadTable = false;
                     } else {
-                        $this->results = new EloquentCollection;
+                        $this->results = null;
                     }
                     break;
                 case self::TAB_EVENTS:
@@ -94,6 +93,8 @@ class Parse extends Component
     {
         if ($this->currentTab == self::TAB_TABLE) {
             $this->refreshResults();
+        } else {
+            $this->results = null;
         }
     }
 }
