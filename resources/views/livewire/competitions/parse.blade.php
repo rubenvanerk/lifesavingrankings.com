@@ -38,7 +38,7 @@
                            :class="currentTab == 'text' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
                             <span>Text</span>
-                            <x-base.badge class="ml-1" wire:loading.class="animate-pulse" x-show="currentTab == 'text'">
+                            <x-base.badge class="ml-1" x-show="currentTab == 'text'">
                                 <span wire:loading.remove>{{ $matchCount ?? '?' }} regex matches</span>
                                 <x-heroicon-s-refresh class="animate-spin h-4 w-4 transform rotate-180" wire:loading/>
                             </x-base.badge>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="py-5 px-4 sm:px-6 lg:px-8"
                          x-show="currentTab == 'table'">
-                        <div class="ml-5 flex-col space-y-3">
+                        <div class="flex-col space-y-3">
                             <x-base.button wire:click="refreshResults"
                                            wire:loading.attr="disabled"
                                            wire:target="refreshResults">
@@ -106,7 +106,7 @@
                                                                 name="autoloadTable"/>
                         </div>
                         @if ($results)
-                            <x-table>
+                            <x-table :add-padding="false">
                                 <x-slot name="head">
                                     <x-table.heading>Name</x-table.heading>
                                     <x-table.heading>YoB</x-table.heading>
@@ -137,11 +137,20 @@
                     <div class="sm:divide-y sm:divide-gray-200  py-5 px-4 sm:px-6 lg:px-8"
                          x-show="currentTab == 'events'">
                         @if($currentTab == self::TAB_EVENTS)
-                            <ul>
-                                @foreach($events as $event)
-                                    <li>{{ $event }}</li>
-                                @endforeach
-                            </ul>
+                            <x-table :add-padding="false">
+                                <x-slot name="head">
+                                    <x-table.heading>Line</x-table.heading>
+                                    <x-table.heading>Match</x-table.heading>
+                                </x-slot>
+                                <x-slot name="body">
+                                    @foreach($events as $event)
+                                        <x-table.row>
+                                            <x-table.cell>{{ $event['line'] }}</x-table.cell>
+                                            <x-table.cell>{{ $event['match'] }}</x-table.cell>
+                                        </x-table.row>
+                                    @endforeach
+                                </x-slot>
+                            </x-table>
                         @else
                             <div type="button" class="relative block w-full rounded-lg p-12 text-center">
                                 <x-heroicon-s-refresh class="mx-auto h-12 w-12 text-gray-400 animate-spin transform rotate-180"/>

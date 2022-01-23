@@ -9,7 +9,7 @@
 @endif
 
 <div class="hidden sm:block">
-    <div class="w-full mx-auto p-5">
+    <div class="w-full mx-auto {{ ($addPadding ?? true) ? 'p-5' : '' }}">
         <div class="flex flex-col mt-2">
             <div class="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">

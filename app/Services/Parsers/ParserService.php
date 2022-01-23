@@ -7,6 +7,7 @@ use App\Interfaces\ParserInterface;
 use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Support\ParserOptions\EventIndicator;
+use App\Support\ParserOptions\Option;
 use Illuminate\Support\Collection;
 use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
@@ -97,8 +98,25 @@ class ParserService
         $lines = collect(explode("\n", $this->rawText));
         /** @var EventIndicator $eventIndicator */
         $eventIndicator = $this->parserConfig->options['event_indicator'];
-        return $lines->filter(function ($line) use ($eventIndicator) {
+        $eventLines = $lines->filter(function ($line) use ($eventIndicator) {
             return $eventIndicator->hasMatch($line);
+        });
+        $eventMatchers = $this->parserConfig->options->filter(function (Option $option) {
+            return $option->group === Option::GROUP_EVENTS;
+        });
+        return $eventLines->map(function ($eventLine) use ($eventMatchers) {
+            foreach ($eventMatchers as $eventMatcher) {
+                if ($eventMatcher->hasMatch($eventLine)) {
+                    return [
+                        'line' => $eventLine,
+                        'match' => $eventMatcher->label,
+                    ];
+                }
+            }
+            return [
+                'line' => $eventLine,
+                'match' => null,
+            ];
         });
     }
 }
