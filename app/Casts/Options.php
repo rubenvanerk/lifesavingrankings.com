@@ -2,12 +2,14 @@
 
 namespace App\Casts;
 
+use App\Enums\ResultStatus;
 use App\Models\Event;
 use App\Models\ParserConfig;
 use App\Support\ParserOptions\AthleteMatcher;
 use App\Support\ParserOptions\CategoryMatcher;
 use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\EventMatcher;
+use App\Support\ParserOptions\StatusMatcher;
 use App\Support\ParserOptions\TimeMatcher;
 use App\Support\ParserOptions\WomenMatcher;
 use App\Support\ParserOptions\HorizontalOffsetOption;
@@ -88,6 +90,10 @@ class Options implements CastsAttributes
             new WomenMatcher(),
             new ResultIndicator(),
             new TimeMatcher(),
+            new StatusMatcher(status: ResultStatus::DSQ()),
+            new StatusMatcher(status: ResultStatus::DNF()),
+            new StatusMatcher(status: ResultStatus::DNS()),
+            new StatusMatcher(status: ResultStatus::WDR()),
             new AthleteMatcher(),
             new YearOfBirthMatcher(),
             new TeamMatcher(),

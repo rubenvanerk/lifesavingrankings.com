@@ -23,7 +23,7 @@ class TimeMatcher extends Option
     /**
      * @throws Exception
      */
-    public function getMatch(string $string): mixed
+    public function getMatch(string $string): CarbonInterval
     {
         $timeAsText = trim(parent::getMatch($string));
 

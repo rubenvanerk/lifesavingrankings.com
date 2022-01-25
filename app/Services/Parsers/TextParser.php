@@ -4,6 +4,7 @@ namespace App\Services\Parsers;
 
 use App\Enums\EventType;
 use App\Enums\Gender;
+use App\Enums\ResultStatus;
 use App\Interfaces\ParserInterface;
 use App\Models\Athlete;
 use App\Models\CompetitionCategory;
@@ -39,13 +40,18 @@ class TextParser implements ParserInterface
         $category = null;
         $results = new EloquentCollection;
 
-        foreach ($lines as $line) {
+        foreach ($lines as $lineNumber => $line) {
+            $status = $this->options['dsq_matcher']->getMatch($line)
+                ?: $this->options['dnf_matcher']->getMatch($line)
+                    ?: $this->options['dns_matcher']->getMatch($line)
+                        ?: $this->options['wdr_matcher']->getMatch($line);
+
             if ($this->options['event_indicator']->hasMatch($line)) {
                 $gender = $this->getGenderFromLine($line);
                 $event = $this->getEventFromLine($line);
             }
-            if ($event && $gender && $this->options['result_indicator']->hasMatch($line)) {
-                $results->add($this->getResultFromLine($line, $event, $gender, $category));
+            if ($event && $gender && ($this->options['result_indicator']->hasMatch($line) || $status)) {
+                $results->add($this->getResultFromLine($line, $lineNumber + 1, $event, $gender, $category, $status));
             }
             if ($this->options['category_matcher']->hasMatch($line)) {
                 $category = $this->options['category_matcher']->getMatch($line);
@@ -68,7 +74,7 @@ class TextParser implements ParserInterface
         return null;
     }
 
-    private function getResultFromLine(string $line, Event $event, Gender $gender, ?CompetitionCategory $category): Result
+    private function getResultFromLine(string $line, int $lineNumber, Event $event, Gender $gender, ?CompetitionCategory $category, ?ResultStatus $resultStatus): Result
     {
         $entrant = null;
         $team = null;
@@ -79,12 +85,15 @@ class TextParser implements ParserInterface
         }
 
         $result = new Result([
+            'original_line' => $line,
+            'original_line_number' => $lineNumber,
             'entrant_id' => $entrant?->id,
             'entrant_type' => get_class($entrant),
             'team_id' => $team?->id,
             'category_id' => $category?->id,
             'event_id' => $event->id,
             'time' => $this->options['time_matcher']->getMatch($line),
+            'status' => $resultStatus,
         ]);
 
         $result->entrant = $entrant;

@@ -106,8 +106,9 @@
                                                                 name="autoloadTable"/>
                         </div>
                         @if ($results)
-                            <x-table :add-padding="false">
+                            <x-table :add-padding="false" class="overflow-scroll">
                                 <x-slot name="head">
+                                    <x-table.heading>Line #</x-table.heading>
                                     <x-table.heading>Name</x-table.heading>
                                     <x-table.heading>YoB</x-table.heading>
                                     <x-table.heading>Gender</x-table.heading>
@@ -119,9 +120,10 @@
                                 <x-slot name="body">
                                     @foreach($results as $result)
                                         <x-table.row>
+                                            <x-table.cell>{{ $result->original_line_number }}</x-table.cell>
                                             <x-table.cell>{{ $result->entrant?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->entrant?->year_of_birth }}</x-table.cell>
-                                            <x-table.cell>{{ $result->entrant?->gender?->description }}</x-table.cell>
+                                            <x-table.cell>{{ $result->entrant?->gender?->description[0] }}</x-table.cell>
                                             <x-table.cell>{{ $result->team?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->category?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->event?->name }}</x-table.cell>

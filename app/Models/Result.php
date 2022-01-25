@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\Time;
 use App\Enums\CompetitionStatus;
+use App\Enums\ResultStatus;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
 use App\Traits\HasTime;
@@ -23,6 +24,7 @@ class Result extends Model
 
     protected $casts = [
         'time' => Time::class,
+        'status' => ResultStatus::class,
     ];
 
     protected static function booted(): void

@@ -4,6 +4,10 @@ trait HasTime
 {
     public function getTimeFormattedAttribute(): string
     {
+        if ($this->status) {
+            return $this->status->description;
+        }
+
         if ($this->time->minutes) {
             return sprintf('%s:%s.%s',
                 $this->time->minutes,
