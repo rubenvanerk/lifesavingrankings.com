@@ -8,6 +8,7 @@ use App\Support\ParserOptions\AthleteMatcher;
 use App\Support\ParserOptions\CategoryMatcher;
 use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\EventMatcher;
+use App\Support\ParserOptions\TimeMatcher;
 use App\Support\ParserOptions\WomenMatcher;
 use App\Support\ParserOptions\HorizontalOffsetOption;
 use App\Support\ParserOptions\MenMatcher;
@@ -86,6 +87,7 @@ class Options implements CastsAttributes
             new MenMatcher(),
             new WomenMatcher(),
             new ResultIndicator(),
+            new TimeMatcher(),
             new AthleteMatcher(),
             new YearOfBirthMatcher(),
             new TeamMatcher(),

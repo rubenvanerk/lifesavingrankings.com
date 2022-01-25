@@ -83,7 +83,8 @@ class TextParser implements ParserInterface
             'entrant_type' => get_class($entrant),
             'team_id' => $team?->id,
             'category_id' => $category?->id,
-            'event_id' => $event->id
+            'event_id' => $event->id,
+            'time' => $this->options['time_matcher']->getMatch($line),
         ]);
 
         $result->entrant = $entrant;

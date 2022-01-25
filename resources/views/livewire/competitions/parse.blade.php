@@ -114,6 +114,7 @@
                                     <x-table.heading>Team</x-table.heading>
                                     <x-table.heading>Category</x-table.heading>
                                     <x-table.heading>Event</x-table.heading>
+                                    <x-table.heading>Time</x-table.heading>
                                 </x-slot>
                                 <x-slot name="body">
                                     @foreach($results as $result)
@@ -124,6 +125,7 @@
                                             <x-table.cell>{{ $result->team?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->category?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->event?->name }}</x-table.cell>
+                                            <x-table.cell>{{ $result->time_formatted }}</x-table.cell>
                                         </x-table.row>
                                     @endforeach
                                 </x-slot>

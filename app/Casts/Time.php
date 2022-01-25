@@ -3,20 +3,24 @@
 namespace App\Casts;
 
 use Carbon\CarbonInterval;
+use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 
 class Time implements CastsAttributes
 {
     /**
      * Cast the given value.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @param  string  $key
-     * @param  mixed  $value
-     * @param  array  $attributes
+     * @param Model $model
+     * @param string $key
+     * @param mixed $value
+     * @param array $attributes
      * @return mixed
+     *
+     * @throws Exception
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, string $key, $value, array $attributes): mixed
     {
         $microseconds = ($value % 100) * 10000;
         $seconds = (int)floor($value / 100);
@@ -29,13 +33,13 @@ class Time implements CastsAttributes
     /**
      * Prepare the given value for storage.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @param  string  $key
-     * @param  mixed  $value
+     * @param  int|CarbonInterval  $value
      * @param  array  $attributes
-     * @return mixed
+     * @return float|int
      */
-    public function set($model, $key, $value, $attributes)
+    public function set($model, string $key, $value, array $attributes): float|int
     {
         if (is_numeric($value)) {
             return (int)$value;
