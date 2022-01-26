@@ -94,8 +94,10 @@ class TextParser implements ParserInterface
             'event_id' => $event->id,
             'time' => $this->options['time_matcher']->getMatch($line),
             'status' => $resultStatus,
+            'splits' => $this->options['splits_matcher']->getMatches($line),
         ]);
 
+        $result->splits = $this->options['splits_matcher']->getMatches($line);
         $result->entrant = $entrant;
         $result->team = $team;
         $result->category = $category;

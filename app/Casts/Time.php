@@ -6,6 +6,7 @@ use Carbon\CarbonInterval;
 use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use App\Support\Time as CarbonTime;
 
 class Time implements CastsAttributes
 {
@@ -27,7 +28,7 @@ class Time implements CastsAttributes
         $minutes = (int)floor($seconds / 60);
         $seconds %= 60;
 
-        return CarbonInterval::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
+        return CarbonTime::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
     }
 
     /**

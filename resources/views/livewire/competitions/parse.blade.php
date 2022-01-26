@@ -110,24 +110,26 @@
                                 <x-slot name="head">
                                     <x-table.heading>Line #</x-table.heading>
                                     <x-table.heading>Name</x-table.heading>
-                                    <x-table.heading>YoB</x-table.heading>
-                                    <x-table.heading>Gender</x-table.heading>
                                     <x-table.heading>Team</x-table.heading>
                                     <x-table.heading>Category</x-table.heading>
                                     <x-table.heading>Event</x-table.heading>
                                     <x-table.heading>Time</x-table.heading>
+                                    <x-table.heading>Splits</x-table.heading>
                                 </x-slot>
                                 <x-slot name="body">
                                     @foreach($results as $result)
                                         <x-table.row>
                                             <x-table.cell>{{ $result->original_line_number }}</x-table.cell>
-                                            <x-table.cell>{{ $result->entrant?->name }}</x-table.cell>
-                                            <x-table.cell>{{ $result->entrant?->year_of_birth }}</x-table.cell>
-                                            <x-table.cell>{{ $result->entrant?->gender?->description[0] }}</x-table.cell>
+                                            <x-table.cell>
+                                                {{ $result->entrant?->gender->is(\App\Enums\Gender::Men) ? '♂' : '♀' }}
+                                                {{ $result->entrant?->name }}
+                                                <small>{{ $result->entrant?->year_of_birth }}</small>
+                                            </x-table.cell>
                                             <x-table.cell>{{ $result->team?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->category?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->event?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->time_formatted }}</x-table.cell>
+                                            <x-table.cell>{{ is_iterable($result->splits) ? implode(', ', $result->splits->toArray()) : '' }}</x-table.cell>
                                         </x-table.row>
                                     @endforeach
                                 </x-slot>

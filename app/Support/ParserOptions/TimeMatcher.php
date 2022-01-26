@@ -3,6 +3,7 @@
 namespace App\Support\ParserOptions;
 
 use App\Enums\ParserConfigOptionType;
+use App\Support\Time;
 use Carbon\CarbonInterval;
 use Exception;
 use Spatie\Regex\Regex;
@@ -25,13 +26,13 @@ class TimeMatcher extends Option
      */
     public function getMatch(string $string): CarbonInterval
     {
-        $timeAsText = trim(parent::getMatch($string));
+        $timeAsText = parent::getMatch($string);
 
         $tenths = (int) Regex::match('/\d{2}$/', $timeAsText)->result();
         $microseconds = ($tenths % 100) * 10000;
         $seconds = (int) Regex::match('/\d{1,2}(?=[^\d]+\d{2}$)/', $timeAsText)->result();
         $minutes = (int) Regex::match('/\d{1,2}(?=[^\d]+\d{1,2}[^\d]+\d{2}$)/', $timeAsText)->result();
 
-        return CarbonInterval::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
+        return Time::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
     }
 }

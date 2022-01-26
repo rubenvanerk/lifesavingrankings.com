@@ -3,7 +3,9 @@
 namespace App\Support\ParserOptions;
 
 use App\Services\Parsers\ParserService;
+use Illuminate\Support\Collection;
 use Parser;
+use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
 
 abstract class Option
@@ -44,5 +46,15 @@ abstract class Option
         }
 
         return trim(Regex::match($this->value, $string)->result());
+    }
+
+    public function getMatches(string $string): ?Collection
+    {
+        if (!ParserService::isValidRegex($this->value)) {
+            return null;
+        }
+
+        $matches = collect(Regex::matchAll($this->value, $string)->results());
+        return $matches->map(fn (MatchResult $matchResult) => trim($matchResult->result()));
     }
 }

@@ -9,6 +9,7 @@ use App\Support\ParserOptions\AthleteMatcher;
 use App\Support\ParserOptions\CategoryMatcher;
 use App\Support\ParserOptions\EventIndicator;
 use App\Support\ParserOptions\EventMatcher;
+use App\Support\ParserOptions\SplitsMatcher;
 use App\Support\ParserOptions\StatusMatcher;
 use App\Support\ParserOptions\TimeMatcher;
 use App\Support\ParserOptions\WomenMatcher;
@@ -90,6 +91,7 @@ class Options implements CastsAttributes
             new WomenMatcher(),
             new ResultIndicator(),
             new TimeMatcher(),
+            new SplitsMatcher(),
             new StatusMatcher(status: ResultStatus::DSQ()),
             new StatusMatcher(status: ResultStatus::DNF()),
             new StatusMatcher(status: ResultStatus::DNS()),

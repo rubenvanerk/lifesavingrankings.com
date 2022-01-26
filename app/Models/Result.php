@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Splits;
 use App\Casts\Time;
 use App\Enums\CompetitionStatus;
 use App\Enums\ResultStatus;
@@ -12,7 +13,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
@@ -25,6 +25,7 @@ class Result extends Model
     protected $casts = [
         'time' => Time::class,
         'status' => ResultStatus::class,
+        'splits' => Splits::class,
     ];
 
     protected static function booted(): void
@@ -59,11 +60,6 @@ class Result extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
-    }
-
-    public function splits(): HasMany
-    {
-        return $this->hasMany(Split::class);
     }
 
     public function scopeValid(Builder $query): void
