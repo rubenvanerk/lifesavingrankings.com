@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\Country;
 use App\Traits\HasCountry;
 use App\Traits\Parseable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

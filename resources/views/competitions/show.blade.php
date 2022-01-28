@@ -140,9 +140,16 @@
                            :class="venueTab == '{{ $venue->type->value }}' ? 'text-gray-900' : 'text-gray-500'"
                            class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center @if($competition->venues->count() > 1)hover:bg-gray-50 @endif focus:z-10">
                             <span>{{ $venue->type->description }}</span>
+                            @php
+                                $colorClass = match($venue->type_color ?? 'blue') {
+                                    'amber' => 'bg-amber-500',
+                                    'blue' => 'bg-blue-500',
+                                    default => throw new Exception("Unknown color $colorClass, add it to competition.show component")
+                                }
+                            @endphp
                             <span aria-hidden="true"
                                   x-show="venueTab == '{{ $venue->type->value }}'"
-                                  class="bg-{{ $venue->type_color }}-500 absolute inset-x-0 bottom-0 h-0.5">
+                                  class="{{ $colorClass }} absolute inset-x-0 bottom-0 h-0.5">
                             </span>
                         </a>
                     @endforeach

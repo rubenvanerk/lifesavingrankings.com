@@ -19,5 +19,6 @@ class PermissionsSeeder extends Seeder
 
         Permission::create(['name' => 'parse competitions']);
         Permission::create(['name' => 'edit competitions']);
+        Permission::create(['name' => 'edit athletes']);
     }
 }

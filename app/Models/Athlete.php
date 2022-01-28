@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Casts\Countries;
-use App\Enums\CompetitionStatus;
 use App\Enums\Gender;
 use App\Services\AthleteFinder;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
+use App\Traits\HasCountries;
 use App\Traits\Parseable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,12 +17,11 @@ use Spatie\Sluggable\SlugOptions;
 
 class Athlete extends Model
 {
-    use HasFactory, HasSlug, HasCachedCount, Parseable;
+    use HasFactory, HasSlug, HasCachedCount, Parseable, HasCountries;
 
     protected $guarded = ['id'];
 
     protected $casts = [
-        'nationalities' => Countries::class,
         'gender' => Gender::class,
     ];
 
@@ -53,6 +51,11 @@ class Athlete extends Model
         if ($filter->getValue('gender')) {
             $query->where('gender', $filter->getValue('gender'));
         }
+    }
+
+    public function getNationalitiesAttribute()
+    {
+        return $this->countries;
     }
 
     public function toDatabase(): Athlete
