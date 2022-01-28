@@ -19,22 +19,4 @@ class CategoryMatcher extends Option
         $this->type = ParserConfigOptionType::Regex();
         parent::__construct($value);
     }
-
-    public function getMatch(string $string): CompetitionCategory
-    {
-        $categoryName = parent::getMatch($string);
-
-        if (isset($this->competitionCategoryMatch[$categoryName])) {
-            return $this->competitionCategoryMatch[$categoryName];
-        }
-
-        /** @var CompetitionCategory $competitionCategory */
-        $competitionCategory = CompetitionCategory::query()->firstOrNew([
-            'name' => $categoryName,
-        ]);
-
-        $this->competitionCategoryMatch[$competitionCategory->name] = $competitionCategory;
-
-        return $competitionCategory;
-    }
 }

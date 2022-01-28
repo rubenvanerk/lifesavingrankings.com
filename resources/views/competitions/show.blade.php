@@ -6,7 +6,7 @@
 
 @section('content')
     @can('edit competitions')
-        <div class="md:mx-2 xl:mx-0 px-5">
+        <div class="px-4 sm:px-6 lg:px-8">
             <x-base.button href="/admin/competitions/{{ $competition->id }}/edit"> {{-- TODO: use route generator --}}
                 Edit
             </x-base.button>

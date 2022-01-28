@@ -24,9 +24,13 @@ class TimeMatcher extends Option
     /**
      * @throws Exception
      */
-    public function getMatch(string $string): CarbonInterval
+    public function getMatch(string $string): ?CarbonInterval
     {
         $timeAsText = parent::getMatch($string);
+
+        if (is_null($timeAsText)) {
+            return null;
+        }
 
         $tenths = (int) Regex::match('/\d{2}$/', $timeAsText)->result();
         $microseconds = ($tenths % 100) * 10000;

@@ -22,6 +22,11 @@
                                           wire:target="save"/>
                     Save
                 </x-base.button>
+                <x-base.button wire:click="saveAndImport">
+                    <x-heroicon-s-refresh wire:loading class="animate-spin h-4 w-4 mr-3 transform rotate-180"
+                                          wire:target="saveAndImport"/>
+                    Save & import
+                </x-base.button>
             </div>
         </div>
     </x-layout.panel>
@@ -121,12 +126,12 @@
                                         <x-table.row>
                                             <x-table.cell>{{ $result->original_line_number }}</x-table.cell>
                                             <x-table.cell>
-                                                {{ $result->entrant?->gender->is(\App\Enums\Gender::Men) ? '♂' : '♀' }}
-                                                {{ $result->entrant?->name }}
-                                                <small>{{ $result->entrant?->year_of_birth }}</small>
+                                                {{ $result->parsedEntrant?->gender->is(\App\Enums\Gender::Men) ? '♂' : '♀' }}
+                                                {{ $result->parsedEntrant?->name }}
+                                                <small>{{ $result->parsedEntrant?->year_of_birth }}</small>
                                             </x-table.cell>
-                                            <x-table.cell>{{ $result->team?->name }}</x-table.cell>
-                                            <x-table.cell>{{ $result->category?->name }}</x-table.cell>
+                                            <x-table.cell>{{ $result->parsedTeam?->name }}</x-table.cell>
+                                            <x-table.cell>{{ $result->parsedCategory?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->event?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->time_formatted }}</x-table.cell>
                                             <x-table.cell>{{ is_iterable($result->splits) ? implode(', ', $result->splits->toArray()) : '' }}</x-table.cell>

@@ -22,7 +22,7 @@ class ParserService
     /**
      * @throws UnsupportedMimeTypeException
      */
-    public function __construct(protected Media $competitionFile, protected ?ParserConfig $parserConfig)
+    public function __construct(protected Media $competitionFile, protected ?ParserConfig $parserConfig = null)
     {
         if (empty($this->parserConfig)) {
             $this->parserConfig = $this->competitionFile->parser_config;

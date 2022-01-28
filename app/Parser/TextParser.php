@@ -12,9 +12,9 @@ use App\Models\Event;
 use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Models\Result;
+use App\Models\Team;
 use App\Parser\Options\EventMatcher;
 use App\Parser\Options\Option;
-use App\Services\AthleteFinder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
@@ -54,7 +54,7 @@ class TextParser implements ParserInterface
                 $results->add($this->getResultFromLine($line, $lineNumber + 1, $event, $gender, $category, $status));
             }
             if ($this->options['category_matcher']->hasMatch($line)) {
-                $category = $this->options['category_matcher']->getMatch($line);
+                $category = new CompetitionCategory(['name' => $this->options['category_matcher']->getMatch($line)]);
             }
         }
 
@@ -81,7 +81,7 @@ class TextParser implements ParserInterface
 
         if ($event->isType(EventType::Individual())) {
             $entrant = $this->getAthleteFromLine($line, $gender);
-            $team = $this->options['team_matcher']->getMatch($line);
+            $team = new Team(['name' => $this->options['team_matcher']->getMatch($line)]);
         }
 
         $result = new Result([
@@ -97,11 +97,10 @@ class TextParser implements ParserInterface
             'splits' => $this->options['splits_matcher']->getMatches($line),
         ]);
 
-        $result->splits = $this->options['splits_matcher']->getMatches($line);
-        $result->entrant = $entrant;
-        $result->team = $team;
-        $result->category = $category;
-        $result->event = $event;
+        $result->parsedEntrant = $entrant;
+        $result->parsedTeam = $team;
+        $result->parsedCategory = $category;
+        $result->event()->associate($event);
 
         return $result;
     }
@@ -111,7 +110,11 @@ class TextParser implements ParserInterface
         $name = $this->options['athlete_matcher']->getMatch($line);
         $yearOfBirth = $this->options['year_of_birth_matcher']->getMatch($line);
 
-        return AthleteFinder::findOrNewAthlete($name, $gender, $yearOfBirth);
+        return new Athlete([
+            'name' => $name,
+            'gender' => $gender,
+            'year_of_birth' => $yearOfBirth,
+        ]);
     }
 
     private function getGenderFromLine(string $line): ?Gender

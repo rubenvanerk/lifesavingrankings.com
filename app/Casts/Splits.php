@@ -39,9 +39,9 @@ class Splits implements CastsAttributes
      * @param string $key
      * @param int|CarbonInterval $value
      * @param array $attributes
-     * @return array
+     * @return string
      */
-    public function set($model, string $key, $value, array $attributes): array
+    public function set($model, string $key, $value, array $attributes): string
     {
         $splits = [];
         foreach ($value as $split) {
@@ -50,6 +50,6 @@ class Splits implements CastsAttributes
             }
             $splits[] =  $split->microseconds / 10000;
         }
-        return $splits;
+        return json_encode($splits);
     }
 }

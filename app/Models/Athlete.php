@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Casts\Countries;
 use App\Enums\CompetitionStatus;
 use App\Enums\Gender;
+use App\Services\AthleteFinder;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
+use App\Traits\Parseable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +18,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Athlete extends Model
 {
-    use HasFactory, HasSlug, HasCachedCount;
+    use HasFactory, HasSlug, HasCachedCount, Parseable;
 
     protected $guarded = ['id'];
 
@@ -51,5 +53,10 @@ class Athlete extends Model
         if ($filter->getValue('gender')) {
             $query->where('gender', $filter->getValue('gender'));
         }
+    }
+
+    public function toDatabase(): Athlete
+    {
+        return AthleteFinder::findOrCreateAthlete($this->name, $this->gender, $this->year_of_birth);
     }
 }

@@ -17,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(Filter::class, function ($app) {
             return new Filter();
         });
+
+        if ($this->app->environment('local')) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\Country;
 use App\Traits\HasCountry;
+use App\Traits\Parseable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,9 +13,11 @@ use Spatie\Sluggable\SlugOptions;
 
 class Team extends Model
 {
-    use HasFactory, HasCountry, HasSlug;
+    use HasFactory, HasCountry, HasSlug, Parseable;
 
     protected $guarded = ['id'];
+
+    protected array $parsedAttributes = ['name'];
 
     public function getSlugOptions(): SlugOptions
     {

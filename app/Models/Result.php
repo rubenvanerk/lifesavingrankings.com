@@ -22,6 +22,10 @@ class Result extends Model
 
     protected $guarded = ['id'];
 
+    public ?CompetitionCategory $parsedCategory;
+    public ?Team $parsedTeam;
+    public ?Athlete $parsedEntrant;
+
     protected $casts = [
         'time' => Time::class,
         'status' => ResultStatus::class,
@@ -35,6 +39,11 @@ class Result extends Model
                 $query->where('status', CompetitionStatus::Published);
             });
         });
+    }
+
+    public function media_source(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'media_id');
     }
 
     public function competition(): BelongsTo

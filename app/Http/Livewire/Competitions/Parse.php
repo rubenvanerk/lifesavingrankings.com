@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Competitions;
 
 use App\Exceptions\UnsupportedMimeTypeException;
+use App\Jobs\ImportCompetitionFile;
 use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Parser\ParserService;
@@ -69,6 +70,12 @@ class Parse extends Component
     {
         $this->validate();
         $this->parser_config->save();
+    }
+
+    public function saveAndImport()
+    {
+        $this->save();
+        ImportCompetitionFile::dispatch($this->media);
     }
 
     public function highlight($regex, $optionName)

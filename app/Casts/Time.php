@@ -45,6 +45,6 @@ class Time implements CastsAttributes
         if (is_numeric($value)) {
             return (int)$value;
         }
-        return $value->microseconds / 10000;
+        return $value->totalMicroseconds / 10000;
     }
 }

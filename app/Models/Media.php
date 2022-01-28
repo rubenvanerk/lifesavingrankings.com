@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Livewire\Wireable;
 
@@ -30,5 +31,10 @@ class Media extends \Spatie\MediaLibrary\MediaCollections\Models\Media
         }
 
         return [];
+    }
+
+    public function results(): HasMany
+    {
+        return $this->hasMany(Result::class)->withoutGlobalScope('published');
     }
 }

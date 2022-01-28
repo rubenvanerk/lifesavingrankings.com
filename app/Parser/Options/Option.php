@@ -46,7 +46,9 @@ abstract class Option
             return null;
         }
 
-        return trim(Regex::match($this->value, $string)->result());
+        $result = Regex::match($this->value, $string)->result();
+
+        return $result ? trim($result) : null;
     }
 
     public function getMatches(string $string): ?Collection

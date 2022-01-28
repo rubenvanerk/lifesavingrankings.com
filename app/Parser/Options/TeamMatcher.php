@@ -19,22 +19,4 @@ class TeamMatcher extends Option
         $this->type = ParserConfigOptionType::Regex();
         parent::__construct($value);
     }
-
-    public function getMatch(string $string): Team
-    {
-        $teamName = parent::getMatch($string);
-
-        if (isset($this->teamCache[$teamName])) {
-            return $this->teamCache[$teamName];
-        }
-
-        /** @var Team $team */
-        $team = Team::query()->firstOrNew([
-            'name' => $teamName,
-        ]);
-
-        $this->teamCache[$team->name] = $team;
-
-        return $team;
-    }
 }
