@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\CompetitionStatus;
 use App\Enums\TimekeepingMethod;
 use App\Filament\Resources\CompetitionResource\Pages;
+use App\Filament\Resources\CompetitionResource\RelationManagers\CategoriesRelationManager;
 use App\Filament\Resources\CompetitionResource\RelationManagers\ResultsRelationManager;
 use App\Models\Competition;
 use Filament\Forms;
@@ -69,6 +70,7 @@ class CompetitionResource extends Resource
     {
         return [
             ResultsRelationManager::class,
+            CategoriesRelationManager::class,
         ];
     }
 
