@@ -13,6 +13,7 @@ final class Gender extends Enum implements LocalizedEnum
 {
     const Men = 1;
     const Women = 2;
+    const Mixed = 3;
 
     public function getSlug(): ?string
     {

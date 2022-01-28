@@ -12,6 +12,7 @@ use App\Parser\Options\EventMatcher;
 use App\Parser\Options\HorizontalOffsetOption;
 use App\Parser\Options\MenMatcher;
 use App\Parser\Options\Option;
+use App\Parser\Options\RelayTeamMatcher;
 use App\Parser\Options\ResultIndicator;
 use App\Parser\Options\SplitsMatcher;
 use App\Parser\Options\StatusMatcher;
@@ -96,6 +97,7 @@ class Options implements CastsAttributes
             new StatusMatcher(status: ResultStatus::DNF()),
             new StatusMatcher(status: ResultStatus::DNS()),
             new StatusMatcher(status: ResultStatus::WDR()),
+            new RelayTeamMatcher(),
             new AthleteMatcher(),
             new YearOfBirthMatcher(),
             new TeamMatcher(),

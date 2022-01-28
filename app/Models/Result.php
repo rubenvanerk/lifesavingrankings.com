@@ -24,7 +24,7 @@ class Result extends Model
 
     public ?CompetitionCategory $parsedCategory;
     public ?Team $parsedTeam;
-    public ?Athlete $parsedEntrant;
+    public mixed $parsedEntrant;
 
     protected $casts = [
         'time' => Time::class,

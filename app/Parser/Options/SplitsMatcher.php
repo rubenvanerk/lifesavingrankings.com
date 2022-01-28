@@ -24,9 +24,13 @@ class SplitsMatcher extends Option
     /**
      * @throws Exception
      */
-    public function getMatches(string $string): Collection
+    public function getMatches(string $string): ?Collection
     {
         $splitsAsText = parent::getMatches($string);
+
+        if (!$splitsAsText instanceof Collection) {
+            return null;
+        }
 
         return $splitsAsText->map(function ($splitAsText) {
             $tenths = (int)Regex::match('/\d{2}$/', $splitAsText)->result();
