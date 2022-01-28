@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Services\Parsers;
+namespace App\Parser;
 
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Interfaces\ParserInterface;
 use App\Models\Media;
 use App\Models\ParserConfig;
-use App\Support\ParserOptions\EventIndicator;
-use App\Support\ParserOptions\Option;
+use App\Parser\Options\EventIndicator;
+use App\Parser\Options\Option;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use function collect;
 
 class ParserService
 {

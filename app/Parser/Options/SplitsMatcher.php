@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Support\ParserOptions;
+namespace App\Parser\Options;
 
 use App\Enums\ParserConfigOptionType;
 use App\Support\Time;
-use Carbon\CarbonInterval;
 use Exception;
 use Illuminate\Support\Collection;
 use Spatie\Regex\Regex;

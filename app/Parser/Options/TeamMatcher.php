@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Support\ParserOptions;
+namespace App\Parser\Options;
 
 use App\Enums\ParserConfigOptionType;
 use App\Models\Team;
-use Illuminate\Support\Collection;
 
 class TeamMatcher extends Option
 {

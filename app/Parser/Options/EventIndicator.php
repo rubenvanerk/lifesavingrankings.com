@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Support\ParserOptions;
+namespace App\Parser\Options;
 
 use App\Enums\ParserConfigOptionType;
 
-class WomenMatcher extends Option
+class EventIndicator extends Option
 {
-    public mixed $value = '';
-    public string $name = 'women_matcher';
-    public string $label = 'Women matcher';
+    public mixed $value = '/Event/';
+    public string $name = 'event_indicator';
+    public string $label = 'Event indicator';
     public string $group = Option::GROUP_EVENT;
 
     public function __construct($value = null)

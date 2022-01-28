@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Support\ParserOptions;
+namespace App\Parser\Options;
 
 use App\Enums\ParserConfigOptionType;
 use App\Enums\ResultStatus;
-use Carbon\CarbonInterval;
 use Exception;
-use Spatie\Regex\Regex;
 use Str;
 
 class StatusMatcher extends Option

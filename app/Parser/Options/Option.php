@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Support\ParserOptions;
+namespace App\Parser\Options;
 
-use App\Services\Parsers\ParserService;
+use App\Parser\ParserService;
 use Illuminate\Support\Collection;
 use Parser;
 use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
+use function collect;
 
 abstract class Option
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Parsers;
+namespace App\Parser;
 
-use Smalot\PdfParser\Config;
 use App\Models\Media;
+use Smalot\PdfParser\Config;
 
 class PdfParser extends TextParser
 {

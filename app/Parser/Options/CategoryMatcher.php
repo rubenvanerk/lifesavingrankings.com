@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Support\ParserOptions;
+namespace App\Parser\Options;
 
 use App\Enums\ParserConfigOptionType;
 use App\Models\CompetitionCategory;
-use App\Models\Team;
-use Str;
 
 class CategoryMatcher extends Option
 {

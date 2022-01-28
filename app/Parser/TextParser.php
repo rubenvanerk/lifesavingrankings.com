@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Parsers;
+namespace App\Parser;
 
 use App\Enums\EventType;
 use App\Enums\Gender;
@@ -12,11 +12,11 @@ use App\Models\Event;
 use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Models\Result;
+use App\Parser\Options\EventMatcher;
+use App\Parser\Options\Option;
 use App\Services\AthleteFinder;
-use App\Support\ParserOptions\EventMatcher;
-use App\Support\ParserOptions\Option;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 
 class TextParser implements ParserInterface
 {

@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Competitions;
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Models\Media;
 use App\Models\ParserConfig;
-use App\Services\Parsers\ParserService;
+use App\Parser\ParserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Livewire\Component;
