@@ -9,6 +9,7 @@ use App\Parser\Options\AthleteMatcher;
 use App\Parser\Options\CategoryMatcher;
 use App\Parser\Options\EventIndicator;
 use App\Parser\Options\EventMatcher;
+use App\Parser\Options\EventRejector;
 use App\Parser\Options\HorizontalOffsetOption;
 use App\Parser\Options\MenMatcher;
 use App\Parser\Options\Option;
@@ -87,6 +88,7 @@ class Options implements CastsAttributes
     {
         return $this->getDefaultGeneralOptions()->merge(collect([
             new EventIndicator(),
+            new EventRejector(),
             new CategoryMatcher(),
             new MenMatcher(),
             new WomenMatcher(),

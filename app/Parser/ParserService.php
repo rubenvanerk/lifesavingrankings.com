@@ -7,6 +7,7 @@ use App\Interfaces\ParserInterface;
 use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Parser\Options\EventIndicator;
+use App\Parser\Options\EventRejector;
 use App\Parser\Options\Option;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
@@ -99,8 +100,10 @@ class ParserService
         $lines = collect(explode("\n", $this->rawText));
         /** @var EventIndicator $eventIndicator */
         $eventIndicator = $this->parserConfig->options['event_indicator'];
-        $eventLines = $lines->filter(function ($line) use ($eventIndicator) {
-            return $eventIndicator->hasMatch($line);
+        /** @var EventRejector $eventRejector */
+        $eventRejector = $this->parserConfig->options['event_rejector'];
+        $eventLines = $lines->filter(function ($line) use ($eventIndicator, $eventRejector) {
+            return $eventIndicator->hasMatch($line) && !$eventRejector->hasMatch($line);
         });
         $eventMatchers = $this->parserConfig->options->filter(function (Option $option) {
             return $option->group === Option::GROUP_EVENTS;

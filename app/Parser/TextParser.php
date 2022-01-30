@@ -48,6 +48,10 @@ class TextParser implements ParserInterface
                         ?: $this->options['wdr_matcher']->getMatch($line);
 
             if ($this->options['event_indicator']->hasMatch($line)) {
+                if ($this->options['event_rejector']->hasMatch($line)) {
+                    $event = null;
+                    continue;
+                }
                 $gender = $this->getGenderFromLine($line);
                 $previousEvent = $event;
                 $event = $this->getEventFromLine($line);
