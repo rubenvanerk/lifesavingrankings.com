@@ -18,6 +18,7 @@ class Results extends Component
 {
     use WithFilter, WithPagination;
 
+    public string $bladeTemplate;
     public bool $readyToLoad = false;
     public ?Athlete $athlete = null;
     public ?Competition $competition = null;

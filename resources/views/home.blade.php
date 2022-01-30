@@ -20,12 +20,14 @@
     <x-home.stats/>
 
     <livewire:tables.events
+        blade-template="home"
         :event-type="\App\Enums\EventType::IndividualPool()"
         :gender="\App\Enums\Gender::Women()"
         :title="__('app.world') . ' ' . __('app.records') . ' ' . strtolower(\App\Enums\Gender::Women()->description)"
         :title-filtered="__('app.records') . ' ' . strtolower(\App\Enums\Gender::Women()->description)"/>
 
     <livewire:tables.events
+        blade-template="home"
         :event-type="\App\Enums\EventType::IndividualPool()"
         :gender="\App\Enums\Gender::Men()"
         :title="__('app.world') . ' ' . __('app.records') . ' ' . strtolower(\App\Enums\Gender::Men()->description)"

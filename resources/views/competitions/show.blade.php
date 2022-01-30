@@ -215,14 +215,16 @@
 
     @if ($competition->is_published)
         <livewire:tables.events
-            :event-type="\App\Enums\EventType::IndividualPool()"
+            blade-template="competition"
+            :event-type="\App\Enums\EventType::Pool()"
             :competition="$competition"
             :limit="3"
             :title="trans_choice('app.results', 2) . ' ' . strtolower(\App\Enums\Gender::Women()->description)"
             :gender="\App\Enums\Gender::Women()"/>
 
         <livewire:tables.events
-            :event-type="\App\Enums\EventType::IndividualPool()"
+            blade-template="competition"
+            :event-type="\App\Enums\EventType::Pool()"
             :competition="$competition"
             :limit="3"
             :title="trans_choice('app.results', 2) . ' ' . strtolower(\App\Enums\Gender::Men()->description)"

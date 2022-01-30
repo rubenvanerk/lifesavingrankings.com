@@ -24,7 +24,7 @@ Route::prefix('competitions')->group(function () {
     Route::get('/create', [CompetitionController::class, 'create'])->name('competitions.create');
     Route::get('/{competition:slug}', [CompetitionController::class, 'show'])->name('competitions.show');
     Route::get('/{competition:slug}/parse/{media:id}', [CompetitionController::class, 'parse'])->name('competitions.parse')->middleware('permission:parse competitions');
-    Route::get('/{competition:slug}/events/{event}/{gender}', [CompetitionController::class, 'event'])->name('competitions.event');
+    Route::get('/{competition:slug}/events/{event:slug}/{gender}', [CompetitionController::class, 'event'])->name('competitions.event');
     Route::get('/{competition:slug}/download/{mediaItem:file_name}', [CompetitionController::class, 'download'])->name('competitions.download');
 });
 
@@ -35,13 +35,13 @@ Route::prefix('events')->group(function () {
 
 Route::prefix('athletes')->group(function () {
     Route::get('/{athlete:slug}', [AthleteController::class, 'show'])->name('athletes.show');
-    Route::get('/{athlete:slug}/events/{event}', [AthleteController::class, 'event'])->name('athletes.event');
+    Route::get('/{athlete:slug}/events/{event:slug}', [AthleteController::class, 'event'])->name('athletes.event');
 });
 
 Route::prefix('teams')->group(function () {
     Route::view('/', 'teams.index')->name('teams.index');
     Route::get('/{team:slug}', [TeamController::class, 'show'])->name('teams.show');
-    Route::get('/{team:slug}/events/{event}/{gender}', [TeamController::class, 'event'])->name('teams.event');
+    Route::get('/{team:slug}/events/{event:slug}/{gender}', [TeamController::class, 'event'])->name('teams.event');
 });
 
 Route::middleware('guest')->group(function () {

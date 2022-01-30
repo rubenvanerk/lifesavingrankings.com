@@ -13,14 +13,16 @@
                         </a>
                     </x-table.cell>
                     <x-table.cell class="hidden lg:table-cell max-w-0 w-full">
-                        <span class="flex items-center space-x-1">
-                            <x-dynamic-component
-                                :component="'flag-4x3-' . $team->country_code"
-                                class="h-3.5 flex-none"/>
-                            <span class="truncate">
-                                {{ $team->country_name }}
+                        @if ($team->country)
+                            <span class="flex items-center space-x-1">
+                                <x-dynamic-component
+                                    :component="'flag-4x3-' . $team->country_code"
+                                    class="h-3.5 flex-none"/>
+                                <span class="truncate">
+                                    {{ $team->country_name }}
+                                </span>
                             </span>
-                        </span>
+                        @endif
                     </x-table.cell>
                 </x-table.row>
             @endforeach
@@ -30,9 +32,11 @@
             @foreach($teams as $team)
                 <x-table.mobile-row :link="route('teams.show', $team)">
                     <div class="flex items-center space-x-2">
-                        <x-dynamic-component
-                            :component="'flag-4x3-' . $team->country_code"
-                            class="h-3.5 flex-none"/>
+                        @if ($team->country)
+                            <x-dynamic-component
+                                :component="'flag-4x3-' . $team->country_code"
+                                class="h-3.5 flex-none"/>
+                        @endif
                         <span>{{ $team->name }}</span>
                     </div>
                 </x-table.mobile-row>

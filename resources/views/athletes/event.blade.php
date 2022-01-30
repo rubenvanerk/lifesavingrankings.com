@@ -6,6 +6,7 @@
 
 @section('content')
     <livewire:tables.results
+        blade-template="athlete"
         :athlete="$athlete"
         :event="$event"
         :valid="true"/>

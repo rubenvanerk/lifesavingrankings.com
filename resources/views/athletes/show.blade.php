@@ -14,6 +14,7 @@
     @endcan
 
     <livewire:tables.events
+        blade-template="athlete"
         :athlete="$athlete"
         :event-type="\App\Enums\EventType::IndividualPool()"/>
 @endsection

@@ -22,6 +22,7 @@ class Events extends Component
 {
     use WithFilter;
 
+    public string $bladeTemplate;
     public string $title;
     public string $titleFiltered;
     public bool $readyToLoad = false;

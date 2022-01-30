@@ -6,6 +6,7 @@
 
 @section('content')
     <livewire:tables.results
+        blade-template="competition"
         :competition="$competition"
         :event="$event"
         :gender="$gender"/>
