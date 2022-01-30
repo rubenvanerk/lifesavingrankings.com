@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
@@ -52,7 +51,7 @@ class Event extends Model
         $filter = app(Filter::class);
 
         if ($filter->getValue('event_type')) {
-            $query->where('type', $filter->getValue('event_type'));
+            $query->whereRaw('type & ? = ?', [$filter->getValue('event_type'), $filter->getValue('event_type')]);
         }
     }
 
