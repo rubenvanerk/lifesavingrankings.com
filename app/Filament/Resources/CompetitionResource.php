@@ -13,6 +13,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class CompetitionResource extends Resource
 {
@@ -60,9 +61,6 @@ class CompetitionResource extends Resource
                     ->default('View')
                     ->url(fn(Competition $record): string => route('competitions.show', ['competition' => $record]))
                     ->openUrlInNewTab()
-            ])
-            ->filters([
-                //
             ]);
     }
 
@@ -81,5 +79,10 @@ class CompetitionResource extends Resource
             'create' => Pages\CreateCompetition::route('/create'),
             'edit' => Pages\EditCompetition::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes();
     }
 }
