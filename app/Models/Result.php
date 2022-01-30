@@ -105,7 +105,8 @@ class Result extends Model
         }
 
         if ($filter->getValue('gender')) {
-            $query->whereMorphRelation('entrant', [Athlete::class], 'gender', $filter->getValue('gender'));
+            $query->whereMorphRelation('entrant', [Athlete::class], 'gender', $filter->getValue('gender'))
+                ->orWhereMorphRelation('entrant', [RelayTeam::class], 'gender', $filter->getValue('gender'));
         }
 
         if ($filter->getValue('team')) {
