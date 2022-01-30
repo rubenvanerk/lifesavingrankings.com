@@ -42,7 +42,8 @@ class Results extends Component
         $filter->set('team', $this->team);
 
         if ($this->readyToLoad) {
-            $results = Result::orderBy('status')->orderBy('time')
+            $results = Result::query()
+                ->orderBy('status', 'desc')->orderBy('time')
                 ->with(['competition', 'entrant', 'team']);
 
             if ($this->valid) {

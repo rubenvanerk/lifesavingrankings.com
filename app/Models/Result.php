@@ -9,6 +9,7 @@ use App\Enums\ResultStatus;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
 use App\Traits\HasTime;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -105,8 +106,10 @@ class Result extends Model
         }
 
         if ($filter->getValue('gender')) {
-            $query->whereMorphRelation('entrant', [Athlete::class], 'gender', $filter->getValue('gender'))
-                ->orWhereMorphRelation('entrant', [RelayTeam::class], 'gender', $filter->getValue('gender'));
+            $query->where(function (Builder $query) use ($filter) {
+                $query->whereMorphRelation('entrant', [Athlete::class], 'gender', $filter->getValue('gender'))
+                    ->orWhereMorphRelation('entrant', [RelayTeam::class], 'gender', $filter->getValue('gender'));
+            });
         }
 
         if ($filter->getValue('team')) {
@@ -118,7 +121,7 @@ class Result extends Model
         }
 
         if ($filter->getValue('to_year_of_birth')) {
-            $query->whereMorphRelation('entrant', [Athlete::class], 'year_of_birth', '>=', $filter->getValue('from_year_of_birth'));
+            $query->whereMorphRelation('entrant', [Athlete::class], 'year_of_birth', '<=', $filter->getValue('to_year_of_birth'));
         }
 
         if ($filter->getValue('venue')) {
