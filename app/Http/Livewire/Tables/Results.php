@@ -42,7 +42,7 @@ class Results extends Component
         $filter->set('team', $this->team);
 
         if ($this->readyToLoad) {
-            $results = Result::orderBy('time')
+            $results = Result::orderBy('status')->orderBy('time')
                 ->with(['competition', 'entrant', 'team']);
 
             if ($this->valid) {
