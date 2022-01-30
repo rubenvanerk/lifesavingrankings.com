@@ -17,7 +17,7 @@ class EventMatcher extends Option
     {
         $this->value = '';
         $this->event = $event;
-        $this->name = Str::slug($event->name, '_');
+        $this->name = Str::slug($event->slug, '_');
         $this->label = $event->name;
         $this->type = ParserConfigOptionType::Regex();
         parent::__construct();
