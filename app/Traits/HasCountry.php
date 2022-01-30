@@ -22,7 +22,7 @@ trait HasCountry
     protected function country(): Attribute
     {
         return new Attribute(
-            get: fn($value) => country($this->country_code),
+            get: fn($value) => $this->country_code ? country($this->country_code) : null,
             set: function ($value) {
                 if ($value instanceof \Rinvex\Country\Country) {
                     return $this->country_code = $value->getIsoAlpha2();
