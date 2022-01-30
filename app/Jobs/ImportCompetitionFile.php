@@ -41,7 +41,9 @@ class ImportCompetitionFile implements ShouldQueue
         foreach ($results as $result) {
             $result->competition()->associate($this->competitionFile->model);
             $result->media_source()->associate($this->competitionFile);
-            $result->competition_category()->associate($result->parsedCategory->toDatabase(['competition_id' => $this->competitionFile->model->id]));
+            if ($result->parsedCategory) {
+                $result->competition_category()->associate($result->parsedCategory->toDatabase(['competition_id' => $this->competitionFile->model->id]));
+            }
             $result->entrant()->associate($result->parsedEntrant->toDatabase());
             $result->team()->associate($result->parsedTeam->toDatabase());
             $result->save();

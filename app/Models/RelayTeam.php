@@ -14,6 +14,8 @@ class RelayTeam extends Model
 
     protected $guarded = ['id'];
 
+    protected $parsedAttributes = ['name', 'gender'];
+
     protected $casts = [
         'gender' => Gender::class,
     ];
