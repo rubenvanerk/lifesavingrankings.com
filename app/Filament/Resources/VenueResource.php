@@ -53,17 +53,7 @@ class VenueResource extends Resource
                 Tables\Columns\TextColumn::make('city'),
                 Tables\Columns\TextColumn::make('type_name'),
                 Tables\Columns\TextColumn::make('pool_size_label'),
-            ])
-            ->filters([
-                //
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
