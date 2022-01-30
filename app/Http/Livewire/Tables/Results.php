@@ -57,7 +57,6 @@ class Results extends Component
                 $results = $results
                     ->withoutGlobalScope('published')
                     ->whereRaw('(entrant_id, time) IN (' . $sub->toSql() . ')', $sub->getBindings())
-                    ->groupBy('entrant_id')
                     ->paginate(15);
             } elseif ($filter->getValue('athlete') || $filter->getValue('team')) {
                 $results = $results->filter()->paginate(15);
