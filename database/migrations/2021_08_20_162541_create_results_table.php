@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Competition;
+use App\Models\Media;
 use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -26,6 +27,7 @@ class CreateResultsTable extends Migration
             $table->tinyInteger('status')->unsigned()->nullable();
             $table->mediumInteger('time')->unsigned()->nullable()->index();
             $table->foreignIdFor(Team::class)->nullable()->constrained()->onDelete('set null');
+            $table->foreignIdFor(Media::class);
         });
     }
 
