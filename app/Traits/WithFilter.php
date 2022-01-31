@@ -8,7 +8,7 @@ trait WithFilter
     public function __construct()
     {
         $this->listeners = array_merge($this->listeners ?? [], ['filtered' => '$refresh']);
-        View::share('filter', true);
+        View::share('filter', app(Filter::class));
     }
 
     public function resetFilter(): void

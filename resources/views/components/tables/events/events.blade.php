@@ -1,4 +1,4 @@
-<x-table>
+<x-table :title="$title">
     <x-slot name="head">
         <x-table.heading>{{ trans_choice('app.events', 1) }}</x-table.heading>
         <x-table.heading>{{ trans_choice('app.athletes', 1) }}</x-table.heading>
