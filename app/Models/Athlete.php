@@ -62,4 +62,13 @@ class Athlete extends Model
     {
         return AthleteFinder::findOrCreateAthlete($this->name, $this->gender, $this->year_of_birth);
     }
+
+    public function getLastTeamAttribute(): Team
+    {
+        return $this->results()
+            ->join('competitions', 'results.competition_id', '=', 'competitions.id')
+            ->latest('competitions.start_date')
+            ->first()
+            ->team;
+    }
 }

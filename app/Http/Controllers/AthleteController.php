@@ -14,10 +14,15 @@ class AthleteController extends Controller
             abort(404);
         }
 
+        // TODO: add competitions_count
+        $athlete->loadCount([
+            'results',
+        ]);
+
         return view('athletes.show', compact('athlete'));
     }
 
-    public function event(Athlete $athlete, $event)
+    public function event(Athlete $athlete, $event): View
     {
         $event = Event::where('slug', $event)->first();
 
