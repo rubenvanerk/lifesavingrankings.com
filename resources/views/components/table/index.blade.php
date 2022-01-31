@@ -35,7 +35,20 @@
 
 @if (isset($mobileBody))
     <div class="shadow sm:hidden">
-        <ul class="mobile-table mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+        <ul class="mobile-table mt-4 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+            @if ($title)
+                <div class="px-4 sm:px-6 py-4 bg-white">
+                    <h2 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-2xl">
+                        @if($filter->countActive())
+                            <span class="text-amber-500">{{ ucfirst(__('app.filtered')) }}</span>
+                            {{ strtolower($title) }}
+                        @else
+                            {{ ucfirst($title) }}
+                        @endif
+                    </h2>
+                </div>
+            @endif
+
             {{ $mobileBody }}
         </ul>
 
