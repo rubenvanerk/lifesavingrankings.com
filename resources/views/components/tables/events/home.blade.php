@@ -9,7 +9,7 @@
 
     <x-slot name="body">
         @if (is_null($events))
-            @for ($i = 0; $i < 5; $i++)
+            @for ($i = 0; $i < 6; $i++)
                 <x-table.row>
                     <x-tables.cells.placeholders.event/>
                     <x-tables.cells.placeholders.entrants :count="$resultLimit"/>
