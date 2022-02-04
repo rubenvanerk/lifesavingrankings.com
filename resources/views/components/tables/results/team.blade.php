@@ -22,7 +22,7 @@
             @forelse($results as $result)
                 <x-table.row>
                     <x-table.cell>{{ $loop->index + $results->firstItem() }}</x-table.cell>
-                    <x-tables.cells.entrants :entrants="[$result->entrant]"/>
+                    <x-tables.cells.entrants :entrants="[$result->entrant]" :segments="$result->segments"/>
                     <x-tables.cells.times :results="[$result]"/>
                     <x-tables.cells.dates :competitions="[$result->competition]"/>
                     <x-tables.cells.competitions :competitions="[$result->competition]"/>

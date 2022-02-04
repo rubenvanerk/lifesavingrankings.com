@@ -45,7 +45,7 @@ class Results extends Component
         if ($this->readyToLoad) {
             $results = Result::query()
                 ->orderBy('status', 'desc')->orderBy('time')
-                ->with(['competition', 'entrant', 'team']);
+                ->with(['competition', 'entrant', 'team', 'segments.entrant']);
 
             if ($this->valid) {
                 $results->valid();
