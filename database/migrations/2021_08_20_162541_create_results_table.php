@@ -27,7 +27,7 @@ class CreateResultsTable extends Migration
             $table->tinyInteger('status')->unsigned()->nullable();
             $table->mediumInteger('time')->unsigned()->nullable()->index();
             $table->foreignIdFor(Team::class)->nullable()->constrained()->onDelete('set null');
-            $table->foreignIdFor(Media::class);
+            $table->foreignIdFor(Media::class)->constrained();
         });
     }
 

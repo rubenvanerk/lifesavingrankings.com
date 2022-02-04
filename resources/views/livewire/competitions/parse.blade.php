@@ -129,6 +129,11 @@
                                                 {{ $result->parsedEntrant?->gender->is(\App\Enums\Gender::Men) ? '♂' : '♀' }}
                                                 {{ $result->parsedEntrant?->name }}
                                                 <small>{{ $result->parsedEntrant?->year_of_birth }}</small>
+                                                <small>(
+                                                @foreach($result->parsedSegments as $segment)
+                                                        {{ $segment->parsedEntrant->name }}{{ $loop->last ? '' : ',' }}
+                                                @endforeach
+                                                )</small>
                                             </x-table.cell>
                                             <x-table.cell>{{ $result->parsedTeam?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->parsedCategory?->name }}</x-table.cell>

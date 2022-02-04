@@ -15,14 +15,17 @@ abstract class Option
     public string $name;
     public string $label;
     public mixed $value;
+    public bool $canOccurOnNextLine = false;
+    public bool $occursOnNextLine = false;
 
     public string $group;
 
     public const GROUP_EVENTS = 'events';
     public const GROUP_PDF = 'pdf';
+    public const GROUP_TEXT = 'text';
     public const GROUP_EVENT = 'event';
     public const GROUP_RESULT = 'result';
-    const GROUP_ENTRANT = 'entrant';
+    public const GROUP_ENTRANT = 'entrant';
 
     public function __construct($value = null)
     {

@@ -18,9 +18,12 @@ use App\Parser\Options\EventMatcher;
 use App\Parser\Options\Option;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
+use Spatie\Regex\Regex;
 
 class TextParser implements ParserInterface
 {
+    protected array $lines;
+
     /**
      * @var Collection<Option>
      */
@@ -33,15 +36,20 @@ class TextParser implements ParserInterface
 
     public function getParsedResults(Media $competitionFile, ?ParserConfig $parserConfig = null): EloquentCollection
     {
-        $lines = explode("\n", $this->getRawText($competitionFile));
         $this->options = $parserConfig?->options ?: $competitionFile->parser_config->options;
+        $rawText = $this->getRawText($competitionFile);
+        if ($this->options['text_remover']->value) {
+            $rawText = Regex::replace($this->options['text_remover']->value, '', $rawText)->result();
+        }
+
+        $this->lines = explode("\n", $rawText);
 
         $event = null;
         $gender = null;
         $category = null;
         $results = new EloquentCollection;
 
-        foreach ($lines as $lineNumber => $line) {
+        foreach ($this->lines as $lineNumber => $line) {
             $status = $this->options['dsq_matcher']->getMatch($line)
                 ?: $this->options['dnf_matcher']->getMatch($line)
                     ?: $this->options['dns_matcher']->getMatch($line)
@@ -85,6 +93,8 @@ class TextParser implements ParserInterface
 
     private function getResultFromLine(string $line, int $lineNumber, Event $event, Gender $gender, ?CompetitionCategory $category, ?ResultStatus $resultStatus): Result
     {
+        $segments = [];
+
         if ($event->isType(EventType::Individual())) {
             $entrant = $this->getAthleteFromLine($line, $gender);
         } else {
@@ -92,8 +102,9 @@ class TextParser implements ParserInterface
                 'name' => $this->options['relay_team_matcher']->getMatch($line),
                 'gender' => $gender,
             ]);
-        }
 
+            $segments = $this->getSegmentsFromLine($line, $lineNumber, $event, $gender);
+        }
 
         $team = new Team(['name' => $this->options['team_matcher']->getMatch($line)]);
 
@@ -111,6 +122,7 @@ class TextParser implements ParserInterface
         $result->parsedEntrant = $entrant;
         $result->parsedTeam = $team;
         $result->parsedCategory = $category;
+        $result->parsedSegments = $segments;
         $result->event()->associate($event);
 
         return $result;
@@ -139,5 +151,33 @@ class TextParser implements ParserInterface
         }
 
         return null;
+    }
+
+    private function getSegmentsFromLine(string $line, int $lineNumber, Event $event, Gender $gender): array
+    {
+        if ($this->options['team_mate_matcher']->occursOnNextLine) {
+            $line = $this->lines[$lineNumber] ?? null;
+        }
+
+        $names = $this->options['team_mate_matcher']->getMatches($line);
+        $segments = [];
+
+        foreach ($event->segments as $i => $segment) {
+            if (empty($names[$i]) || trim($names[$i]) === '') {
+                return [];
+            }
+
+            $athlete = new Athlete([
+               'name' => $names[$i],
+               'gender' => $gender,
+            ]);
+            $result = new Result([
+                'event_id' => $segment->id,
+            ]);
+            $result->parsedEntrant = $athlete;
+            $segments[] = $result;
+        }
+
+        return $segments;
     }
 }

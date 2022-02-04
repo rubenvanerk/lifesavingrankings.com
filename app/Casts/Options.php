@@ -14,10 +14,12 @@ use App\Parser\Options\HorizontalOffsetOption;
 use App\Parser\Options\MenMatcher;
 use App\Parser\Options\Option;
 use App\Parser\Options\RelayTeamMatcher;
+use App\Parser\Options\RelayTeamMateMatcher;
 use App\Parser\Options\ResultIndicator;
 use App\Parser\Options\SplitsMatcher;
 use App\Parser\Options\StatusMatcher;
 use App\Parser\Options\TeamMatcher;
+use App\Parser\Options\TextRemover;
 use App\Parser\Options\TimeMatcher;
 use App\Parser\Options\WomenMatcher;
 use App\Parser\Options\YearOfBirthMatcher;
@@ -39,9 +41,11 @@ class Options implements CastsAttributes
     {
         $options = $this->getDefaultOptions($model->media->mime_type);
         $optionValues = json_decode($value, true);
+        /** @var Option $option */
         foreach ($options as $option) {
             if (isset($optionValues[$option->name])) {
-                $option->value = $optionValues[$option->name];
+                $option->value = $optionValues[$option->name]['value'] ?? $optionValues[$option->name];
+                $option->occursOnNextLine = $optionValues[$option->name]['occurs_on_next_line'] ?? false;
             }
         }
 
@@ -57,13 +61,17 @@ class Options implements CastsAttributes
      * @param string $key
      * @param mixed $value
      * @param array $attributes
-     * @return mixed
+     * @return string|bool
      */
-    public function set($model, string $key, $value, array $attributes)
+    public function set($model, string $key, $value, array $attributes): string|bool
     {
         $optionsToSave = [];
+        /** @var Option $option */
         foreach ($value as $option) {
-            $optionsToSave[$option->name] = $option->value;
+            $optionsToSave[$option->name] =[
+                'value' => $option->value,
+                'occurs_on_next_line' => $option->occursOnNextLine,
+            ];
         }
         return json_encode($optionsToSave);
     }
@@ -100,9 +108,11 @@ class Options implements CastsAttributes
             new StatusMatcher(status: ResultStatus::DNS()),
             new StatusMatcher(status: ResultStatus::WDR()),
             new RelayTeamMatcher(),
+            new RelayTeamMateMatcher(),
             new AthleteMatcher(),
             new YearOfBirthMatcher(),
             new TeamMatcher(),
+            new TextRemover(),
         ]));
     }
 

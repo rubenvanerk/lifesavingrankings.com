@@ -9,11 +9,11 @@ use App\Enums\ResultStatus;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
 use App\Traits\HasTime;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
@@ -24,6 +24,7 @@ class Result extends Model
     protected $guarded = ['id'];
 
     public ?CompetitionCategory $parsedCategory;
+    public array $parsedSegments;
     public ?Team $parsedTeam;
     public mixed $parsedEntrant;
 
@@ -35,10 +36,14 @@ class Result extends Model
 
     protected static function booted(): void
     {
-        static::addGlobalScope('published', function (Builder $builder) {
-            $builder->whereHas('competition', function (Builder $query) {
+        static::addGlobalScope('published', function (Builder $query) {
+            $query->whereHas('competition', function (Builder $query) {
                 $query->where('status', CompetitionStatus::Published);
             });
+        });
+
+        static::addGlobalScope('parents', function (Builder $query) {
+            $query->whereNull('parent_id');
         });
     }
 
@@ -70,6 +75,16 @@ class Result extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function segments(): HasMany
+    {
+        return $this->hasMany(Result::class, 'parent_id')->withoutGlobalScope('parents');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Result::class, 'parent_id');
     }
 
     public function scopeValid(Builder $query): void

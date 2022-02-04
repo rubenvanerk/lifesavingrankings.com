@@ -47,6 +47,16 @@ class ImportCompetitionFile implements ShouldQueue
             $result->entrant()->associate($result->parsedEntrant->toDatabase());
             $result->team()->associate($result->parsedTeam->toDatabase());
             $result->save();
+
+            foreach ($result->parsedSegments as $segment) {
+                $segment->entrant()->associate($segment->parsedEntrant->toDatabase());
+                $segment->competition()->associate($this->competitionFile->model);
+                $segment->media_source()->associate($this->competitionFile);
+                $segment->save();
+                $result->segments()->save($segment);
+            }
+
+            $result->save();
         }
     }
 }

@@ -15,15 +15,24 @@
                     </a>
                     <sup>'{{ substr($entrant->year_of_birth, -2) }}</sup>
                 @else
-                    <span class="inline-flex items-center space-x-1">
-                        @if ($entrant->country)
-                            <x-dynamic-component
-                                :component="'flag-4x3-' . strtolower($entrant->country->getIsoAlpha2())"
-                                class="h-3.5"/>
-                        @endif
-                        <span>
-                            {{ $entrant->name }}
+                    <span class="flex flex-col">
+                        <span class="inline-flex items-center space-x-1">
+                            @if ($entrant->country)
+                                <x-dynamic-component
+                                    :component="'flag-4x3-' . strtolower($entrant->country->getIsoAlpha2())"
+                                    class="h-3.5"/>
+                            @endif
+                            <span>
+                                {{ $entrant->name }}
+                            </span>
                         </span>
+                        @if (!empty($segments))
+                            <span>
+                                @foreach($segments as $segment)
+                                    <small>{{ $segment->entrant->name }}@if (!$loop->last),@endif</small>
+                                @endforeach
+                            </span>
+                        @endif
                     </span>
                 @endif
             </span>

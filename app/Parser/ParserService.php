@@ -23,7 +23,10 @@ class ParserService
     /**
      * @throws UnsupportedMimeTypeException
      */
-    public function __construct(protected Media $competitionFile, protected ?ParserConfig $parserConfig = null)
+    public function __construct(
+        protected Media         $competitionFile,
+        protected ?ParserConfig $parserConfig = null
+    )
     {
         if (empty($this->parserConfig)) {
             $this->parserConfig = $this->competitionFile->parser_config;
@@ -58,13 +61,18 @@ class ParserService
 
     public function getHighlightedRawText($highlightRegex = null): string
     {
-        $lines = collect(explode("\n", $this->rawText));
+        $rawText = $this->rawText;
+        if ($this->competitionFile->parser_config->options['text_remover']->value) {
+            $rawText = Regex::replace($this->competitionFile->parser_config->options['text_remover']->value, '', $rawText)->result();
+        }
+
+        $lines = collect(explode("\n", $rawText));
 
         if ($this->isValidRegex($highlightRegex) && $this->countMatches($highlightRegex) < 5000) {
             $lines = $lines->map(function ($line) use ($highlightRegex) {
                 return Regex::replace(
                     $highlightRegex,
-                    fn (MatchResult $result) => '<mark>' . $result->result() . '</mark>',
+                    fn(MatchResult $result) => '<mark>' . $result->result() . '</mark>',
                     $line
                 )->result();
             });
