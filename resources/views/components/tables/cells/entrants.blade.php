@@ -29,7 +29,7 @@
                         @if (!empty($segments))
                             <span>
                                 @foreach($segments as $segment)
-                                    <small>{{ $segment->entrant->name }}@if (!$loop->last),@endif</small>
+                                    <small><a href="{{ route('athletes.show', $segment->entrant) }}">{{ $segment->entrant->name }}@if (!$loop->last),@endif</a></small>
                                 @endforeach
                             </span>
                         @endif
