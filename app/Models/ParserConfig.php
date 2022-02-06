@@ -17,14 +17,4 @@ class ParserConfig extends Model
     {
         return $this->belongsTo(Media::class);
     }
-
-    public function toLivewire()
-    {
-        dd('1');
-    }
-
-    public static function fromLivewire($value)
-    {
-        dd('2');
-    }
 }
