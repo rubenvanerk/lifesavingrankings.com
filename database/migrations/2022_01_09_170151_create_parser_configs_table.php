@@ -18,7 +18,7 @@ class CreateParserConfigsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->json('options')->nullable();
-            $table->foreignIdFor(Media::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Media::class)->index()->constrained()->onDelete('cascade');
         });
     }
 

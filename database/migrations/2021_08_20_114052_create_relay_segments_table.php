@@ -16,8 +16,8 @@ class CreateRelaySegmentsTable extends Migration
         Schema::create('relay_segments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(App\Models\Event::class)->constrained();
-            $table->foreignIdFor(App\Models\Event::class, 'segment_id')
+            $table->foreignIdFor(App\Models\Event::class)->index()->constrained();
+            $table->foreignIdFor(App\Models\Event::class, 'segment_id')->index()
                 ->constrained()->references('id')->on('events');
             $table->tinyInteger('order')->unsigned();
         });

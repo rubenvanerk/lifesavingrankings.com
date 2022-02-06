@@ -14,7 +14,7 @@ class AddSegmentOfToResultsTable extends Migration
     public function up()
     {
         Schema::table('results', function (Blueprint $table) {
-            $table->foreignId('parent_id')->nullable()->constrained('results')->onDelete('cascade');
+            $table->foreignId('parent_id')->index()->nullable()->constrained('results')->onDelete('cascade');
         });
     }
 

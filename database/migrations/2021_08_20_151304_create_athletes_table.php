@@ -21,7 +21,7 @@ class CreateAthletesTable extends Migration
             $table->string('slug')->index();
             $table->smallInteger('year_of_birth')->unsigned()->nullable();
             $table->tinyInteger('gender');
-            $table->foreignIdFor(Athlete::class, 'alias_of')->nullable()
+            $table->foreignIdFor(Athlete::class, 'alias_of')->nullable()->index()
                 ->constrained()->references('id')->on('athletes')
                 ->onDelete('cascade');
             $table->json('nationalities')->nullable();
