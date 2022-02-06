@@ -12,8 +12,6 @@ class TeamMatcher extends Option
     public string $label = 'Team matcher';
     public string $group = Option::GROUP_ENTRANT;
 
-    private array $teamCache = [];
-
     public function __construct($value = null)
     {
         $this->type = ParserConfigOptionType::Regex();

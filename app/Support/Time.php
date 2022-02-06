@@ -18,8 +18,8 @@ class Time
     public function __toString()
     {
         if ($this->minutes) {
-            return $this->minutes . ':' . Str::padLeft($this->seconds, 2, '0') . '.' . Str::padLeft($this->centiseconds, 2, '0');
+            return $this->minutes . ':' . Str::padLeft((string)$this->seconds, 2, '0') . '.' . Str::padLeft((string)$this->centiseconds, 2, '0');
         }
-        return $this->seconds . '.' . Str::padLeft($this->centiseconds, 2, '0');
+        return $this->seconds . '.' . Str::padLeft((string)$this->centiseconds, 2, '0');
     }
 }

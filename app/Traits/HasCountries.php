@@ -16,7 +16,7 @@ trait HasCountries
     protected function countries(): Attribute
     {
         return new Attribute(
-            get: fn($value) => $this->country_codes->map(fn($countryCode) => country($countryCode)),
+            get: fn($value) => $this->country_codes->map(fn($countryCode) => country($countryCode)), // @phpstan-ignore-line
             set: function ($value) {
                 return $value->map(function ($country) {
                     if ($country instanceof \Rinvex\Country\Country) {

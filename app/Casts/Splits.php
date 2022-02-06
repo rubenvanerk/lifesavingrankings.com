@@ -42,12 +42,12 @@ class Splits implements CastsAttributes
     public function set($model, string $key, $value, array $attributes): string
     {
         $splits = [];
-        /** @var \App\Support\Time $split */
         foreach ($value as $split) {
             if (is_numeric($split)) {
                 $splits[] = (int)$split;
+            } else {
+                $splits[] =  $split->totalCentiseconds;
             }
-            $splits[] =  $split->totalCentiseconds;
         }
         return json_encode($splits);
     }

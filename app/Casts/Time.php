@@ -24,10 +24,10 @@ class Time implements CastsAttributes
     {
         $totalCentiseconds = (int)$value;
 
-        $minutes = floor($totalCentiseconds / self::CENTISECONDS_PER_MINUTE);
+        $minutes = (int)floor($totalCentiseconds / self::CENTISECONDS_PER_MINUTE);
         $totalCentiseconds = $totalCentiseconds % self::CENTISECONDS_PER_MINUTE;
 
-        $seconds = floor($totalCentiseconds / self::CENTISECONDS_PER_SECOND);
+        $seconds = (int)floor($totalCentiseconds / self::CENTISECONDS_PER_SECOND);
         $centiseconds = $totalCentiseconds % self::CENTISECONDS_PER_SECOND;
 
         return new CarbonTime($minutes, $seconds, $centiseconds);

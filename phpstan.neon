@@ -9,6 +9,8 @@ parameters:
         # Custom casts are currently not supported: https://github.com/nunomaduro/larastan/issues/890
         - '#(Access|Call) to an undefined (property|method) App\\Casts.*#'
         - '#Property .* does not accept App\\Casts.*#'
+        - '#Cannot cast App\\Casts\\Time\|null to string.#'
+        - '#Access to an undefined property App\\Models\\Athlete::\$countries.#'
 
         - '#Access to an undefined property App\\Models\\.*::\$country#'
         - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
