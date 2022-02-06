@@ -23,7 +23,7 @@
                                           :url="route('competitions.event', ['competition' => $competition, 'event' => $event, 'gender' => $gender->getSlug()])"/>
                     <x-tables.cells.entrants :entrants="$event->results->pluck('entrant')"/>
                     <x-tables.cells.times :results="$event->results" :athlete="$athlete ?? null" :event="$event"/>
-                    <x-tables.cells.teams :teams="$event->results->pluck('team')"/>
+                    <x-tables.cells.teams :teams="$event->results->pluck('team')->filter()"/>
                 </x-table.row>
             @empty
                 <x-tables.empty-row/>

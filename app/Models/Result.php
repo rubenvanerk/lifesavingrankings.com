@@ -23,11 +23,6 @@ class Result extends Model
 
     protected $guarded = ['id'];
 
-    public ?CompetitionCategory $parsedCategory;
-    public array $parsedSegments;
-    public ?Team $parsedTeam;
-    public mixed $parsedEntrant;
-
     protected $casts = [
         'time' => Time::class,
         'status' => ResultStatus::class,
@@ -42,7 +37,7 @@ class Result extends Model
             });
         });
 
-        static::addGlobalScope('parents', function (Builder $query) {
+        static::addGlobalScope('without_segments', function (Builder $query) {
             $query->whereNull('parent_id');
         });
     }
@@ -79,7 +74,7 @@ class Result extends Model
 
     public function segments(): HasMany
     {
-        return $this->hasMany(Result::class, 'parent_id')->withoutGlobalScope('parents');
+        return $this->hasMany(Result::class, 'parent_id')->withoutGlobalScope('without_segments');
     }
 
     public function parent(): BelongsTo

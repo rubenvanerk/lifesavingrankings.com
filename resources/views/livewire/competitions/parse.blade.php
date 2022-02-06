@@ -50,7 +50,7 @@
                             <span aria-hidden="true"
                                   x-show="currentTab == 'text'"
                                   class="bg-blue-800 absolute inset-x-0 bottom-0 h-0.5">
-                        </span>
+                            </span>
                         </a>
                         <a href="#"
                            @click="currentTab = '{{ self::TAB_TABLE }}'"
@@ -80,7 +80,7 @@
                             <span aria-hidden="true"
                                   x-show="currentTab == 'events'"
                                   class="bg-blue-800 absolute inset-x-0 bottom-0 h-0.5">
-                        </span>
+                            </span>
                         </a>
                     </nav>
                 </div>
@@ -93,7 +93,8 @@
                             </x-well>
                         @else
                             <div type="button" class="relative block w-full rounded-lg p-12 text-center">
-                                <x-heroicon-s-refresh class="mx-auto h-12 w-12 text-gray-400 animate-spin transform rotate-180"/>
+                                <x-heroicon-s-refresh
+                                    class="mx-auto h-12 w-12 text-gray-400 animate-spin transform rotate-180"/>
                             </div>
                         @endif
                     </div>
@@ -124,21 +125,23 @@
                                 <x-slot name="body">
                                     @foreach($results as $result)
                                         <x-table.row>
-                                            <x-table.cell>{{ $result->original_line_number }}</x-table.cell>
+                                            <x-table.cell>{{ $result->originalLineNumber }}</x-table.cell>
                                             <x-table.cell>
-                                                {{ $result->parsedEntrant?->gender->is(\App\Enums\Gender::Men) ? '♂' : '♀' }}
-                                                {{ $result->parsedEntrant?->name }}
-                                                <small>{{ $result->parsedEntrant?->year_of_birth }}</small>
-                                                <small>(
-                                                @foreach($result->parsedSegments as $segment)
-                                                        {{ $segment->parsedEntrant->name }}{{ $loop->last ? '' : ',' }}
-                                                @endforeach
-                                                )</small>
+                                                {{ $result->entrant?->gender->is(\App\Enums\Gender::Men) ? '♂' : '♀' }}
+                                                {{ $result->entrant?->name }}
+                                                <small>{{ $result->entrant?->yearOfBirth }}</small>
+                                                @if (count($result->getSegments()) > 0)
+                                                    <small>(
+                                                        @foreach($result->getSegments() as $segment)
+                                                            {{ $segment->entrant->name }}{{ $loop->last ? '' : ',' }}
+                                                        @endforeach
+                                                        )</small>
+                                                @endif
                                             </x-table.cell>
-                                            <x-table.cell>{{ $result->parsedTeam?->name }}</x-table.cell>
-                                            <x-table.cell>{{ $result->parsedCategory?->name }}</x-table.cell>
+                                            <x-table.cell>{{ $result->team?->name }}</x-table.cell>
+                                            <x-table.cell>{{ $result->category?->name }}</x-table.cell>
                                             <x-table.cell>{{ $result->event?->name }}</x-table.cell>
-                                            <x-table.cell>{{ $result->time_formatted }}</x-table.cell>
+                                            <x-table.cell>{{ $result->getFormattedTime() }}</x-table.cell>
                                             <x-table.cell>{{ is_iterable($result->splits) ? implode(', ', $result->splits->toArray()) : '' }}</x-table.cell>
                                         </x-table.row>
                                     @endforeach
@@ -146,7 +149,8 @@
                             </x-table>
                         @elseif($currentTab != self::TAB_TABLE)
                             <div type="button" class="relative block w-full rounded-lg p-12 text-center">
-                                <x-heroicon-s-refresh class="mx-auto h-12 w-12 text-gray-400 animate-spin transform rotate-180"/>
+                                <x-heroicon-s-refresh
+                                    class="mx-auto h-12 w-12 text-gray-400 animate-spin transform rotate-180"/>
                             </div>
                         @endif
                     </div>
@@ -169,7 +173,8 @@
                             </x-table>
                         @else
                             <div type="button" class="relative block w-full rounded-lg p-12 text-center">
-                                <x-heroicon-s-refresh class="mx-auto h-12 w-12 text-gray-400 animate-spin transform rotate-180"/>
+                                <x-heroicon-s-refresh
+                                    class="mx-auto h-12 w-12 text-gray-400 animate-spin transform rotate-180"/>
                             </div>
                         @endif
                     </div>

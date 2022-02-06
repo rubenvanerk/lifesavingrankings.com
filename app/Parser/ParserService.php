@@ -9,7 +9,6 @@ use App\Models\ParserConfig;
 use App\Parser\Options\EventIndicator;
 use App\Parser\Options\EventRejector;
 use App\Parser\Options\Option;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Spatie\Regex\MatchResult;
 use Spatie\Regex\Regex;
@@ -54,7 +53,7 @@ class ParserService
         return $concreteParser;
     }
 
-    public function getParsedResults(): EloquentCollection
+    public function getParsedResults(): Collection
     {
         return $this->concreteParser->getParsedResults($this->competitionFile, $this->parserConfig);
     }

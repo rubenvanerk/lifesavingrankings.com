@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Actions\SaveResultValueObject;
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Models\Media;
 use App\Models\Result;
@@ -36,27 +37,12 @@ class ImportCompetitionFile implements ShouldQueue
         $this->competitionFile->results()->delete();
         $parser = new ParserService($this->competitionFile);
         $results = $parser->getParsedResults();
+        $competition = $this->competitionFile->model;
+        $saveResultAction = new SaveResultValueObject();
 
-        /** @var Result $result */
-        foreach ($results as $result) {
-            $result->competition()->associate($this->competitionFile->model);
-            $result->media_source()->associate($this->competitionFile);
-            if ($result->parsedCategory) {
-                $result->competition_category()->associate($result->parsedCategory->toDatabase(['competition_id' => $this->competitionFile->model->id]));
-            }
-            $result->entrant()->associate($result->parsedEntrant->toDatabase());
-            $result->team()->associate($result->parsedTeam->toDatabase());
-            $result->save();
-
-            foreach ($result->parsedSegments as $segment) {
-                $segment->entrant()->associate($segment->parsedEntrant->toDatabase());
-                $segment->competition()->associate($this->competitionFile->model);
-                $segment->media_source()->associate($this->competitionFile);
-                $segment->save();
-                $result->segments()->save($segment);
-            }
-
-            $result->save();
+        /** @var \App\Parser\ValueObjects\Result $resultValueObject */
+        foreach ($results as $resultValueObject) {
+            $saveResultAction->handle($resultValueObject, $competition, $this->competitionFile);
         }
     }
 }

@@ -6,17 +6,13 @@ use App\Enums\EventType;
 use App\Enums\Gender;
 use App\Enums\ResultStatus;
 use App\Interfaces\ParserInterface;
-use App\Models\Athlete;
-use App\Models\CompetitionCategory;
 use App\Models\Event;
 use App\Models\Media;
 use App\Models\ParserConfig;
-use App\Models\RelayTeam;
-use App\Models\Result;
-use App\Models\Team;
 use App\Parser\Options\EventMatcher;
 use App\Parser\Options\Option;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use App\Parser\ValueObjects\Category;
+use App\Parser\ValueObjects\Segments;
 use Illuminate\Support\Collection;
 use Spatie\Regex\Regex;
 
@@ -34,7 +30,7 @@ class TextParser implements ParserInterface
         return file_get_contents($competitionFile->getPath());
     }
 
-    public function getParsedResults(Media $competitionFile, ?ParserConfig $parserConfig = null): EloquentCollection
+    public function getParsedResults(Media $competitionFile, ?ParserConfig $parserConfig = null): Collection
     {
         $this->options = $parserConfig?->options ?: $competitionFile->parser_config->options;
         $rawText = $this->getRawText($competitionFile);
@@ -47,7 +43,7 @@ class TextParser implements ParserInterface
         $event = null;
         $gender = null;
         $category = null;
-        $results = new EloquentCollection;
+        $results = new Collection;
 
         foreach ($this->lines as $lineNumber => $line) {
             $status = $this->options['dsq_matcher']->getMatch($line)
@@ -71,7 +67,7 @@ class TextParser implements ParserInterface
                 $results->add($this->getResultFromLine($line, $lineNumber + 1, $event, $gender, $category, $status));
             }
             if ($this->options['category_matcher']->hasMatch($line)) {
-                $category = new CompetitionCategory(['name' => $this->options['category_matcher']->getMatch($line)]);
+                $category = new Category($this->options['category_matcher']->getMatch($line));
             }
         }
 
@@ -91,53 +87,46 @@ class TextParser implements ParserInterface
         return null;
     }
 
-    private function getResultFromLine(string $line, int $lineNumber, Event $event, Gender $gender, ?CompetitionCategory $category, ?ResultStatus $resultStatus): Result
+    private function getResultFromLine(string $line, int $lineNumber, Event $event, Gender $gender, ?Category $category, ?ResultStatus $resultStatus): \App\Parser\ValueObjects\Result
     {
-        $segments = [];
-
         if ($event->isType(EventType::Individual())) {
             $entrant = $this->getAthleteFromLine($line, $gender);
+            $segments = new Segments();
         } else {
-            $entrant = new RelayTeam([
-                'name' => $this->options['relay_team_matcher']->getMatch($line),
-                'gender' => $gender,
-            ]);
+            $entrant = new \App\Parser\ValueObjects\RelayTeam(
+                $this->options['relay_team_matcher']->getMatch($line),
+                $gender,
+            );
 
             $segments = $this->getSegmentsFromLine($line, $lineNumber, $event, $gender);
         }
 
-        $team = new Team(['name' => $this->options['team_matcher']->getMatch($line)]);
+        $team = new \App\Parser\ValueObjects\Team($this->options['team_matcher']->getMatch($line));
 
-        $result = new Result([
-            'original_line' => $line,
-            'original_line_number' => $lineNumber,
-            'team_id' => $team?->id,
-            'category_id' => $category?->id,
-            'event_id' => $event->id,
-            'time' => $this->options['time_matcher']->getMatch($line),
-            'status' => $resultStatus,
-            'splits' => $this->options['splits_matcher']->getMatches($line),
-        ]);
-
-        $result->parsedEntrant = $entrant;
-        $result->parsedTeam = $team;
-        $result->parsedCategory = $category;
-        $result->parsedSegments = $segments;
-        $result->event()->associate($event);
-
-        return $result;
+        return new \App\Parser\ValueObjects\Result(
+            $event,
+            $entrant,
+            $team,
+            $this->options['time_matcher']->getMatch($line),
+            $resultStatus,
+            $category,
+            $segments,
+            $this->options['splits_matcher']->getMatches($line),
+            $line,
+            $lineNumber
+        );
     }
 
-    private function getAthleteFromLine(string $line, Gender $gender): Athlete
+    private function getAthleteFromLine(string $line, Gender $gender): \App\Parser\ValueObjects\Athlete
     {
         $name = $this->options['athlete_matcher']->getMatch($line);
         $yearOfBirth = $this->options['year_of_birth_matcher']->getMatch($line);
 
-        return new Athlete([
-            'name' => $name,
-            'gender' => $gender,
-            'year_of_birth' => $yearOfBirth,
-        ]);
+        return new \App\Parser\ValueObjects\Athlete(
+            $name,
+            $gender,
+            $yearOfBirth
+        );
     }
 
     private function getGenderFromLine(string $line): ?Gender
@@ -153,7 +142,7 @@ class TextParser implements ParserInterface
         return null;
     }
 
-    private function getSegmentsFromLine(string $line, int $lineNumber, Event $event, Gender $gender): array
+    private function getSegmentsFromLine(string $line, int $lineNumber, Event $event, Gender $gender): ?Segments
     {
         if ($this->options['team_mate_matcher']->occursOnNextLine) {
             $line = $this->lines[$lineNumber] ?? null;
@@ -164,20 +153,21 @@ class TextParser implements ParserInterface
 
         foreach ($event->segments as $i => $segment) {
             if (empty($names[$i]) || trim($names[$i]) === '') {
-                return [];
+                return null;
             }
 
-            $athlete = new Athlete([
-               'name' => $names[$i],
-               'gender' => $gender,
-            ]);
-            $result = new Result([
-                'event_id' => $segment->id,
-            ]);
-            $result->parsedEntrant = $athlete;
+            $athlete = new \App\Parser\ValueObjects\Athlete(
+                $names[$i],
+                $gender,
+                null
+            );
+            $result = new \App\Parser\ValueObjects\Result(
+                event: $event,
+                entrant: $athlete
+            );
             $segments[] = $result;
         }
 
-        return $segments;
+        return new Segments(...$segments);
     }
 }

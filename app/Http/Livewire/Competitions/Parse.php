@@ -9,6 +9,7 @@ use App\Models\ParserConfig;
 use App\Parser\ParserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class Parse extends Component
@@ -17,7 +18,7 @@ class Parse extends Component
     public ParserConfig $parser_config;
     public ?string $currentRegex = null;
     public ?string $currentRegexOptionName = null;
-    public ?EloquentCollection $results = null;
+    public ?Collection $results = null;
     public bool $autoloadTable = false;
     public bool $loadTable = false;
     public string $currentTab = self::TAB_TEXT;

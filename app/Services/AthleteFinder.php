@@ -9,7 +9,7 @@ class AthleteFinder
 {
     protected static array $rememberedAthletes = [];
 
-    public static function findOrCreateAthlete(string $name, Gender $gender, ?int $yearOfBirth): Athlete
+    public static function firstOrNew(string $name, Gender $gender, ?int $yearOfBirth): Athlete
     {
         if (!empty(self::$rememberedAthletes[$name . $gender . $yearOfBirth])) {
             return self::$rememberedAthletes[$name . $gender . $yearOfBirth];
@@ -24,7 +24,7 @@ class AthleteFinder
             $where['year_of_birth'] = $yearOfBirth;
         }
 
-        $athlete = Athlete::withoutGlobalScope('published')->firstOrCreate($where);
+        $athlete = Athlete::withoutGlobalScope('published')->firstOrNew($where);
         $athlete->gender = $gender;
 
         self::$rememberedAthletes[$name . $gender . $yearOfBirth] = $athlete;

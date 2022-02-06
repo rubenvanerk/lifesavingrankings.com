@@ -4,17 +4,15 @@ namespace App\Models;
 
 use App\Enums\Gender;
 use App\Traits\HasCountry;
-use App\Traits\Parseable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class RelayTeam extends Model
 {
-    use Parseable, HasCountry;
+    use HasCountry;
 
     protected $guarded = ['id'];
-
-    protected $parsedAttributes = ['name', 'gender'];
 
     protected $casts = [
         'gender' => Gender::class,
@@ -23,5 +21,10 @@ class RelayTeam extends Model
     public function results(): MorphMany
     {
         return $this->morphMany(Result::class, 'entrant');
+    }
+
+    public function competition(): BelongsTo
+    {
+        return $this->belongsTo(Competition::class);
     }
 }

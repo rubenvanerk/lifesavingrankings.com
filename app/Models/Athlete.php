@@ -7,7 +7,6 @@ use App\Services\AthleteFinder;
 use App\Services\Filter;
 use App\Traits\HasCachedCount;
 use App\Traits\HasCountries;
-use App\Traits\Parseable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +16,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Athlete extends Model
 {
-    use HasFactory, HasSlug, HasCachedCount, Parseable, HasCountries;
+    use HasFactory, HasSlug, HasCachedCount, HasCountries;
 
     protected $guarded = ['id'];
 
@@ -60,7 +59,7 @@ class Athlete extends Model
 
     public function toDatabase(): Athlete
     {
-        return AthleteFinder::findOrCreateAthlete($this->name, $this->gender, $this->year_of_birth);
+        return AthleteFinder::firstOrNew($this->name, $this->gender, $this->year_of_birth);
     }
 
     public function getLastTeamAttribute(): Team
