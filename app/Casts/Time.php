@@ -2,14 +2,15 @@
 
 namespace App\Casts;
 
-use Carbon\CarbonInterval;
-use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use App\Support\Time as CarbonTime;
 
 class Time implements CastsAttributes
 {
+    const CENTISECONDS_PER_MINUTE = 6000;
+    const CENTISECONDS_PER_SECOND = 100;
+
     /**
      * Cast the given value.
      *
@@ -17,27 +18,28 @@ class Time implements CastsAttributes
      * @param string $key
      * @param mixed $value
      * @param array $attributes
-     * @return mixed
-     *
-     * @throws Exception
+     * @return CarbonTime
      */
-    public function get($model, string $key, $value, array $attributes): mixed
+    public function get($model, string $key, $value, array $attributes): CarbonTime
     {
-        $microseconds = ($value % 100) * 10000;
-        $seconds = (int)floor($value / 100);
-        $minutes = (int)floor($seconds / 60);
-        $seconds %= 60;
+        $totalCentiseconds = (int)$value;
 
-        return CarbonTime::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
+        $minutes = floor($totalCentiseconds / self::CENTISECONDS_PER_MINUTE);
+        $totalCentiseconds = $totalCentiseconds % self::CENTISECONDS_PER_MINUTE;
+
+        $seconds = floor($totalCentiseconds / self::CENTISECONDS_PER_SECOND);
+        $centiseconds = $totalCentiseconds % self::CENTISECONDS_PER_SECOND;
+
+        return new CarbonTime($minutes, $seconds, $centiseconds);
     }
 
     /**
      * Prepare the given value for storage.
      *
-     * @param  Model  $model
-     * @param  string  $key
-     * @param  int|CarbonInterval  $value
-     * @param  array  $attributes
+     * @param Model $model
+     * @param string $key
+     * @param int|CarbonTime $value
+     * @param array $attributes
      * @return float|int
      */
     public function set($model, string $key, $value, array $attributes): float|int
@@ -45,6 +47,6 @@ class Time implements CastsAttributes
         if (is_numeric($value)) {
             return (int)$value;
         }
-        return $value->totalMicroseconds / 10000;
+        return $value->totalCentiseconds;
     }
 }

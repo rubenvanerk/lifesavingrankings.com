@@ -11,8 +11,12 @@ use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Parser\Options\EventMatcher;
 use App\Parser\Options\Option;
+use App\Parser\ValueObjects\Athlete;
 use App\Parser\ValueObjects\Category;
+use App\Parser\ValueObjects\RelayTeam;
+use App\Parser\ValueObjects\Result;
 use App\Parser\ValueObjects\Segments;
+use App\Parser\ValueObjects\Team;
 use Illuminate\Support\Collection;
 use Spatie\Regex\Regex;
 
@@ -87,13 +91,13 @@ class TextParser implements ParserInterface
         return null;
     }
 
-    private function getResultFromLine(string $line, int $lineNumber, Event $event, Gender $gender, ?Category $category, ?ResultStatus $resultStatus): \App\Parser\ValueObjects\Result
+    private function getResultFromLine(string $line, int $lineNumber, Event $event, Gender $gender, ?Category $category, ?ResultStatus $resultStatus): Result
     {
         if ($event->isType(EventType::Individual())) {
             $entrant = $this->getAthleteFromLine($line, $gender);
             $segments = new Segments();
         } else {
-            $entrant = new \App\Parser\ValueObjects\RelayTeam(
+            $entrant = new RelayTeam(
                 $this->options['relay_team_matcher']->getMatch($line),
                 $gender,
             );
@@ -101,9 +105,9 @@ class TextParser implements ParserInterface
             $segments = $this->getSegmentsFromLine($line, $lineNumber, $event, $gender);
         }
 
-        $team = new \App\Parser\ValueObjects\Team($this->options['team_matcher']->getMatch($line));
+        $team = new Team($this->options['team_matcher']->getMatch($line));
 
-        return new \App\Parser\ValueObjects\Result(
+        return new Result(
             $event,
             $entrant,
             $team,
@@ -117,12 +121,12 @@ class TextParser implements ParserInterface
         );
     }
 
-    private function getAthleteFromLine(string $line, Gender $gender): \App\Parser\ValueObjects\Athlete
+    private function getAthleteFromLine(string $line, Gender $gender): Athlete
     {
         $name = $this->options['athlete_matcher']->getMatch($line);
         $yearOfBirth = $this->options['year_of_birth_matcher']->getMatch($line);
 
-        return new \App\Parser\ValueObjects\Athlete(
+        return new Athlete(
             $name,
             $gender,
             $yearOfBirth
@@ -156,12 +160,12 @@ class TextParser implements ParserInterface
                 return null;
             }
 
-            $athlete = new \App\Parser\ValueObjects\Athlete(
+            $athlete = new Athlete(
                 $names[$i],
                 $gender,
                 null
             );
-            $result = new \App\Parser\ValueObjects\Result(
+            $result = new Result(
                 event: $event,
                 entrant: $athlete
             );

@@ -1,21 +1,25 @@
 <?php namespace App\Support;
 
-use Carbon\CarbonInterval;
+use Illuminate\Support\Str;
 
-class Time extends CarbonInterval
+class Time
 {
+    public readonly int $totalCentiseconds;
+
+    public function __construct(
+        public readonly ?int $minutes,
+        public readonly int $seconds,
+        public readonly int $centiseconds
+    )
+    {
+        $this->totalCentiseconds = $this->minutes * 6000 + $this->seconds * 100 + $this->centiseconds;
+    }
+
     public function __toString()
     {
         if ($this->minutes) {
-            return sprintf('%s:%s.%s',
-                $this->minutes,
-                str_pad((string) $this->seconds, 2, '0', STR_PAD_LEFT),
-                str_pad((string) ($this->microseconds / 10000), 2, '0', STR_PAD_LEFT)
-            );
+            return $this->minutes . ':' . Str::padLeft($this->seconds, 2, '0') . '.' . Str::padLeft($this->centiseconds, 2, '0');
         }
-        return sprintf('%s.%s',
-            $this->seconds,
-            str_pad((string) ($this->microseconds / 10000), 2, '0', STR_PAD_LEFT)
-        );
+        return $this->seconds . '.' . Str::padLeft($this->centiseconds, 2, '0');
     }
 }

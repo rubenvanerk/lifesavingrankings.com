@@ -24,9 +24,6 @@ class StatusMatcher extends Option
         parent::__construct($value);
     }
 
-    /**
-     * @throws Exception
-     */
     public function getMatch(string $string): ?ResultStatus
     {
         return parent::hasMatch($string) ? $this->status : null;

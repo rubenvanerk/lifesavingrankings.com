@@ -4,7 +4,6 @@ namespace App\Parser\Options;
 
 use App\Enums\ParserConfigOptionType;
 use App\Support\Time;
-use Exception;
 use Illuminate\Support\Collection;
 use Spatie\Regex\Regex;
 
@@ -21,9 +20,6 @@ class SplitsMatcher extends Option
         parent::__construct($value);
     }
 
-    /**
-     * @throws Exception
-     */
     public function getMatches(string $string): ?Collection
     {
         $splitsAsText = parent::getMatches($string);
@@ -33,12 +29,11 @@ class SplitsMatcher extends Option
         }
 
         return $splitsAsText->map(function ($splitAsText) {
-            $tenths = (int)Regex::match('/\d{2}$/', $splitAsText)->result();
-            $microseconds = ($tenths % 100) * 10000;
+            $centiseconds = (int)Regex::match('/\d{2}$/', $splitAsText)->result();
             $seconds = (int)Regex::match('/\d{1,2}(?=[^\d]+\d{2}$)/', $splitAsText)->result();
             $minutes = (int)Regex::match('/\d{1,2}(?=[^\d]+\d{1,2}[^\d]+\d{2}$)/', $splitAsText)->result();
 
-            return Time::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
+            return new Time($minutes, $seconds, $centiseconds);
         });
     }
 }

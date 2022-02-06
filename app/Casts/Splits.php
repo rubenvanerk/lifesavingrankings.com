@@ -2,7 +2,6 @@
 
 namespace App\Casts;
 
-use Carbon\CarbonInterval;
 use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
@@ -17,18 +16,17 @@ class Splits implements CastsAttributes
      * @param mixed $value
      * @param array $attributes
      * @return mixed
-     *
-     * @throws Exception
      */
     public function get($model, string $key, $value, array $attributes): mixed
     {
         $splits = collect(json_decode($value));
         return $splits->map(function ($split) {
-            $microseconds = ((int)$split % 100) * 10000;
-            $seconds = (int)floor((int)$split / 100);
-            $minutes = (int)floor($seconds / 60);
-            $seconds %= 60;
-            return CarbonInterval::create(years: 0, minutes: $minutes, seconds: $seconds, microseconds: $microseconds);
+            $totalCentiseconds = (int)$split;
+            $minutes = $totalCentiseconds % 6000;
+            $totalCentiseconds -= $minutes * 6000;
+            $seconds = $totalCentiseconds % 100;
+            $centiseconds = $totalCentiseconds - $seconds * 100;
+            return new \App\Support\Time($minutes, $seconds, $centiseconds);
         });
     }
 
@@ -37,18 +35,19 @@ class Splits implements CastsAttributes
      *
      * @param Model $model
      * @param string $key
-     * @param int|CarbonInterval $value
+     * @param array $value
      * @param array $attributes
      * @return string
      */
     public function set($model, string $key, $value, array $attributes): string
     {
         $splits = [];
+        /** @var \App\Support\Time $split */
         foreach ($value as $split) {
             if (is_numeric($split)) {
                 $splits[] = (int)$split;
             }
-            $splits[] =  $split->microseconds / 10000;
+            $splits[] =  $split->totalCentiseconds;
         }
         return json_encode($splits);
     }
