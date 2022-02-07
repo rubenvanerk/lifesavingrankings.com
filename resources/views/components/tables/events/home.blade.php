@@ -41,15 +41,9 @@
             @foreach($events as $event)
                 @php $result = $event->results->first() @endphp
                 <x-table.mobile-row>
-                    <x-slot name="icon">
-                        @foreach($result->entrant->nationalities ?? [] as $country)
-                            <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                                 class="shrink-0 h-3.5 rounded shadow mt-1"/>
-                        @endforeach
-                    </x-slot>
                     <span class="flex flex-col text-sm truncate w-full leading-relaxed">
-                        <a href="{{ route('athletes.show', $result->entrant) }}" class="truncate">{{ $result->entrant->name }}</a>
                         <a href="{{ route('events.show', [$event, $gender->getSlug()]) }}" class="truncate">{{ $event->name }}</a>
+                        <x-tables.cells.contents.entrant :entrant="$result->entrant"/>
                         <span class="flex">
                             <span class="grow font-medium">
                                 {{ $result->time_formatted }}

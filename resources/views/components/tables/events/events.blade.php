@@ -50,20 +50,7 @@
                         </a>
                         @foreach($event->results as $result)
                             <div class="flex space-x-1">
-                                @foreach($result->entrant->countries ?? [] as $country)
-                                    <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                                         class="shrink-0 h-3.5 rounded shadow mt-1"/>
-                                @endforeach
-                                <span class="grow truncate">
-                                    @if ($result->entrant instanceof \App\Models\Athlete)
-                                        <a href="{{ route('athletes.show', $result->entrant) }}">
-                                            {{ $result->entrant->name }}
-                                        </a>
-                                        <sup>'{{ substr($result->entrant->year_of_birth, 2) }}</sup>
-                                    @else
-                                        {{ $result->entrant->name }}
-                                    @endif
-                                </span>
+                                <x-tables.cells.contents.entrant :entrant="$result->entrant" class="flex-grow"/>
                                 <span class="font-medium">{{ $result->time_formatted }}</span>
                             </div>
                         @endforeach

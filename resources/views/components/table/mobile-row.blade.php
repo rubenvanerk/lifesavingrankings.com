@@ -1,6 +1,6 @@
 @if (!empty($link))
     <li>
-        <a href="{{ $link }}" class="block px-4 py-4 bg-white hover:bg-gray-50 focus:bg-gray-50">
+        <a href="{{ $link }}" class="block px-4 py-4 bg-white hover:bg-gray-50 focus:bg-gray-50 hover:no-underline">
             <span class="flex items-center space-x-4">
                 <span class="flex-1 flex space-x-2 truncate">
                     {{ $icon ?? '' }}

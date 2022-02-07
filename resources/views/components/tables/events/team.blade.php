@@ -39,31 +39,21 @@
             <x-tables.placeholder-mobile-rows/>
         @else
             @foreach($events as $event)
+                @php $result = $event->results->first() @endphp
                 <x-table.mobile-row>
                     <span class="flex flex-col text-sm truncate w-full leading-relaxed">
-                        <a href="{{ route('teams.event', ['event' => $event, 'gender' => $gender->getSlug(), 'team' => $team]) }}"
-                           class="truncate">
-                            {{ $event->name }}
-                        </a>
-                        @foreach($event->results as $result)
-                            <div class="flex space-x-1">
-                                @foreach($result->entrant->countries ?? [] as $country)
-                                    <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                                         class="shrink-0 h-3.5 rounded shadow mt-1"/>
-                                @endforeach
-                                <span class="grow truncate">
-                                    @if ($result->entrant instanceof \App\Models\Athlete)
-                                        <a href="{{ route('athletes.show', $result->entrant) }}">
-                                            {{ $result->entrant->name }}
-                                        </a>
-                                        <sup>'{{ substr($result->entrant->year_of_birth, 2) }}</sup>
-                                    @else
-                                        {{ $result->entrant->name }}
-                                    @endif
-                                </span>
-                                <span class="font-medium">{{ $result->time_formatted }}</span>
-                            </div>
-                        @endforeach
+                        <a href="{{ route('teams.event', [$team, $event, $gender->getSlug()]) }}" class="truncate">{{ $event->name }}</a>
+                        <x-tables.cells.contents.entrant :entrant="$result->entrant"/>
+                        <span class="flex">
+                            <span class="grow font-medium">
+                                {{ $result->time_formatted }}
+                            </span>
+                            <a href="{{ route('competitions.show', $result->competition) }}">
+                                <time datetime="{{ $result->competition->start_date->format('Y-m-d') }}">
+                                    {{ $result->competition->start_date->isoFormat('LL') }}
+                                </time>
+                            </a>
+                        </span>
                     </span>
                 </x-table.mobile-row>
             @endforeach

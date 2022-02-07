@@ -58,7 +58,7 @@
                                         {{ $result->entrant->name }}
                                     @endif
                                 </span>
-                                <span>{{ $result->team?->name }}</span>
+                                <a href="{{ route('teams.show', $result->team) }}">{{ $result->team?->name }}</a>
                             </span>
                         </span>
                         <span class="font-medium">
