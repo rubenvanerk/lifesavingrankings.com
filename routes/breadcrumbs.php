@@ -13,6 +13,11 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('home'));
 });
 
+Breadcrumbs::for('search', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Search', route('search'));
+});
+
 Breadcrumbs::for('competitions.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push(trans_choice('app.competitions', 2), route('competitions.index'));

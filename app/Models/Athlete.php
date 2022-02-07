@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Athlete extends Model
 {
-    use HasFactory, HasSlug, HasCachedCount, HasCountries;
+    use HasFactory, HasSlug, HasCachedCount, HasCountries, Searchable;
 
     protected $guarded = ['id'];
 
