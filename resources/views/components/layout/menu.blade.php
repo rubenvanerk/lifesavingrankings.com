@@ -47,7 +47,7 @@
                         class="bg-blue-600 p-2 rounded-md inline-flex items-center justify-center text-blue-200 hover:text-white hover:bg-blue-500 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white">
                     <span class="sr-only">{{ __('app.open_main_menu') }}</span>
                     <x-heroicon-o-menu x-show="!open" class="h-6 w-6"/>
-                    <x-heroicon-o-x x-show="open" class="h-6 w-6"/>
+                    <x-heroicon-o-x x-show="open" x-cloak class="h-6 w-6"/>
                 </button>
             </div>
 
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="lg:hidden shadow-2xl" id="mobile-menu" x-show="open">
+    <div class="lg:hidden shadow-2xl" id="mobile-menu" x-show="open" x-cloak>
         <div class="px-2 pt-2 pb-3 space-y-1">
             <x-layout.menu-item-mobile :active="request()->routeIs('competitions.*')"
                                        :url="route('competitions.index')">

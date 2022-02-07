@@ -14,7 +14,7 @@
 
     <div class="bg-blue-800 lg:rounded-lg shadow-2xl lg:mx-5 xl:mx-0"
          @click.away="filter = false"
-         x-show="filter"
+         x-show="filter" x-cloak
          x-transition:enter="transition ease-in-out duration-300"
          x-transition:enter-start="opacity-0 scale-y-0 translate-y-64"
          x-transition:enter-end="opacity-100 scale-y-100 translate-y-0"

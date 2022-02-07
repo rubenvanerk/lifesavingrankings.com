@@ -11,6 +11,7 @@
     </div>
 
     <div x-show="localePicker"
+         x-cloak
          x-transition:enter="transition ease-out duration-100"
          x-transition:enter-start="opacity-0 scale-95"
          x-transition:enter-end="opacity-100 scale-100"

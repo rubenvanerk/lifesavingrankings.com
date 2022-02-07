@@ -1,4 +1,4 @@
-<div x-data="{ tooltip: false }">
+<div x-data="{ tooltip: false }" x-cloak>
     <span @mouseenter="tooltip = true" @click="tooltip = ! tooltip" @mouseleave="tooltip = false" @click.away="tooltip = false">
         {{ $slot }}
     </span>
