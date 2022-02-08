@@ -13,7 +13,7 @@ class Index extends Component
 
     public function render(): View
     {
-        $teams = Team::query()->orderBy('name')->paginate(15);
+        $teams = Team::query()->has('results')->orderBy('name')->paginate(15);
 
         return view('livewire.teams.index', [
             'teams' => $teams,
