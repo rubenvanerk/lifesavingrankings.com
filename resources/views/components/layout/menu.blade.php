@@ -37,7 +37,7 @@
                             </div>
                             <input id="search"
                                    class="block w-full bg-white py-2 pl-10 pr-3 border border-transparent rounded-md leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-amber-300 focus:border-white sm:text-sm"
-                                   placeholder="{{ __('app.search') }}..." type="search" name="search">
+                                   placeholder="{{ __('app.search') }}..." type="search" name="query">
                         </div>
                     </form>
                 </div>
