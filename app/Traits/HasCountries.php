@@ -15,6 +15,6 @@ trait HasCountries
 
     public function getCountriesAttribute()
     {
-        return $this->country_codes->map(fn($countryCode) => country($countryCode));
+        return $this->country_codes->map(fn($countryCode) => country($countryCode)); // @phpstan-ignore-line
     }
 }
