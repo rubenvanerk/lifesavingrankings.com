@@ -19,16 +19,8 @@ trait HasCountry
         );
     }
 
-    protected function country(): Attribute
+    public function getCountryAttribute(): \Rinvex\Country\Country|null
     {
-        return new Attribute(
-            get: fn($value) => $this->country_code ? country($this->country_code) : null,
-            set: function ($value) {
-                if ($value instanceof \Rinvex\Country\Country) {
-                    return $this->country_code = $value->getIsoAlpha2();
-                }
-                return $this->country_code = $value;
-            },
-        );
+        return $this->country_code ? country($this->country_code) : null;
     }
 }

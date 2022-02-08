@@ -86,4 +86,12 @@ class Competition extends Model implements HasMedia
     {
         return $this->status->is(CompetitionStatus::Published());
     }
+
+    public function getAthleteCountAttribute(): int
+    {
+        return Athlete::query()
+            ->whereHas('results', function (Builder $query) {
+                $query->whereRelation('competition', 'id', $this->id);
+            })->count();
+    }
 }
