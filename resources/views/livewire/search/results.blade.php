@@ -18,10 +18,15 @@
         @empty
             <x-layout.panel>
                 <div class="flex items-center space-x-2">
-                    <span>Start typing to search</span>
-                    <x-heroicon-o-arrow-up class="rotate-45 h-5 w-5"/>
+                    @if (strlen($query) > 2)
+                        No search results. Try searching for something else?
+                    @else
+                        <span>Start typing to search</span>
+                        <x-heroicon-o-arrow-up class="rotate-45 h-5 w-5"/>
+                    @endif
                 </div>
             </x-layout.panel>
+
         @endforelse
     </div>
 </div>

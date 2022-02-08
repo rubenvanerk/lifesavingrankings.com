@@ -12,6 +12,7 @@ use Livewire\Component;
 class Results extends Component
 {
     public Collection $resultSets;
+    public string $query = '';
 
     protected $listeners = ['search'];
 
@@ -27,6 +28,7 @@ class Results extends Component
 
     public function search($query)
     {
+        $this->query = $query;
         if (strlen($query) < 2) {
             $this->resultSets = collect();
             return;
