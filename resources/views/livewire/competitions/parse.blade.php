@@ -41,7 +41,7 @@
                            @click="currentTab = '{{ self::TAB_TEXT }}'"
                            wire:click="$set('currentTab', '{{ self::TAB_TEXT }}')"
                            :class="currentTab == 'text' ? 'text-gray-900' : 'text-gray-500'"
-                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
+                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10">
                             <span>Text</span>
                             <x-base.badge class="ml-1" x-show="currentTab == 'text'">
                                 <span wire:loading.remove>{{ $matchCount ?? '?' }} regex matches</span>
@@ -56,7 +56,7 @@
                            @click="currentTab = '{{ self::TAB_TABLE }}'"
                            wire:click="$set('currentTab', '{{ self::TAB_TABLE }}')"
                            :class="currentTab == 'table' ? 'text-gray-900' : 'text-gray-500'"
-                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
+                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10">
                             <span>Table</span>
                             <x-base.badge class="ml-1" x-show="currentTab == 'table'">
                                 <span wire:loading.remove>{{ $results?->count() ?: '?' }}</span>
@@ -71,7 +71,7 @@
                            @click="currentTab = '{{ self::TAB_EVENTS }}'"
                            wire:click="$set('currentTab', '{{ self::TAB_EVENTS }}')"
                            :class="currentTab == 'events' ? 'text-gray-900' : 'text-gray-500'"
-                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 hover:no-underline">
+                           class="group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10">
                             <span>Events</span>
                             <x-base.badge class="ml-1" x-show="currentTab == 'events'">
                                 <span wire:loading.remove>{{ isset($events) ? $events->count() : '?' }}</span>

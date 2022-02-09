@@ -4,7 +4,7 @@
             class="relative h-16 flex items-center justify-between lg:border-b lg:border-blue-400 lg:border-opacity-25">
             <div class="px-2 flex items-center lg:px-0">
                 <div class="shrink-0">
-                    <a href="{{ url('/') }}" class="flex space-x-2 group hover:no-underline">
+                    <a href="{{ url('/') }}" class="flex space-x-2 group">
                         <x-logo class="block h-8 w-8 text-white group-hover:text-gray-200 transition"/>
                         <span
                             class="text-white font-bold tracking-wide leading-4 group-hover:text-gray-200 transition hidden sm:block">

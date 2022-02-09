@@ -10,7 +10,7 @@
                     {!! __('app.call_to_action.are_you_missing_a_result', ['break' => '<br>']) !!}
                 </p>
                 <a href="{{ route('competitions.create') }}"
-                   class="mt-8 bg-white border border-transparent rounded-md shadow px-5 py-3 inline-flex items-center text-base font-medium text-gray-900 hover:bg-blue-50 hover:no-underline hover:text-gray-900">
+                   class="mt-8 bg-white border border-transparent rounded-md shadow px-5 py-3 inline-flex items-center text-base font-medium text-gray-900 hover:bg-blue-50 hover:text-gray-900">
                     {{ __('app.call_to_action.add_competition') }}
                 </a>
             </div>
