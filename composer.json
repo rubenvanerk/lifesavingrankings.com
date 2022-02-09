@@ -12,23 +12,23 @@
     ],
     "require": {
         "php": "^8.1",
-        "bensampo/laravel-enum": "^4.0",
+        "bensampo/laravel-enum": "^5.0",
         "blade-ui-kit/blade-heroicons": "^1.2",
         "blade-ui-kit/blade-ui-kit": "^0.3.1",
-        "diglactic/laravel-breadcrumbs": "^7.0",
+        "diglactic/laravel-breadcrumbs": "^7.1",
         "doctrine/dbal": "^3.3",
         "filament/filament": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.75",
+        "fruitcake/laravel-cors": "^2.0.5",
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^9.0",
         "laravel/scout": "^9.4",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
         "meilisearch/meilisearch-php": "^0.21.0",
-        "rinvex/countries": "^7.3",
+        "rinvex/countries": "^8.1",
         "smalot/pdfparser": "^2.0",
-        "spatie/laravel-medialibrary": "^9.11",
+        "spatie/laravel-medialibrary": "^10.0",
         "spatie/laravel-permission": "^5.4",
         "spatie/laravel-sluggable": "^3.1",
         "spatie/regex": "^3.1",
@@ -38,14 +38,14 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "dev-master",
         "barryvdh/laravel-ide-helper": "^2.10",
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "laravel/telescope": "^4.7",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
+        "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "^1.0",
-        "phpunit/phpunit": "^9.5.10"
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -86,7 +86,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "composer/package-versions-deprecated": true
+            "composer/package-versions-deprecated": true,
+            "phpstan/extension-installer": true
         }
     },
     "minimum-stability": "dev",
