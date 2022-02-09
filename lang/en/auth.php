@@ -3,7 +3,8 @@
 return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'throttle' =>
+        'Too many login attempts. Please try again in :seconds seconds.',
     'create_new_account' => 'Create a new account',
     'or' => 'Or',
     'sign_in_to_your_account' => 'Sign in to your account',
@@ -19,8 +20,10 @@ return [
     'send_password_reset_link' => 'Send password reset link',
     'verify_your_email_address' => 'Verify your email address',
     'sign_out' => 'Sign out',
-    'verification_link_sent' => 'A fresh verification link has been sent to your email address.',
-    'check_your_email' => 'Before proceeding, please check your email for a verification link.',
+    'verification_link_sent' =>
+        'A fresh verification link has been sent to your email address.',
+    'check_your_email' =>
+        'Before proceeding, please check your email for a verification link.',
     'verify_not_received' => 'If you did not receive the email,',
     'request_new_verify' => 'click here to request another',
 ];

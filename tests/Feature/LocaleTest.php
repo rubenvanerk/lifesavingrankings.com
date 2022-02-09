@@ -11,9 +11,14 @@ class LocaleTest extends TestCase
 {
     public function test_locale_picker(): void
     {
-        $response = $this->withHeader('Accept-Language', 'en')->get(route('set-locale', ['locale' => 'nl']));
+        $response = $this->withHeader('Accept-Language', 'en')->get(
+            route('set-locale', ['locale' => 'nl']),
+        );
         $response->assertRedirect();
-        $response->assertSessionHas(App\Http\Middleware\Localize::SESSION_KEY, 'nl');
+        $response->assertSessionHas(
+            App\Http\Middleware\Localize::SESSION_KEY,
+            'nl',
+        );
     }
 
     public function test_auto_locale_nl(): void

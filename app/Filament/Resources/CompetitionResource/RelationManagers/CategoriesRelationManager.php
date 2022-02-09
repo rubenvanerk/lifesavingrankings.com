@@ -16,17 +16,13 @@ class CategoriesRelationManager extends HasManyRelationManager
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            //
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name'),
-            ]);
+        return $table->columns([Tables\Columns\TextColumn::make('name')]);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | View Name
@@ -73,5 +72,4 @@ return [
 
     // Generator
     'generator-class' => Diglactic\Breadcrumbs\Generator::class,
-
 ];

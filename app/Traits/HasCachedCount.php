@@ -1,6 +1,5 @@
 <?php namespace App\Traits;
 
-
 use Cache;
 
 trait HasCachedCount

@@ -29,9 +29,18 @@ class SplitsMatcher extends Option
         }
 
         return $splitsAsText->map(function ($splitAsText) {
-            $centiseconds = (int)Regex::match('/\d{2}$/', $splitAsText)->result();
-            $seconds = (int)Regex::match('/\d{1,2}(?=[^\d]+\d{2}$)/', $splitAsText)->result();
-            $minutes = (int)Regex::match('/\d{1,2}(?=[^\d]+\d{1,2}[^\d]+\d{2}$)/', $splitAsText)->result();
+            $centiseconds = (int) Regex::match(
+                '/\d{2}$/',
+                $splitAsText,
+            )->result();
+            $seconds = (int) Regex::match(
+                '/\d{1,2}(?=[^\d]+\d{2}$)/',
+                $splitAsText,
+            )->result();
+            $minutes = (int) Regex::match(
+                '/\d{1,2}(?=[^\d]+\d{1,2}[^\d]+\d{2}$)/',
+                $splitAsText,
+            )->result();
 
             return new Time($minutes, $seconds, $centiseconds);
         });

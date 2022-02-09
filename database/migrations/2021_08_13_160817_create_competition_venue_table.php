@@ -17,8 +17,16 @@ class CreateCompetitionVenueTable extends Migration
     {
         Schema::create('competition_venue', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Competition::class)->index()->constrained()->onDelete('cascade');
-            $table->foreignIdFor(Venue::class)->index()->constrained()->onDelete('cascade');
+            $table
+                ->foreignIdFor(Competition::class)
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
+            $table
+                ->foreignIdFor(Venue::class)
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
         });
     }
 

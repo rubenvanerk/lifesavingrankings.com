@@ -74,7 +74,9 @@ class Result extends Model
 
     public function segments(): HasMany
     {
-        return $this->hasMany(Result::class, 'parent_id')->withoutGlobalScope('without_segments');
+        return $this->hasMany(Result::class, 'parent_id')->withoutGlobalScope(
+            'without_segments',
+        );
     }
 
     public function parent(): BelongsTo
@@ -92,18 +94,36 @@ class Result extends Model
         $filter = app(Filter::class);
 
         if ($filter->getValue('from_date')) {
-            $query->whereRelation('competition', 'start_date', '>=', $filter->getValue('from_date'));
+            $query->whereRelation(
+                'competition',
+                'start_date',
+                '>=',
+                $filter->getValue('from_date'),
+            );
         }
 
         if ($filter->getValue('to_date')) {
-            $query->whereRelation('competition', 'to_date', '>=', $filter->getValue('to_date'));
+            $query->whereRelation(
+                'competition',
+                'to_date',
+                '>=',
+                $filter->getValue('to_date'),
+            );
         }
 
         if ($filter->getValue('competition')) {
-            $query->whereRelation('competition', 'id', $filter->getValue('competition'));
+            $query->whereRelation(
+                'competition',
+                'id',
+                $filter->getValue('competition'),
+            );
 
             if ($filter->getValue('competition_category')) {
-                $query->whereRelation('competition_category', 'id', $filter->getValue('competition_category'));
+                $query->whereRelation(
+                    'competition_category',
+                    'id',
+                    $filter->getValue('competition_category'),
+                );
             }
         }
 
@@ -112,13 +132,29 @@ class Result extends Model
         }
 
         if ($filter->getValue('athlete')) {
-            $query->whereMorphRelation('entrant', [Athlete::class], 'id', $filter->getValue('athlete'));
+            $query->whereMorphRelation(
+                'entrant',
+                [Athlete::class],
+                'id',
+                $filter->getValue('athlete'),
+            );
         }
 
         if ($filter->getValue('gender')) {
             $query->where(function (Builder $query) use ($filter) {
-                $query->whereMorphRelation('entrant', [Athlete::class], 'gender', $filter->getValue('gender'))
-                    ->orWhereMorphRelation('entrant', [RelayTeam::class], 'gender', $filter->getValue('gender'));
+                $query
+                    ->whereMorphRelation(
+                        'entrant',
+                        [Athlete::class],
+                        'gender',
+                        $filter->getValue('gender'),
+                    )
+                    ->orWhereMorphRelation(
+                        'entrant',
+                        [RelayTeam::class],
+                        'gender',
+                        $filter->getValue('gender'),
+                    );
             });
         }
 
@@ -127,16 +163,34 @@ class Result extends Model
         }
 
         if ($filter->getValue('from_year_of_birth')) {
-            $query->whereMorphRelation('entrant', [Athlete::class], 'year_of_birth', '>=', $filter->getValue('from_year_of_birth'));
+            $query->whereMorphRelation(
+                'entrant',
+                [Athlete::class],
+                'year_of_birth',
+                '>=',
+                $filter->getValue('from_year_of_birth'),
+            );
         }
 
         if ($filter->getValue('to_year_of_birth')) {
-            $query->whereMorphRelation('entrant', [Athlete::class], 'year_of_birth', '<=', $filter->getValue('to_year_of_birth'));
+            $query->whereMorphRelation(
+                'entrant',
+                [Athlete::class],
+                'year_of_birth',
+                '<=',
+                $filter->getValue('to_year_of_birth'),
+            );
         }
 
         if ($filter->getValue('venue')) {
-            $query->whereHas('competition', function (Builder $query) use ($filter) {
-                $query->whereRelation('venues', 'venues.id', $filter->getValue('venue'));
+            $query->whereHas('competition', function (Builder $query) use (
+                $filter,
+            ) {
+                $query->whereRelation(
+                    'venues',
+                    'venues.id',
+                    $filter->getValue('venue'),
+                );
             });
         }
     }

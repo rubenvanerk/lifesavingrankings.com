@@ -20,7 +20,11 @@ class CreateRelayTeamsTable extends Migration
             $table->string('name');
             $table->tinyInteger('gender');
             $table->string('country_code', 2)->nullable();
-            $table->foreignIdFor(Competition::class)->index()->constrained()->cascadeOnDelete();
+            $table
+                ->foreignIdFor(Competition::class)
+                ->index()
+                ->constrained()
+                ->cascadeOnDelete();
         });
     }
 

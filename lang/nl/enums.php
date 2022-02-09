@@ -25,5 +25,5 @@ return [
     Gender::class => [
         Gender::Men => 'Heren',
         Gender::Women => 'Dames',
-    ]
+    ],
 ];

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'cache' => [
         'enabled' => true,
 
@@ -50,5 +49,4 @@ return [
             'language_short' => 'ISO639_3',
         ],
     ],
-
 ];

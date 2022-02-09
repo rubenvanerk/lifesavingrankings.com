@@ -16,9 +16,11 @@ class CompetitionController extends Controller
             abort(404);
         }
 
-        $competition->load(['venues' => function ($query) {
-            $query->orderBy('type');
-        }]);
+        $competition->load([
+            'venues' => function ($query) {
+                $query->orderBy('type');
+            },
+        ]);
 
         return view('competitions.show', compact('competition'));
     }
@@ -32,7 +34,10 @@ class CompetitionController extends Controller
             abort(404);
         }
 
-        return view('competitions.event', compact('competition', 'event', 'gender'));
+        return view(
+            'competitions.event',
+            compact('competition', 'event', 'gender'),
+        );
     }
 
     public function create(): View

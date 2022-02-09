@@ -21,7 +21,7 @@ class Splits implements CastsAttributes
     {
         $splits = collect(json_decode($value));
         return $splits->map(function ($split) {
-            $totalCentiseconds = (int)$split;
+            $totalCentiseconds = (int) $split;
             $minutes = $totalCentiseconds % 6000;
             $totalCentiseconds -= $minutes * 6000;
             $seconds = $totalCentiseconds % 100;
@@ -44,9 +44,9 @@ class Splits implements CastsAttributes
         $splits = [];
         foreach ($value as $split) {
             if (is_numeric($split)) {
-                $splits[] = (int)$split;
+                $splits[] = (int) $split;
             } else {
-                $splits[] =  $split->totalCentiseconds;
+                $splits[] = $split->totalCentiseconds;
             }
         }
         return json_encode($splits);

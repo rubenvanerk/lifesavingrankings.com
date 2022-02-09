@@ -51,7 +51,10 @@ class Event extends Model
         $filter = app(Filter::class);
 
         if ($filter->getValue('event_type')) {
-            $query->whereRaw('type & ? = ?', [$filter->getValue('event_type'), $filter->getValue('event_type')]);
+            $query->whereRaw('type & ? = ?', [
+                $filter->getValue('event_type'),
+                $filter->getValue('event_type'),
+            ]);
         }
     }
 

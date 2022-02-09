@@ -21,31 +21,35 @@ class AthleteResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $countryOptions = collect(countries())->pluck('name', 'iso_3166_1_alpha2');
-        $countryOptions = $countryOptions->mapWithKeys(fn($countryName, $countryCode) => [strtolower((string)$countryCode) => $countryName]);
+        $countryOptions = collect(countries())->pluck(
+            'name',
+            'iso_3166_1_alpha2',
+        );
+        $countryOptions = $countryOptions->mapWithKeys(
+            fn($countryName, $countryCode) => [
+                strtolower((string) $countryCode) => $countryName,
+            ],
+        );
 
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('slug')->required(),
-                Forms\Components\MultiSelect::make('country_codes')
-                    ->options($countryOptions->toArray()),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('name')->required(),
+            Forms\Components\TextInput::make('slug')->required(),
+            Forms\Components\MultiSelect::make('country_codes')->options(
+                $countryOptions->toArray(),
+            ),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name'),
-            ]);
+        return $table->columns([Tables\Columns\TextColumn::make('name')]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
-        ];
+                //
+            ];
     }
 
     public static function getPages(): array

@@ -23,7 +23,12 @@ class Filter extends Component
 
         if (!isset($this->options)) {
             $this->options = collect();
-            $filter->fields->filter(fn(FilterField $filterField) => !empty($filterField->options))
+            $filter->fields
+                ->filter(
+                    fn(FilterField $filterField) => !empty(
+                        $filterField->options
+                    ),
+                )
                 ->each(function (FilterField $filterField, $fieldName) {
                     $this->options->put($fieldName, $filterField->options);
                 });
@@ -35,7 +40,10 @@ class Filter extends Component
     public function updated()
     {
         $filter = app(\App\Services\Filter::class);
-        $filter->fields = $this->fields->mapWithKeys(function ($filterField, $key) {
+        $filter->fields = $this->fields->mapWithKeys(function (
+            $filterField,
+            $key,
+        ) {
             return [$key => new FilterField(...array_values($filterField))];
         });
         $filter->saveToSession();

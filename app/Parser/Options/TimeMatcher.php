@@ -28,9 +28,15 @@ class TimeMatcher extends Option
             return null;
         }
 
-        $centiseconds = (int)Regex::match('/\d{2}$/', $timeAsText)->result();
-        $seconds = (int)Regex::match('/\d{1,2}(?=[^\d]+\d{2}$)/', $timeAsText)->result();
-        $minutes = (int)Regex::match('/\d{1,2}(?=[^\d]+\d{1,2}[^\d]+\d{2}$)/', $timeAsText)->result();
+        $centiseconds = (int) Regex::match('/\d{2}$/', $timeAsText)->result();
+        $seconds = (int) Regex::match(
+            '/\d{1,2}(?=[^\d]+\d{2}$)/',
+            $timeAsText,
+        )->result();
+        $minutes = (int) Regex::match(
+            '/\d{1,2}(?=[^\d]+\d{1,2}[^\d]+\d{2}$)/',
+            $timeAsText,
+        )->result();
 
         return new Time($minutes, $seconds, $centiseconds);
     }

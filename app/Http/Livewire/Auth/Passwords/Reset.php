@@ -42,7 +42,7 @@ class Reset extends Component
             [
                 'token' => $this->token,
                 'email' => $this->email,
-                'password' => $this->password
+                'password' => $this->password,
             ],
             function ($user, $password) {
                 $user->password = Hash::make($password);
@@ -54,7 +54,7 @@ class Reset extends Component
                 event(new PasswordReset($user));
 
                 $this->guard()->login($user);
-            }
+            },
         );
 
         if ($response == Password::PASSWORD_RESET) {

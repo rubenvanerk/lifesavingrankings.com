@@ -23,16 +23,17 @@ class ParserService
      * @throws UnsupportedMimeTypeException
      */
     public function __construct(
-        protected Media         $competitionFile,
-        protected ?ParserConfig $parserConfig = null
-    )
-    {
+        protected Media $competitionFile,
+        protected ?ParserConfig $parserConfig = null,
+    ) {
         if (empty($this->parserConfig)) {
             $this->parserConfig = $this->competitionFile->parser_config;
         }
 
         $this->concreteParser = $this->getConcreteParser();
-        $this->rawText = $this->concreteParser->getRawText($this->competitionFile);
+        $this->rawText = $this->concreteParser->getRawText(
+            $this->competitionFile,
+        );
     }
 
     /**
@@ -43,11 +44,14 @@ class ParserService
         $concreteParser = match ($this->competitionFile->mime_type) {
             'application/pdf' => new PdfParser(),
             'text/plain' => new TextParser(),
-            default => null,
+            default => null
         };
 
         if (is_null($concreteParser)) {
-            throw new UnsupportedMimeTypeException($this->competitionFile->mime_type . ' is currently not supported');
+            throw new UnsupportedMimeTypeException(
+                $this->competitionFile->mime_type .
+                    ' is currently not supported',
+            );
         }
 
         return $concreteParser;
@@ -55,24 +59,40 @@ class ParserService
 
     public function getParsedResults(): Collection
     {
-        return $this->concreteParser->getParsedResults($this->competitionFile, $this->parserConfig);
+        return $this->concreteParser->getParsedResults(
+            $this->competitionFile,
+            $this->parserConfig,
+        );
     }
 
     public function getHighlightedRawText($highlightRegex = null): string
     {
         $rawText = $this->rawText;
-        if ($this->competitionFile->parser_config->options['text_remover']->value) {
-            $rawText = Regex::replace($this->competitionFile->parser_config->options['text_remover']->value, '', $rawText)->result();
+        if (
+            $this->competitionFile->parser_config->options['text_remover']
+                ->value
+        ) {
+            $rawText = Regex::replace(
+                $this->competitionFile->parser_config->options['text_remover']
+                    ->value,
+                '',
+                $rawText,
+            )->result();
         }
 
         $lines = collect(explode("\n", $rawText));
 
-        if ($this->isValidRegex($highlightRegex) && $this->countMatches($highlightRegex) < 5000) {
+        if (
+            $this->isValidRegex($highlightRegex) &&
+            $this->countMatches($highlightRegex) < 5000
+        ) {
             $lines = $lines->map(function ($line) use ($highlightRegex) {
                 return Regex::replace(
                     $highlightRegex,
-                    fn(MatchResult $result) => '<mark>' . $result->result() . '</mark>',
-                    $line
+                    fn(MatchResult $result) => '<mark>' .
+                        $result->result() .
+                        '</mark>',
+                    $line,
                 )->result();
             });
         }
@@ -91,7 +111,9 @@ class ParserService
         if ($this->isValidRegex($highlightRegex)) {
             $lines = collect(explode("\n", $this->rawText));
             $lines->map(function ($line) use ($highlightRegex, &$matchCount) {
-                $matchCount += count(Regex::matchAll($highlightRegex, $line)->results());
+                $matchCount += count(
+                    Regex::matchAll($highlightRegex, $line)->results(),
+                );
             });
         }
         return $matchCount;
@@ -109,10 +131,16 @@ class ParserService
         $eventIndicator = $this->parserConfig->options['event_indicator'];
         /** @var EventRejector $eventRejector */
         $eventRejector = $this->parserConfig->options['event_rejector'];
-        $eventLines = $lines->filter(function ($line) use ($eventIndicator, $eventRejector) {
-            return $eventIndicator->hasMatch($line) && !$eventRejector->hasMatch($line);
+        $eventLines = $lines->filter(function ($line) use (
+            $eventIndicator,
+            $eventRejector,
+        ) {
+            return $eventIndicator->hasMatch($line) &&
+                !$eventRejector->hasMatch($line);
         });
-        $eventMatchers = $this->parserConfig->options->filter(function (Option $option) {
+        $eventMatchers = $this->parserConfig->options->filter(function (
+            Option $option,
+        ) {
             return $option->group === Option::GROUP_EVENTS;
         });
         return $eventLines->map(function ($eventLine) use ($eventMatchers) {

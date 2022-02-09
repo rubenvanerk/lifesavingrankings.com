@@ -60,15 +60,23 @@ class Athlete extends Model
 
     public function toDatabase(): Athlete
     {
-        return AthleteFinder::firstOrNew($this->name, $this->gender, $this->year_of_birth);
+        return AthleteFinder::firstOrNew(
+            $this->name,
+            $this->gender,
+            $this->year_of_birth,
+        );
     }
 
     public function getLastTeamAttribute(): Team
     {
         return $this->results()
-            ->join('competitions', 'results.competition_id', '=', 'competitions.id')
+            ->join(
+                'competitions',
+                'results.competition_id',
+                '=',
+                'competitions.id',
+            )
             ->latest('competitions.start_date')
-            ->first()
-            ->team;
+            ->first()->team;
     }
 }

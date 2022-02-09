@@ -21,5 +21,4 @@ class TextRemover extends Option
         $this->type = ParserConfigOptionType::Regex();
         parent::__construct($value);
     }
-
 }

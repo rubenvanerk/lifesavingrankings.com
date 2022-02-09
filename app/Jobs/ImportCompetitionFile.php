@@ -42,7 +42,11 @@ class ImportCompetitionFile implements ShouldQueue
 
         /** @var \App\Parser\ValueObjects\Result $resultValueObject */
         foreach ($results as $resultValueObject) {
-            $saveResultAction->handle($resultValueObject, $competition, $this->competitionFile);
+            $saveResultAction->handle(
+                $resultValueObject,
+                $competition,
+                $this->competitionFile,
+            );
         }
     }
 }

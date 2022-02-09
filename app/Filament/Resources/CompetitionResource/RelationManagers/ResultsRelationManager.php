@@ -15,21 +15,20 @@ class ResultsRelationManager extends HasManyRelationManager
 
     protected static ?string $recordTitleAttribute = 'id';
 
-//    public static function form(Form $form): Form
-//    {
-//        return $form
-//            ->schema([
-//                //
-//            ]);
-//    }
+    //    public static function form(Form $form): Form
+    //    {
+    //        return $form
+    //            ->schema([
+    //                //
+    //            ]);
+    //    }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('entrant.name'),
-                Tables\Columns\TextColumn::make('event.name'),
-                Tables\Columns\TextColumn::make('time')
-            ]);
+        return $table->columns([
+            Tables\Columns\TextColumn::make('entrant.name'),
+            Tables\Columns\TextColumn::make('event.name'),
+            Tables\Columns\TextColumn::make('time'),
+        ]);
     }
 }

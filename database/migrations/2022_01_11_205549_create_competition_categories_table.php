@@ -19,11 +19,20 @@ class CreateCompetitionCategoriesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->foreignIdFor(Competition::class)->index()->constrained()->onDelete('cascade');
+            $table
+                ->foreignIdFor(Competition::class)
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
         });
 
         Schema::table('results', function (Blueprint $table) {
-            $table->foreignIdFor(CompetitionCategory::class)->index()->nullable()->constrained()->onDelete('set null');
+            $table
+                ->foreignIdFor(CompetitionCategory::class)
+                ->index()
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
         });
     }
 
@@ -37,7 +46,9 @@ class CreateCompetitionCategoriesTable extends Migration
         Schema::dropIfExists('competition_categories');
 
         Schema::table('results', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('results_competition_category_id_foreign');
+            $table->dropConstrainedForeignId(
+                'results_competition_category_id_foreign',
+            );
         });
     }
 }

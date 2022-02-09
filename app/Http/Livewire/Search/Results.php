@@ -43,10 +43,12 @@ class Results extends Component
             'competitions' => Competition::search($query)->paginate(15),
         ]);
 
-        $this->resultSets = $this->resultSets->sortByDesc(function ($resultSet) {
-            return $resultSet->count();
-        })->filter(function ($resultSet) {
-            return $resultSet->count() > 0;
-        });
+        $this->resultSets = $this->resultSets
+            ->sortByDesc(function ($resultSet) {
+                return $resultSet->count();
+            })
+            ->filter(function ($resultSet) {
+                return $resultSet->count() > 0;
+            });
     }
 }

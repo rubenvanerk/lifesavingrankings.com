@@ -15,9 +15,7 @@ class AthleteController extends Controller
         }
 
         // TODO: add competitions_count
-        $athlete->loadCount([
-            'results',
-        ]);
+        $athlete->loadCount(['results']);
 
         return view('athletes.show', compact('athlete'));
     }

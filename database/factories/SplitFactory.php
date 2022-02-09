@@ -23,10 +23,9 @@ class SplitFactory extends Factory
     public function definition()
     {
         return [
-            //
-        ];
+                //
+            ];
     }
-
 
     public function result($count): SplitFactory
     {

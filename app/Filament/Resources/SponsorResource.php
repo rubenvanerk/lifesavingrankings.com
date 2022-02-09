@@ -22,19 +22,18 @@ class SponsorResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')->columnSpan(2),
-                Forms\Components\DatePicker::make('valid_from')->withoutTime(),
-                Forms\Components\DatePicker::make('valid_until')->withoutTime(),
-                Forms\Components\Toggle::make('enabled'),
-                Forms\Components\SpatieMediaLibraryFileUpload::make('logo')
-//                    ->image()
-//                    ->acceptedFileTypes(['.svg'])
-//                    ->minFiles(1)
-//                    ->maxFiles(1)
-                    ->collection('logo'),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('name')->columnSpan(2),
+            Forms\Components\DatePicker::make('valid_from')->withoutTime(),
+            Forms\Components\DatePicker::make('valid_until')->withoutTime(),
+            Forms\Components\Toggle::make('enabled'),
+            Forms\Components\SpatieMediaLibraryFileUpload::make('logo')
+                //                    ->image()
+                //                    ->acceptedFileTypes(['.svg'])
+                //                    ->minFiles(1)
+                //                    ->maxFiles(1)
+                ->collection('logo'),
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -42,18 +41,26 @@ class SponsorResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->sortable(),
-                Tables\Columns\TextColumn::make('valid_from')->date()->sortable(),
-                Tables\Columns\TextColumn::make('valid_until')->date()->sortable(),
+                Tables\Columns\TextColumn::make('valid_from')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('valid_until')
+                    ->date()
+                    ->sortable(),
                 Tables\Columns\BooleanColumn::make('enabled')->sortable(),
                 Tables\Columns\BooleanColumn::make('visible'),
             ])
             ->filters([
-                Tables\Filters\Filter::make('visible')
-                    ->query(fn (Builder $query) => $query->visible()), // @phpstan-ignore-line
+                Tables\Filters\Filter::make('visible')->query(
+                    fn(Builder $query) => $query->visible(),
+                ), // @phpstan-ignore-line
             ])
             ->prependActions([
-                Tables\Actions\LinkAction::make('toggle_enabled')
-                    ->action(fn (Sponsor $record) => $record->update(['enabled' => !$record->enabled])),
+                Tables\Actions\LinkAction::make('toggle_enabled')->action(
+                    fn(Sponsor $record) => $record->update([
+                        'enabled' => !$record->enabled,
+                    ]),
+                ),
             ]);
     }
 

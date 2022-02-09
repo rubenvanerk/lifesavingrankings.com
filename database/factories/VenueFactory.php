@@ -28,7 +28,9 @@ class VenueFactory extends Factory
             'city' => $this->faker->city(),
             'country' => $this->faker->countryCode(),
             'type' => $venueType->value,
-            'pool_size' => $venueType->is(VenueType::Pool) ? $this->faker->numberBetween(1, 2) * 25 : null,
+            'pool_size' => $venueType->is(VenueType::Pool)
+                ? $this->faker->numberBetween(1, 2) * 25
+                : null,
         ];
     }
 }

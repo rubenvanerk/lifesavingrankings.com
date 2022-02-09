@@ -9,8 +9,11 @@ class AthleteFinder
 {
     protected static array $rememberedAthletes = [];
 
-    public static function firstOrNew(string $name, Gender $gender, ?int $yearOfBirth): Athlete
-    {
+    public static function firstOrNew(
+        string $name,
+        Gender $gender,
+        ?int $yearOfBirth,
+    ): Athlete {
         if (!empty(self::$rememberedAthletes[$name . $gender . $yearOfBirth])) {
             return self::$rememberedAthletes[$name . $gender . $yearOfBirth];
         }

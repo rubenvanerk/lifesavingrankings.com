@@ -25,7 +25,10 @@ class YearOfBirthMatcher extends Option
         $minimumYearOfBirth = today()->year - 100; // TODO: make this competition date dependant
 
         // year of birth can be in YY format, add 100s until in acceptable range
-        while ($yearOfBirth < $minimumYearOfBirth && $yearOfBirth < today()->year) {
+        while (
+            $yearOfBirth < $minimumYearOfBirth &&
+            $yearOfBirth < today()->year
+        ) {
             $yearOfBirth += 100;
         }
 

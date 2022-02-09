@@ -26,7 +26,8 @@ class Media extends \Spatie\MediaLibrary\MediaCollections\Models\Media
     {
         if ($this->mime_type === 'application/pdf') {
             return [
-                'competitionFile.parser_config.horizontal_offset' => 'required|string',
+                'competitionFile.parser_config.horizontal_offset' =>
+                    'required|string',
             ];
         }
 

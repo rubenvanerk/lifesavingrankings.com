@@ -21,39 +21,46 @@ class VenueResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $countryOptions = collect(countries())->pluck('name', 'iso_3166_1_alpha2');
-        $countryOptions = $countryOptions->mapWithKeys(fn($countryName, $countryCode) => [strtolower((string)$countryCode) => $countryName]);
+        $countryOptions = collect(countries())->pluck(
+            'name',
+            'iso_3166_1_alpha2',
+        );
+        $countryOptions = $countryOptions->mapWithKeys(
+            fn($countryName, $countryCode) => [
+                strtolower((string) $countryCode) => $countryName,
+            ],
+        );
 
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required(),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('city')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('country_code')
-                    ->options($countryOptions)
-                    ->required(),
-                Forms\Components\Radio::make('type')
-                    ->options(VenueType::asSelectArray())
-                    ->required(),
-                Forms\Components\Radio::make('pool_size')
-                    ->options([null => 'N/A', 25 => '25m', 50 => '50m']),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('name')->required(),
+            Forms\Components\TextInput::make('slug')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('city')
+                ->required()
+                ->maxLength(255),
+            Forms\Components\Select::make('country_code')
+                ->options($countryOptions)
+                ->required(),
+            Forms\Components\Radio::make('type')
+                ->options(VenueType::asSelectArray())
+                ->required(),
+            Forms\Components\Radio::make('pool_size')->options([
+                null => 'N/A',
+                25 => '25m',
+                50 => '50m',
+            ]),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('city'),
-                Tables\Columns\TextColumn::make('type_name'),
-                Tables\Columns\TextColumn::make('pool_size_label'),
-            ]);
+        return $table->columns([
+            Tables\Columns\TextColumn::make('name'),
+            Tables\Columns\TextColumn::make('city'),
+            Tables\Columns\TextColumn::make('type_name'),
+            Tables\Columns\TextColumn::make('pool_size_label'),
+        ]);
     }
 
     public static function getPages(): array

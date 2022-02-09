@@ -52,8 +52,12 @@ class Create extends Component
 
     public function mount()
     {
-        $this->pools = Venue::pool()->orderBy('name')->get();
-        $this->beaches = Venue::beach()->orderBy('name')->get();
+        $this->pools = Venue::pool()
+            ->orderBy('name')
+            ->get();
+        $this->beaches = Venue::beach()
+            ->orderBy('name')
+            ->get();
     }
 
     public function submit()

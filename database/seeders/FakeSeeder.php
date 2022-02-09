@@ -34,25 +34,37 @@ class FakeSeeder extends Seeder
         $competitionsFactory = Competition::factory(25);
 
         $events = Event::where('type', EventType::IndividualPool)->get();
-        $competitionsFactory = $competitionsFactory->has(CompetitionCategory::factory()->count(random_int(2, 5)), 'categories');
+        $competitionsFactory = $competitionsFactory->has(
+            CompetitionCategory::factory()->count(random_int(2, 5)),
+            'categories',
+        );
         foreach ($events as $event) {
             preg_match('/^\d+(?=m)/', $event->name, $matches);
-            $eventDistance = (int)Arr::first($matches);
+            $eventDistance = (int) Arr::first($matches);
             $splitCount = $eventDistance / 50;
-            $competitionsFactory = $competitionsFactory
-                ->has(Result::factory()->count(random_int(25, 50))
+            $competitionsFactory = $competitionsFactory->has(
+                Result::factory()
+                    ->count(random_int(25, 50))
                     ->competition($event)
-                    ->has(Split::factory()->count($splitCount)->result($splitCount)
-                    )
-                );
+                    ->has(
+                        Split::factory()
+                            ->count($splitCount)
+                            ->result($splitCount),
+                    ),
+            );
         }
 
         $competitions = $competitionsFactory->create();
 
         foreach ($competitions as $competition) {
-            $venueTypes = collect(VenueType::getValues())->random(random_int(1, 2));
+            $venueTypes = collect(VenueType::getValues())->random(
+                random_int(1, 2),
+            );
             foreach ($venueTypes as $venueType) {
-                $randomVenue = Venue::query()->where('type', $venueType)->inRandomOrder()->first();
+                $randomVenue = Venue::query()
+                    ->where('type', $venueType)
+                    ->inRandomOrder()
+                    ->first();
                 $competition->venues()->attach($randomVenue);
             }
         }

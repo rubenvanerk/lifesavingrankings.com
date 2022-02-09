@@ -21,7 +21,8 @@ class CompetitionFeed extends Component
                 ->where('status', CompetitionStatus::Published)
                 ->select(['id', 'name', 'slug', 'start_date'])
                 ->withCount('results')
-                ->limit(6)->get();
+                ->limit(6)
+                ->get();
         });
         return view('components.home.competition-feed', [
             'competitions' => $competitions,

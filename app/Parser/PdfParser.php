@@ -17,7 +17,9 @@ class PdfParser extends TextParser
 
         $config = new Config();
         $parserOptions = $competitionFile->parser_config->options;
-        $config->setHorizontalOffset($this->translateQuoted($parserOptions['horizontal_offset']->value));
+        $config->setHorizontalOffset(
+            $this->translateQuoted($parserOptions['horizontal_offset']->value),
+        );
         $config->setRetainImageContent(false);
 
         $parser = new \Smalot\PdfParser\Parser([], $config);

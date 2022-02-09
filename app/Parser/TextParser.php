@@ -34,12 +34,19 @@ class TextParser implements ParserInterface
         return file_get_contents($competitionFile->getPath());
     }
 
-    public function getParsedResults(Media $competitionFile, ?ParserConfig $parserConfig = null): Collection
-    {
-        $this->options = $parserConfig?->options ?: $competitionFile->parser_config->options;
+    public function getParsedResults(
+        Media $competitionFile,
+        ?ParserConfig $parserConfig = null,
+    ): Collection {
+        $this->options =
+            $parserConfig?->options ?: $competitionFile->parser_config->options;
         $rawText = $this->getRawText($competitionFile);
         if ($this->options['text_remover']->value) {
-            $rawText = Regex::replace($this->options['text_remover']->value, '', $rawText)->result();
+            $rawText = Regex::replace(
+                $this->options['text_remover']->value,
+                '',
+                $rawText,
+            )->result();
         }
 
         $this->lines = explode("\n", $rawText);
@@ -47,13 +54,14 @@ class TextParser implements ParserInterface
         $event = null;
         $gender = null;
         $category = null;
-        $results = new Collection;
+        $results = new Collection();
 
         foreach ($this->lines as $lineNumber => $line) {
-            $status = $this->options['dsq_matcher']->getMatch($line)
-                ?: $this->options['dnf_matcher']->getMatch($line)
-                    ?: $this->options['dns_matcher']->getMatch($line)
-                        ?: $this->options['wdr_matcher']->getMatch($line);
+            $status =
+                $this->options['dsq_matcher']->getMatch($line) ?:
+                $this->options['dnf_matcher']->getMatch($line) ?:
+                $this->options['dns_matcher']->getMatch($line) ?:
+                $this->options['wdr_matcher']->getMatch($line);
 
             if ($this->options['event_indicator']->hasMatch($line)) {
                 if ($this->options['event_rejector']->hasMatch($line)) {
@@ -67,11 +75,26 @@ class TextParser implements ParserInterface
                     $category = null;
                 }
             }
-            if ($event && $gender && ($this->options['result_indicator']->hasMatch($line) || $status)) {
-                $results->add($this->getResultFromLine($line, $lineNumber + 1, $event, $gender, $category, $status));
+            if (
+                $event &&
+                $gender &&
+                ($this->options['result_indicator']->hasMatch($line) || $status)
+            ) {
+                $results->add(
+                    $this->getResultFromLine(
+                        $line,
+                        $lineNumber + 1,
+                        $event,
+                        $gender,
+                        $category,
+                        $status,
+                    ),
+                );
             }
             if ($this->options['category_matcher']->hasMatch($line)) {
-                $category = new Category($this->options['category_matcher']->getMatch($line));
+                $category = new Category(
+                    $this->options['category_matcher']->getMatch($line),
+                );
             }
         }
 
@@ -91,8 +114,14 @@ class TextParser implements ParserInterface
         return null;
     }
 
-    private function getResultFromLine(string $line, int $lineNumber, Event $event, Gender $gender, ?Category $category, ?ResultStatus $resultStatus): Result
-    {
+    private function getResultFromLine(
+        string $line,
+        int $lineNumber,
+        Event $event,
+        Gender $gender,
+        ?Category $category,
+        ?ResultStatus $resultStatus,
+    ): Result {
         if ($event->isType(EventType::Individual())) {
             $entrant = $this->getAthleteFromLine($line, $gender);
             $segments = new Segments();
@@ -102,7 +131,12 @@ class TextParser implements ParserInterface
                 $gender,
             );
 
-            $segments = $this->getSegmentsFromLine($line, $lineNumber, $event, $gender);
+            $segments = $this->getSegmentsFromLine(
+                $line,
+                $lineNumber,
+                $event,
+                $gender,
+            );
         }
 
         $team = new Team($this->options['team_matcher']->getMatch($line));
@@ -117,7 +151,7 @@ class TextParser implements ParserInterface
             $segments,
             $this->options['splits_matcher']->getMatches($line),
             $line,
-            $lineNumber
+            $lineNumber,
         );
     }
 
@@ -126,11 +160,7 @@ class TextParser implements ParserInterface
         $name = $this->options['athlete_matcher']->getMatch($line);
         $yearOfBirth = $this->options['year_of_birth_matcher']->getMatch($line);
 
-        return new Athlete(
-            $name,
-            $gender,
-            $yearOfBirth
-        );
+        return new Athlete($name, $gender, $yearOfBirth);
     }
 
     private function getGenderFromLine(string $line): ?Gender
@@ -146,8 +176,12 @@ class TextParser implements ParserInterface
         return null;
     }
 
-    private function getSegmentsFromLine(string $line, int $lineNumber, Event $event, Gender $gender): ?Segments
-    {
+    private function getSegmentsFromLine(
+        string $line,
+        int $lineNumber,
+        Event $event,
+        Gender $gender,
+    ): ?Segments {
         if ($this->options['team_mate_matcher']->occursOnNextLine) {
             $line = $this->lines[$lineNumber] ?? null;
         }
@@ -160,15 +194,8 @@ class TextParser implements ParserInterface
                 return null;
             }
 
-            $athlete = new Athlete(
-                $names[$i],
-                $gender,
-                null
-            );
-            $result = new Result(
-                event: $event,
-                entrant: $athlete
-            );
+            $athlete = new Athlete($names[$i], $gender, null);
+            $result = new Result(event: $event, entrant: $athlete);
             $segments[] = $result;
         }
 

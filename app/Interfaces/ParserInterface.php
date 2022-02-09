@@ -8,7 +8,10 @@ use Illuminate\Support\Collection;
 
 interface ParserInterface
 {
-    public function getParsedResults(Media $competitionFile, ?ParserConfig $parserConfig = null): Collection;
+    public function getParsedResults(
+        Media $competitionFile,
+        ?ParserConfig $parserConfig = null,
+    ): Collection;
 
     public function getRawText(Media $competitionFile): string;
 }

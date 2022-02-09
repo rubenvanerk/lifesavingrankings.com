@@ -37,15 +37,23 @@ class Options implements CastsAttributes
      * @param array $attributes
      * @return Collection
      */
-    public function get($model, string $key, $value, array $attributes): Collection
-    {
+    public function get(
+        $model,
+        string $key,
+        $value,
+        array $attributes,
+    ): Collection {
         $options = $this->getDefaultOptions($model->media->mime_type);
         $optionValues = json_decode($value, true);
         /** @var Option $option */
         foreach ($options as $option) {
             if (isset($optionValues[$option->name])) {
-                $option->value = $optionValues[$option->name]['value'] ?? $optionValues[$option->name];
-                $option->occursOnNextLine = $optionValues[$option->name]['occurs_on_next_line'] ?? false;
+                $option->value =
+                    $optionValues[$option->name]['value'] ??
+                    $optionValues[$option->name];
+                $option->occursOnNextLine =
+                    $optionValues[$option->name]['occurs_on_next_line'] ??
+                    false;
             }
         }
 
@@ -63,12 +71,16 @@ class Options implements CastsAttributes
      * @param array $attributes
      * @return string|bool
      */
-    public function set($model, string $key, $value, array $attributes): string|bool
-    {
+    public function set(
+        $model,
+        string $key,
+        $value,
+        array $attributes,
+    ): string|bool {
         $optionsToSave = [];
         /** @var Option $option */
         foreach ($value as $option) {
-            $optionsToSave[$option->name] =[
+            $optionsToSave[$option->name] = [
                 'value' => $option->value,
                 'occurs_on_next_line' => $option->occursOnNextLine,
             ];
@@ -81,39 +93,41 @@ class Options implements CastsAttributes
         return match ($mimeType) {
             'application/pdf' => $this->getDefaultPdfOptions(),
             'text/plain' => $this->getDefaultTextOptions(),
-            default => collect(),
+            default => collect()
         };
     }
 
     private function getDefaultPdfOptions(): Collection
     {
-        return $this->getDefaultTextOptions()->merge(collect([
-            new HorizontalOffsetOption(),
-        ]));
+        return $this->getDefaultTextOptions()->merge(
+            collect([new HorizontalOffsetOption()]),
+        );
     }
 
     private function getDefaultTextOptions(): Collection
     {
-        return $this->getDefaultGeneralOptions()->merge(collect([
-            new EventIndicator(),
-            new EventRejector(),
-            new CategoryMatcher(),
-            new MenMatcher(),
-            new WomenMatcher(),
-            new ResultIndicator(),
-            new TimeMatcher(),
-            new SplitsMatcher(),
-            new StatusMatcher(status: ResultStatus::DSQ()),
-            new StatusMatcher(status: ResultStatus::DNF()),
-            new StatusMatcher(status: ResultStatus::DNS()),
-            new StatusMatcher(status: ResultStatus::WDR()),
-            new RelayTeamMatcher(),
-            new RelayTeamMateMatcher(),
-            new AthleteMatcher(),
-            new YearOfBirthMatcher(),
-            new TeamMatcher(),
-            new TextRemover(),
-        ]));
+        return $this->getDefaultGeneralOptions()->merge(
+            collect([
+                new EventIndicator(),
+                new EventRejector(),
+                new CategoryMatcher(),
+                new MenMatcher(),
+                new WomenMatcher(),
+                new ResultIndicator(),
+                new TimeMatcher(),
+                new SplitsMatcher(),
+                new StatusMatcher(status: ResultStatus::DSQ()),
+                new StatusMatcher(status: ResultStatus::DNF()),
+                new StatusMatcher(status: ResultStatus::DNS()),
+                new StatusMatcher(status: ResultStatus::WDR()),
+                new RelayTeamMatcher(),
+                new RelayTeamMateMatcher(),
+                new AthleteMatcher(),
+                new YearOfBirthMatcher(),
+                new TeamMatcher(),
+                new TextRemover(),
+            ]),
+        );
     }
 
     private function getDefaultGeneralOptions(): Collection

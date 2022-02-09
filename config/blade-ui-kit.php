@@ -3,7 +3,6 @@
 use BladeUIKit\Components;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Components
@@ -16,33 +15,33 @@ return [
     */
 
     'components' => [
-//        'alert' => Components\Alerts\Alert::class,
-//        'avatar' => Components\Support\Avatar::class,
-//        'carbon' => Components\DateTime\Carbon::class,
+        //        'alert' => Components\Alerts\Alert::class,
+        //        'avatar' => Components\Support\Avatar::class,
+        //        'carbon' => Components\DateTime\Carbon::class,
         'checkbox' => Components\Forms\Inputs\Checkbox::class,
-//        'color-picker' => Components\Forms\Inputs\ColorPicker::class,
-//        'countdown' => Components\DateTime\Countdown::class,
-//        'cron' => Components\Support\Cron::class,
-//        'dropdown' => Components\Navigation\Dropdown::class,
-//        'easy-mde' => Components\Editors\EasyMDE::class,
-//        'email' => Components\Forms\Inputs\Email::class,
-//        'error' => Components\Forms\Error::class,
-//        'flat-pickr' => Components\Forms\Inputs\FlatPickr::class,
-//        'form' => Components\Forms\Form::class,
-//        'form-button' => Components\Buttons\FormButton::class,
-//        'html' => Components\Layouts\Html::class,
+        //        'color-picker' => Components\Forms\Inputs\ColorPicker::class,
+        //        'countdown' => Components\DateTime\Countdown::class,
+        //        'cron' => Components\Support\Cron::class,
+        //        'dropdown' => Components\Navigation\Dropdown::class,
+        //        'easy-mde' => Components\Editors\EasyMDE::class,
+        //        'email' => Components\Forms\Inputs\Email::class,
+        //        'error' => Components\Forms\Error::class,
+        //        'flat-pickr' => Components\Forms\Inputs\FlatPickr::class,
+        //        'form' => Components\Forms\Form::class,
+        //        'form-button' => Components\Buttons\FormButton::class,
+        //        'html' => Components\Layouts\Html::class,
         'input' => Components\Forms\Inputs\Input::class,
-//        'label' => Components\Forms\Label::class,
-//        'logout' => Components\Buttons\Logout::class,
-//        'mapbox' => Components\Maps\Mapbox::class,
-//        'markdown' => Components\Markdown\Markdown::class,
-//        'password' => Components\Forms\Inputs\Password::class,
-//        'pikaday' => Components\Forms\Inputs\Pikaday::class,
-//        'social-meta' => Components\Layouts\SocialMeta::class,
-//        'textarea' => Components\Forms\Inputs\Textarea::class,
-//        'toc' => Components\Markdown\ToC::class,
-//        'trix' => Components\Editors\Trix::class,
-//        'unsplash' => Components\Support\Unsplash::class,
+        //        'label' => Components\Forms\Label::class,
+        //        'logout' => Components\Buttons\Logout::class,
+        //        'mapbox' => Components\Maps\Mapbox::class,
+        //        'markdown' => Components\Markdown\Markdown::class,
+        //        'password' => Components\Forms\Inputs\Password::class,
+        //        'pikaday' => Components\Forms\Inputs\Pikaday::class,
+        //        'social-meta' => Components\Layouts\SocialMeta::class,
+        //        'textarea' => Components\Forms\Inputs\Textarea::class,
+        //        'toc' => Components\Markdown\ToC::class,
+        //        'trix' => Components\Editors\Trix::class,
+        //        'unsplash' => Components\Support\Unsplash::class,
     ],
 
     /*
@@ -88,8 +87,8 @@ return [
     */
 
     'assets' => [
-
-        'alpine' => 'https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js',
+        'alpine' =>
+            'https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js',
 
         'easy-mde' => [
             'https://unpkg.com/easymde/dist/easymde.min.css',
@@ -125,7 +124,5 @@ return [
             'https://unpkg.com/trix@1.2.3/dist/trix.css',
             'https://unpkg.com/trix@1.2.3/dist/trix.js',
         ],
-
     ],
-
 ];

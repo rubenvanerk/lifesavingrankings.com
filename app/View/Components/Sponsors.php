@@ -11,6 +11,10 @@ class Sponsors extends Component
 {
     public function render(): View
     {
-        return view('components.sponsors', ['sponsors' => Sponsor::query()->visible()->get()]);
+        return view('components.sponsors', [
+            'sponsors' => Sponsor::query()
+                ->visible()
+                ->get(),
+        ]);
     }
 }

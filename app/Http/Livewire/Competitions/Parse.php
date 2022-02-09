@@ -43,8 +43,12 @@ class Parse extends Component
 
             switch ($this->currentTab) {
                 case self::TAB_TEXT:
-                    $data['matchCount'] = $parser->countMatches($this->currentRegex);
-                    $data['rawText'] = $parser->getHighlightedRawText($this->currentRegex);
+                    $data['matchCount'] = $parser->countMatches(
+                        $this->currentRegex,
+                    );
+                    $data['rawText'] = $parser->getHighlightedRawText(
+                        $this->currentRegex,
+                    );
                     break;
                 case self::TAB_TABLE:
                     if ($this->loadTable || $this->autoloadTable) {
@@ -87,14 +91,25 @@ class Parse extends Component
 
     public function rules(): array
     {
-        $values = $this->media->parser_config->options->mapWithKeys(function ($option) {
-            return ['parser_config.options.' . $option->name . '.value' => 'nullable'];
-        })->toArray();
+        $values = $this->media->parser_config->options
+            ->mapWithKeys(function ($option) {
+                return [
+                    'parser_config.options.' .
+                    $option->name .
+                    '.value' => 'nullable',
+                ];
+            })
+            ->toArray();
         $canOccurOnNextLine = $this->media->parser_config->options
             ->filter(fn($option) => $option->canOccurOnNextLine)
             ->mapWithKeys(function ($option) {
-                return ['parser_config.options.' . $option->name . '.occursOnNextLine' => 'nullable'];
-            })->toArray();
+                return [
+                    'parser_config.options.' .
+                    $option->name .
+                    '.occursOnNextLine' => 'nullable',
+                ];
+            })
+            ->toArray();
         return array_merge($values, $canOccurOnNextLine);
     }
 

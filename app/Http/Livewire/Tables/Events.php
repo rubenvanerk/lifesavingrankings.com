@@ -50,14 +50,20 @@ class Events extends Component
 
         // TODO: extract into service
         if ($this->readyToLoad) {
-            $events = Event::query()->filter()->with(['results' => function (HasMany $query) {
-                /** @var Result $query */
-                $query->valid()
-                    ->orderBy('time')
-                    ->filter()
-                    ->limit($this->limit)
-                    ->with(['entrant', 'competition', 'team']);
-            }])->get();
+            $events = Event::query()
+                ->filter()
+                ->with([
+                    'results' => function (HasMany $query) {
+                        /** @var Result $query */
+                        $query
+                            ->valid()
+                            ->orderBy('time')
+                            ->filter()
+                            ->limit($this->limit)
+                            ->with(['entrant', 'competition', 'team']);
+                    },
+                ])
+                ->get();
 
             $events = $events->filter(function ($event) {
                 return $event->results->count() > 0;
@@ -67,7 +73,9 @@ class Events extends Component
         return view('livewire.tables.events', [
             'events' => $events ?? null,
             'filter' => app(Filter::class),
-            'genderEnum' => $this->gender ? Gender::coerce($this->gender) : null,
+            'genderEnum' => $this->gender
+                ? Gender::coerce($this->gender)
+                : null,
         ]);
     }
 

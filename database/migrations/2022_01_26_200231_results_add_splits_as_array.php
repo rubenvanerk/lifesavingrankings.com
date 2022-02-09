@@ -33,11 +33,25 @@ class ResultsAddSplitsAsArray extends Migration
         Schema::create('splits', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(Result::class)->constrained()->onDelete('cascade');
-            $table->mediumInteger('time')->nullable()->unsigned();
+            $table
+                ->foreignIdFor(Result::class)
+                ->constrained()
+                ->onDelete('cascade');
+            $table
+                ->mediumInteger('time')
+                ->nullable()
+                ->unsigned();
             $table->smallInteger('distance')->unsigned();
-            $table->foreignIdFor(Athlete::class)->nullable()->constrained()->onDelete('cascade');
-            $table->foreignIdFor(RelaySegment::class)->nullable()->constrained()->onDelete('set null');
+            $table
+                ->foreignIdFor(Athlete::class)
+                ->nullable()
+                ->constrained()
+                ->onDelete('cascade');
+            $table
+                ->foreignIdFor(RelaySegment::class)
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
         });
 
         Schema::table('results', function (Blueprint $table) {

@@ -61,6 +61,8 @@ abstract class Option
         }
 
         $matches = collect(Regex::matchAll($this->value, $string)->results());
-        return $matches->map(fn (MatchResult $matchResult) => trim($matchResult->result()));
+        return $matches->map(
+            fn(MatchResult $matchResult) => trim($matchResult->result()),
+        );
     }
 }

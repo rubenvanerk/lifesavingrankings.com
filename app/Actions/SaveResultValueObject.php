@@ -8,8 +8,11 @@ use App\Parser\ValueObjects\Result;
 
 class SaveResultValueObject
 {
-    public function handle(Result $resultValueObject, Competition $competition, Media $competitionFile): \App\Models\Result
-    {
+    public function handle(
+        Result $resultValueObject,
+        Competition $competition,
+        Media $competitionFile,
+    ): \App\Models\Result {
         $result = $resultValueObject->toModel();
         $result->competition()->associate($competition);
         $result->media_source()->associate($competitionFile);
@@ -33,7 +36,9 @@ class SaveResultValueObject
         }
 
         foreach ($resultValueObject->getSegments() as $segment) {
-            $result->segments()->save($this->handle($segment, $competition, $competitionFile));
+            $result
+                ->segments()
+                ->save($this->handle($segment, $competition, $competitionFile));
         }
 
         $result->save();

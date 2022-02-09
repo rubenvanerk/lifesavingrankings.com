@@ -44,22 +44,34 @@ class Results extends Component
 
         if ($this->readyToLoad) {
             $results = Result::query()
-                ->orderBy('status', 'desc')->orderBy('time')
+                ->orderBy('status', 'desc')
+                ->orderBy('time')
                 ->with(['competition', 'entrant', 'team', 'segments.entrant']);
 
             if ($this->valid) {
                 $results->valid();
             }
 
-            if (!$filter->getValue('competition') && !$filter->getValue('athlete') && !$filter->getValue('team')) {
-                $sub = Result::filter()->selectRaw('entrant_id, MIN(time)')
+            if (
+                !$filter->getValue('competition') &&
+                !$filter->getValue('athlete') &&
+                !$filter->getValue('team')
+            ) {
+                $sub = Result::filter()
+                    ->selectRaw('entrant_id, MIN(time)')
                     ->groupByRaw('event_id, entrant_id, entrant_type');
 
                 $results = $results
                     ->withoutGlobalScope('published')
-                    ->whereRaw('(entrant_id, time) IN (' . $sub->toSql() . ')', $sub->getBindings())
+                    ->whereRaw(
+                        '(entrant_id, time) IN (' . $sub->toSql() . ')',
+                        $sub->getBindings(),
+                    )
                     ->paginate(15);
-            } elseif ($filter->getValue('athlete') || $filter->getValue('team')) {
+            } elseif (
+                $filter->getValue('athlete') ||
+                $filter->getValue('team')
+            ) {
                 $results = $results->filter()->paginate(15);
             } else {
                 $results = $results->filter()->get();

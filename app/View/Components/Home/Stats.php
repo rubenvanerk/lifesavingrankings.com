@@ -18,7 +18,9 @@ class Stats extends Component
     {
         return view('components.home.stats', [
             'athleteCount' => $this->shortNumber(Athlete::getCachedCount()),
-            'competitionCount' => $this->shortNumber(Competition::getCachedCount()),
+            'competitionCount' => $this->shortNumber(
+                Competition::getCachedCount(),
+            ),
             'resultCount' => $this->shortNumber(Result::getCachedCount()),
         ]);
     }

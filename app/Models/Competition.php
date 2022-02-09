@@ -62,7 +62,7 @@ class Competition extends Model implements HasMedia
         return match ($this->timekeeping->value) {
             TimekeepingMethod::ByHand => 'blue',
             TimekeepingMethod::Electronic => 'amber',
-            default => 'gray',
+            default => 'gray'
         };
     }
 
@@ -73,7 +73,7 @@ class Competition extends Model implements HasMedia
             CompetitionStatus::ScheduledForImport => 'violet',
             CompetitionStatus::UnableToImport => 'red',
             CompetitionStatus::Published => 'emerald',
-            default => 'gray',
+            default => 'gray'
         };
     }
 
@@ -92,6 +92,7 @@ class Competition extends Model implements HasMedia
         return Athlete::query()
             ->whereHas('results', function (Builder $query) {
                 $query->whereRelation('competition', 'id', $this->id);
-            })->count();
+            })
+            ->count();
     }
 }
