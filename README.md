@@ -4,8 +4,8 @@
 
 ### Prerequisites
 
-- docker & docker-compose
-- composer
+-   docker & docker-compose
+-   composer
 
 ### Instructions
 

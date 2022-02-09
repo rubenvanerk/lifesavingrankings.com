@@ -14,7 +14,9 @@
  *
  * See: https://github.com/laravel-frontend-presets/tall/issues/7
  */
- input:invalid, textarea:invalid, select:invalid {
+input:invalid,
+textarea:invalid,
+select:invalid {
     box-shadow: none;
 }
 
@@ -55,7 +57,8 @@
 }
 
 @layer base {
-    td a, a.link {
+    td a,
+    a.link {
         @apply text-blue-900 hover:text-blue-600 hover:underline;
     }
 }
@@ -68,8 +71,8 @@ pre span:before {
     content: counter(line);
     display: inline-block;
     border-right: 1px solid #ddd;
-    padding: 0 .5em;
-    margin-right: .5em;
+    padding: 0 0.5em;
+    margin-right: 0.5em;
     min-width: 50px;
     color: #aaa;
 }

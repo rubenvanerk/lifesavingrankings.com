@@ -2,7 +2,11 @@
     "name": "rubenvanerk/lifesavingrankings.com",
     "type": "project",
     "description": "LifesavingRankings.com",
-    "keywords": ["laravel", "lifesaving", "results"],
+    "keywords": [
+        "laravel",
+        "lifesaving",
+        "results"
+    ],
     "license": "MIT",
     "authors": [
         {
