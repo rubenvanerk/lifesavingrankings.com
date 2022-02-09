@@ -8,20 +8,18 @@ use App\Models\Team;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Request;
 
 class Results extends Component
 {
     public Collection $resultSets;
     public string $query = '';
 
-    protected $queryString = [
-        'query' => ['except' => ''],
-    ];
-
     protected $listeners = ['search'];
 
     public function mount()
     {
+        $this->query = Request::get('query');
         $this->resultSets = collect();
     }
 
@@ -40,9 +38,9 @@ class Results extends Component
         }
 
         $this->resultSets = collect([
-            'athletes' => Athlete::search($query)->get(),
-            'teams' => Team::search($query)->get(),
-            'competitions' => Competition::search($query)->get(),
+            'athletes' => Athlete::search($query)->paginate(15),
+            'teams' => Team::search($query)->paginate(15),
+            'competitions' => Competition::search($query)->paginate(15),
         ]);
 
         $this->resultSets = $this->resultSets->sortByDesc(function ($resultSet) {
