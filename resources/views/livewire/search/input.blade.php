@@ -1,4 +1,4 @@
-<div wire:ignore wire:init="search">
+<div wire:ignore>
     <form method="get" action="{{ route('search') }}">
         <label for="search" class="sr-only">{{ __('app.search') }}</label>
         <div class="relative text-gray-400 focus-within:text-gray-600">

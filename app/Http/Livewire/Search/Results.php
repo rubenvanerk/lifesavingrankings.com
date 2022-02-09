@@ -14,6 +14,10 @@ class Results extends Component
     public Collection $resultSets;
     public string $query = '';
 
+    protected $queryString = [
+        'query' => ['except' => ''],
+    ];
+
     protected $listeners = ['search'];
 
     public function mount()
@@ -23,6 +27,7 @@ class Results extends Component
 
     public function render(): View
     {
+        $this->search($this->query);
         return view('livewire.search.results');
     }
 

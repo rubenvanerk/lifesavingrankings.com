@@ -20,7 +20,7 @@ class Input extends Component
 
     public function updatedQuery()
     {
-        $this->emit('search', $this->query);
+        $this->search();
     }
 
     public function search()
