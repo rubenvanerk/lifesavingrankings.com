@@ -13,7 +13,7 @@
         </a>
     </li>
 @else
-    <li>
+    <li class="mobile-table">
         <span class="block px-4 py-4 bg-white">
             <span class="flex items-center space-x-4">
                 <span class="flex-1 flex space-x-2 truncate">

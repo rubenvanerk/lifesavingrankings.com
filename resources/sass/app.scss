@@ -58,7 +58,8 @@ select:invalid {
 
 @layer base {
     td a,
-    a.link {
+    a.link,
+    li.mobile-table a {
         @apply text-blue-900 hover:text-blue-600 hover:underline;
     }
 }
