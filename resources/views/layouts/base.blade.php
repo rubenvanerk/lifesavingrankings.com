@@ -33,6 +33,25 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{ Breadcrumbs::view('breadcrumbs::json-ld') }}
+
+        @if (request()->routeIs('home'))
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "url": "{{ url('/') }}",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "{{ route('search') }}?query={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            }
+            </script>
+        @endif
+
     </head>
 
     <body>
