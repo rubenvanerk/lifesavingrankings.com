@@ -105,7 +105,7 @@ class Result extends Model
         if ($filter->getValue('to_date')) {
             $query->whereRelation(
                 'competition',
-                'to_date',
+                'end_date',
                 '>=',
                 $filter->getValue('to_date'),
             );

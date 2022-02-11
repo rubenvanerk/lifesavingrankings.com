@@ -19,25 +19,31 @@
 
                     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                         <div class="sm:col-span-4">
-                            <x-forms.input.with-label name="name" label="Competition name" required
-                                                      wire:model.defer="name"/>
+                            <x-input.group :error="$errors->first('name')" :required="true">
+                                <x-input.label>Competition name</x-input.label>
+                                <x-input.text name="name" wire:model.defer="name"/>
+                            </x-input.group>
                         </div>
 
                         <div class="sm:col-span-4">
-                            <x-forms.label for="files">File(s)</x-forms.label>
-                            <input type="file" wire:model="files" id="files" name="files" class="mt-1" multiple>
+                            <x-input.group :error="$errors->first('files')" :required="false" id="files">
+                                <x-input.label>File(s)</x-input.label>
+                                <div class="flex">
+                                    <x-input.file name="files" wire:model="files" multiple/>
+                                </div>
 
-                            <div wire:loading wire:target="files">Uploading...</div>
-
-                            <p class="mt-1 text-sm text-gray-500">
-                                If you can, please also provide a link to the source of the file.
-                            </p>
+                                <p class="mt-1 text-sm text-gray-500">
+                                    If you can, please also provide a link to the source of the file.
+                                </p>
+                            </x-input.group>
                         </div>
 
                         <div class="sm:col-span-4">
-                            <x-forms.input.with-label name="file_link" label="Link to file" wire:model.defer="competition.file_link"/>
+                            <x-input.group :error="$errors->first('file_link')" :required="false">
+                                <x-input.label>File link</x-input.label>
+                                <x-input.text name="file_link" wire:model="file_link"/>
+                            </x-input.group>
                         </div>
-
                     </div>
                 </div>
 
@@ -45,18 +51,24 @@
 
                     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                         <div class="sm:col-span-4">
-                            <x-forms.checkbox.with-inline-label name="ils_sanctioned" label="ILS sanctioned competition"
-                                                                wire:model.defer="ils_sanctioned"/>
+                            <x-input.group class="flex space-x-2" :error="$errors->first('ils_sanctioned')">
+                                <x-input.toggle name="ils_sanctioned" wire:model="value"/>
+                                <x-input.label>ILS sanctioned competition</x-input.label>
+                            </x-input.group>
                         </div>
 
                         <div class="sm:col-span-3">
-                            <x-forms.input.with-label name="start_date" label="Start date" type="date" required
-                                                      wire:model.defer="start_date"/>
+                            <x-input.group :error="$errors->first('start_date')" :required="true">
+                                <x-input.label>Start date</x-input.label>
+                                <x-input.date name="start_date" wire:model="start_date"/>
+                            </x-input.group>
                         </div>
 
                         <div class="sm:col-span-3">
-                            <x-forms.input.with-label name="end_date" label="End date" type="date"
-                                                      wire:model.defer="end_date"/>
+                            <x-input.group :error="$errors->first('end_date')" :required="false">
+                                <x-input.label>End date</x-input.label>
+                                <x-input.date name="end_date" wire:model="end_date"/>
+                            </x-input.group>
                         </div>
                     </div>
 
@@ -144,10 +156,11 @@
                                     </div>
 
                                     <div x-show="customPool" class="space-y-8">
-                                        <div>
-                                            <x-forms.input.with-label label="Name" name="pool_name"
-                                                                      wire:model.defer="pool_name"/>
-                                        </div>
+
+                                        <x-input.group :error="$errors->first('pool_name')">
+                                            <x-input.label>Name</x-input.label>
+                                            <x-input.text name="pool_name" wire:model.defer="pool_name"/>
+                                        </x-input.group>
 
                                         <div>
                                             <x-forms.label for="pool-country">Country</x-forms.label>
@@ -160,10 +173,11 @@
                                             </select>
                                         </div>
 
-                                        <div>
-                                            <x-forms.input.with-label label="City" name="pool_city"
-                                                                      wire:model.defer="pool_city"/>
-                                        </div>
+
+                                        <x-input.group :error="$errors->first('pool_city')">
+                                            <x-input.label>City</x-input.label>
+                                            <x-input.text name="pool_city" wire:model.defer="pool_city"/>
+                                        </x-input.group>
 
                                         <div>
                                             <x-forms.label for="pool-size">Pool size</x-forms.label>
@@ -222,10 +236,10 @@
                                     </div>
 
                                     <div x-show="customBeach" class="space-y-8">
-                                        <div>
-                                            <x-forms.input.with-label label="Name" name="beach_name"
-                                                                      wire:model.defer="beach_name"/>
-                                        </div>
+                                        <x-input.group :error="$errors->first('beach_name')">
+                                            <x-input.label>Name</x-input.label>
+                                            <x-input.text name="beach_name" wire:model.defer="beach_name"/>
+                                        </x-input.group>
 
                                         <div>
                                             <x-forms.label for="beach-country">Country</x-forms.label>
@@ -238,10 +252,10 @@
                                             </select>
                                         </div>
 
-                                        <div>
-                                            <x-forms.input.with-label label="City" name="beach_city"
-                                                                      wire:model.defer="beach_city"/>
-                                        </div>
+                                        <x-input.group :error="$errors->first('beach_city')">
+                                            <x-input.label>City</x-input.label>
+                                            <x-input.text name="beach_city" wire:model.defer="beach_city"/>
+                                        </x-input.group>
 
                                         <div class="mt-1">
                                             <a href=""

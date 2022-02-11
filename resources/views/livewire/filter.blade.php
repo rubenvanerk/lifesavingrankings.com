@@ -37,18 +37,26 @@
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {{-- TODO: Dynamically show filters based on $fields and visibility --}}
-                <div>
-                    <x-forms.input.with-label label="From date" name="from_date" labelClasses="text-white" wire:model="fields.from_date.value" type="date"/>
-                </div>
-                <div>
-                    <x-forms.input.with-label label="To date" name="to_date" labelClasses="text-white" wire:model="fields.to_date.value" type="date"/>
-                </div>
-                <div>
-                    <x-forms.input.with-label label="From year of birth" name="from_year_of_birth" labelClasses="text-white" wire:model="fields.from_year_of_birth.value" type="number" min="0"/>
-                </div>
-                <div>
-                    <x-forms.input.with-label label="To year of birth" name="to_year_of_birth" labelClasses="text-white" wire:model="fields.to_year_of_birth.value" type="number" min="0"/>
-                </div>
+                <x-input.group :error="$errors->first('from_date')" id="from-date">
+                    <x-input.label class="text-white" color="tex-white">From date</x-input.label>
+                    <x-input.date name="from_date" wire:model="fields.from_date.value"/>
+                </x-input.group>
+
+                <x-input.group :error="$errors->first('to_date')" id="to-date">
+                    <x-input.label class="text-white" color="tex-white">To date</x-input.label>
+                    <x-input.date name="to_date" wire:model="fields.to_date.value"/>
+                </x-input.group>
+
+                <x-input.group :error="$errors->first('from_year_of_birth')" id="from-yob">
+                    <x-input.label class="text-white" color="tex-white">From year of birth</x-input.label>
+                    <x-input.number name="from_year_of_birth" wire:model="fields.from_year_of_birth.value"/>
+                </x-input.group>
+
+                <x-input.group :error="$errors->first('to_year_of_birth')" id="to-yob">
+                    <x-input.label class="text-white" color="tex-white">From date</x-input.label>
+                    <x-input.number name="to_year_of_birth" wire:model="fields.to_year_of_birth.value"/>
+                </x-input.group>
+
                 <div>
                     <x-forms.label for="category" color-class="text-white">Category</x-forms.label>
                     <select wire:model="fields.competition_category.value" name="competition_category" id="category" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md text-gray-900">

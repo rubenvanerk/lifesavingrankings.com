@@ -1,18 +1,22 @@
 @if ($option->type->value == \App\Enums\ParserConfigOptionType::Regex)
-    <x-forms.input.with-label
-        wire:model="parser_config.options.{{ $option->name }}.value"
-        wire:input="highlight($event.target.value, '{{ $option->name }}')"
-        wire:click="highlight($event.target.value, '{{ $option->name }}')"
-        name="parser_config.options.{{ $option->name }}.value"
-        :label="$option->label"
-        :class="$this->currentRegexOptionName == $option->name ? 'ring-2 ring-amber-400 border-amber-400 font-mono' : 'font-mono'"/>
+
+    <x-input.group id="{{ $option->name }}">
+        <x-input.label class="text-white">{{ $option->label }}</x-input.label>
+        <x-input.text wire:model="parser_config.options.{{ $option->name }}.value"
+                      wire:input="highlight($event.target.value, '{{ $option->name }}')"
+                      wire:click="highlight($event.target.value, '{{ $option->name }}')"
+                      name="parser_config.options.{{ $option->name }}.value"
+                      :class="$this->currentRegexOptionName == $option->name ? 'ring-2 ring-amber-400 border-amber-400 font-mono' : 'font-mono'"/>
+    </x-input.group>
     {{-- TODO: install regex highlighter --}}
 @else
-    <x-forms.input.with-label
-        wire:model="parser_config.options.{{ $option->name }}.value"
-        name="parser_config.options.{{ $option->name }}.value"
-        class="font-mono"
-        :label="$option->label"/>
+    <x-input.group id="{{ $option->name }}">
+        <x-input.label>{{ $option->label }}</x-input.label>
+        <x-input.text
+            wire:model="parser_config.options.{{ $option->name }}.value"
+            name="parser_config.options.{{ $option->name }}.value"
+            class="font-mono"/>
+    </x-input.group>
 @endif
 
 @if ($option->canOccurOnNextLine)
