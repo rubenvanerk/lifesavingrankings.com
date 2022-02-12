@@ -45,10 +45,9 @@
                         </span>
                     </x-slot>
                     <span class="flex flex-col text-sm truncate w-full leading-relaxed">
-                        <span class="flex space-x-2">
+                        <span class="flex space-x-2 items-center">
                             @foreach($result->entrant->countries ?? [] as $country)
-                                <x-dynamic-component :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                                     class="shrink-0 h-3.5 rounded shadow mt-1"/>
+                                <x-flag :country="$country"/>
                             @endforeach
                             <span class="flex w-full">
                                 <span class="grow">

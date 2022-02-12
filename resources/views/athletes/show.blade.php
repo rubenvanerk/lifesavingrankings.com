@@ -23,17 +23,14 @@
                             {{ $athlete->name }}
                         </h2>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500 flex space-x-2">
-                            <span class="font-bold flex items-center">
-                                @if ($athlete->gender == \App\Enums\Gender::Men())
-                                    <x-tabler-mars class="h-5 w-5"/>
-                                @else
-                                    <x-tabler-venus class="h-5 w-5"/>
-                                @endif
-                            </span>
+                            @if ($athlete->gender == \App\Enums\Gender::Men())
+                                <x-tabler-mars class="h-5 w-5"/>
+                            @else
+                                <x-tabler-venus class="h-5 w-5"/>
+                            @endif
                             <span>{{ $athlete->year_of_birth }}</span>
                             @foreach($athlete->nationalities as $nationality)
-                                <x-dynamic-component :component="'flag-4x3-' . strtolower($nationality->getIsoAlpha2())"
-                                                     class="shrink-0 h-3.5 rounded shadow mt-1"/>
+                                <x-flag :country="$nationality" class="shrink-0 h-3.5 rounded shadow mt-1"/>
                             @endforeach
                         </p>
                     </div>

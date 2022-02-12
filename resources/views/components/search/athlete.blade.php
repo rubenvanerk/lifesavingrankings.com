@@ -5,9 +5,7 @@
                 <p class="text-sm font-medium text-blue-900 truncate">
                     <span class="inline-flex items-center space-x-1">
                         @foreach($athlete->countries ?? [] as $country)
-                            <x-dynamic-component
-                                :component="'flag-4x3-' . strtolower($country->getIsoAlpha2())"
-                                class="h-3.5"/>
+                            <x-flag :country="$country"/>
                         @endforeach
                         <span>
                             {{ $athlete->name }}

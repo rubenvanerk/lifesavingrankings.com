@@ -15,9 +15,7 @@
                     <x-table.cell class="hidden lg:table-cell max-w-0 w-full">
                         @if ($team->country)
                             <span class="flex items-center space-x-1">
-                                <x-dynamic-component
-                                    :component="'flag-4x3-' . $team->country_code"
-                                    class="h-3.5 flex-none"/>
+                                <x-flag :country="$team->country"/>
                                 <span class="truncate">
                                     {{ $team->country_name }}
                                 </span>
@@ -33,9 +31,7 @@
                 <x-table.mobile-row :link="route('teams.show', $team)">
                     <div class="flex items-center space-x-2">
                         @if ($team->country)
-                            <x-dynamic-component
-                                :component="'flag-4x3-' . $team->country_code"
-                                class="h-3.5 flex-none"/>
+                            <x-flag :country="$team->country"/>
                         @endif
                         <span>{{ $team->name }}</span>
                     </div>

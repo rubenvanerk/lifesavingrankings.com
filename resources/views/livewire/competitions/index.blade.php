@@ -38,9 +38,7 @@
                     </x-table.cell>
                     <x-table.cell>
                         <span class="flex items-center space-x-1">
-                            <x-dynamic-component
-                                :component="'flag-4x3-' . $competition->venues->first()->country_code"
-                                class="h-3.5 flex-none block lg:hidden"/>
+                            <x-flag :country="$competition->venues->first()->country" class="block lg:hidden"/>
                             @foreach($competition->venues as $venue)
                                 <x-base.badge :color="$venue->type_color">
                                     {{ $venue->city }}
@@ -59,9 +57,7 @@
                     </x-table.cell>
                     <x-table.cell class="hidden lg:table-cell max-w-0 w-full">
                         <span class="flex items-center space-x-1">
-                            <x-dynamic-component
-                                :component="'flag-4x3-' . $competition->venues->first()->country_code"
-                                class="h-3.5 flex-none"/>
+                            <x-flag :country="$competition->venues->first()->country"/>
                             <span class="truncate">
                                 {{ $competition->venues->first()->country_name }}
                             </span>
@@ -102,9 +98,7 @@
                         @endif
                     </span>
                     <span class="flex items-center space-x-1">
-                        <x-dynamic-component
-                            :component="'flag-4x3-' . $competition->venues->first()->country_code"
-                            class="h-3.5 flex-none"/>
+                        <x-flag :country="$competition->venues->first()->country"/>
                         @foreach($competition->venues as $venue)
                             <x-base.badge :color="$venue->type_color">
                                 {{ $venue->city }}
