@@ -16,10 +16,11 @@
                             {{ $competition->name }}
                         </a>
                         @if($competition->ils_sanctioned)
-                            <x-base.tooltip :title="__('app.ils_sanctioned')">
+                            <span x-data>
                                 <x-heroicon-s-badge-check class="h-5 w-5 text-emerald-800"
-                                                          aria-label="{{ __('app.ils_sanctioned') }}"/>
-                            </x-base.tooltip>
+                                                          aria-label="{{ __('app.ils_sanctioned') }}"
+                                                          x-tooltip="{{ __('app.ils_sanctioned') }}"/>
+                            </span>
                         @endif
                     </x-table.cell>
                     <x-table.cell>
@@ -81,10 +82,12 @@
                     <span class="truncate flex items-center space-x-1">
                         <span>{{ $competition->name }}</span>
                         @if ($competition->ils_sanctioned)
-                            <x-base.tooltip :title="__('app.ils_sanctioned')">
-                                <x-heroicon-s-badge-check class="h-5 w-5 text-emerald-800" @click.prevent
-                                                          aria-label="{{ __('app.ils_sanctioned') }}"/>
-                            </x-base.tooltip>
+                            <span x-data>
+                                <x-heroicon-s-badge-check class="h-5 w-5 text-emerald-800"
+                                                          @click.prevent
+                                                          aria-label="{{ __('app.ils_sanctioned') }}"
+                                                          x-tooltip="{{ __('app.ils_sanctioned') }}"/>
+                            </span>
                         @endif
                     </span>
                     <span class="flex items-center space-x-1">
