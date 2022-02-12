@@ -22,12 +22,4 @@ final class Gender extends Enum implements LocalizedEnum
             Gender::Women => 'women',
         ][$this->value] ?? null;
     }
-
-    public function getIcon(): ?string
-    {
-        return [
-            Gender::Men => '♂',
-            Gender::Women => '♀',
-        ][$this->value] ?? null;
-    }
 }
