@@ -18,8 +18,8 @@ trait HasCountries
 
     public function getCountriesAttribute()
     {
-        return $this->country_codes->map(
+        return $this->country_codes->map( // @phpstan-ignore-line
             fn($countryCode) => country($countryCode),
-        ); // @phpstan-ignore-line
+        );
     }
 }

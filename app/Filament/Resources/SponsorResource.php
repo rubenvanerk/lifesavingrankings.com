@@ -52,8 +52,8 @@ class SponsorResource extends Resource
             ])
             ->filters([
                 Tables\Filters\Filter::make('visible')->query(
-                    fn(Builder $query) => $query->visible(),
-                ), // @phpstan-ignore-line
+                    fn(Builder $query) => $query->visible(), // @phpstan-ignore-line
+                ),
             ])
             ->prependActions([
                 Tables\Actions\LinkAction::make('toggle_enabled')->action(
