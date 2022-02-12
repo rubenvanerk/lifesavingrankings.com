@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="sm:col-span-4">
-                            <x-input.group :error="$errors->first('files')" :required="false" id="files">
+                            <x-input.group :error="$errors->first('files')" :required="false">
                                 <x-input.label>File(s)</x-input.label>
                                 <div class="flex">
                                     <x-input.file name="files" wire:model="files" multiple/>
@@ -51,8 +51,10 @@
 
                     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                         <div class="sm:col-span-4">
-                            <x-input.group class="flex space-x-2" :error="$errors->first('ils_sanctioned')">
-                                <x-input.toggle name="ils_sanctioned" wire:model="value"/>
+                            <x-input.group class="flex space-x-2 items-start" :error="$errors->first('ils_sanctioned')">
+                                <div class="flex items-center h-5">
+                                    <x-input.checkbox name="ils_sanctioned" wire:model.defer="ils_sanctioned"/>
+                                </div>
                                 <x-input.label>ILS sanctioned competition</x-input.label>
                             </x-input.group>
                         </div>

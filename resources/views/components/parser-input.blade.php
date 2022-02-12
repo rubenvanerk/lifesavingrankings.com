@@ -20,10 +20,10 @@
 @endif
 
 @if ($option->canOccurOnNextLine)
-    <div class="mt-1">
-        <x-forms.checkbox.with-inline-label
-            label="Occurs on next line"
-            name="parser_config.options.{{ $option->name }}.occursOnNextLine"
-            wire:model="parser_config.options.{{ $option->name }}.occursOnNextLine"/>
-    </div>
+    <x-input.group class="mt-1 flex space-x-2 items-start">
+        <div class="flex items-center h-5">
+            <x-input.checkbox name="parser_config.options.{{ $option->name }}.occursOnNextLine" wire:model="parser_config.options.{{ $option->name }}.occursOnNextLine"/>
+        </div>
+        <x-input.label>Occurs on next line</x-input.label>
+    </x-input.group>
 @endif

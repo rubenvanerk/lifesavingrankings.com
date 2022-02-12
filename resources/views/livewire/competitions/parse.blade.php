@@ -108,8 +108,13 @@
                                                       class="animate-spin h-4 w-4 mr-3 transform rotate-180"/>
                                 Load table
                             </x-base.button>
-                            <x-forms.checkbox.with-inline-label label="Autoload" wire:model.defer="autoloadTable"
-                                                                name="autoloadTable"/>
+
+                            <x-input.group class="mt-1 flex space-x-2 items-start">
+                                <div class="flex items-center h-5">
+                                    <x-input.checkbox name="autoloadTable" wire:model="autoloadTable"/>
+                                </div>
+                                <x-input.label>Autoload</x-input.label>
+                            </x-input.group>
                         </div>
                         @if ($results)
                             <x-table :add-padding="false" class="overflow-scroll">
