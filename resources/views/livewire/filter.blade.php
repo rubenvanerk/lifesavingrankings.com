@@ -58,7 +58,7 @@
                 </x-input.group>
 
                 <div>
-                    <x-forms.label for="category" color-class="text-white">Category</x-forms.label>
+                    <x-input.label for="category" color-class="text-white">Category</x-input.label>
                     <select wire:model="fields.competition_category.value" name="competition_category" id="category" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md text-gray-900">
                         <option value="">---</option>
                         @foreach($this->options['competition_category'] ?? [] as $key => $option)
@@ -67,7 +67,7 @@
                     </select>
                 </div>
                 <div>
-                    <x-forms.label for="venue" color-class="text-white">Venue</x-forms.label>
+                    <x-input.label for="venue" color-class="text-white">Venue</x-input.label>
                     <select wire:model="fields.venue.value" name="competition_category" id="venue" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md text-gray-900">
                         <option value="">---</option>
                         @foreach(\App\Models\Venue::orderBy('name')->get()->pluck('name', 'id') as $key => $option)
