@@ -61,14 +61,14 @@
                         <div class="sm:col-span-3">
                             <x-input.group :error="$errors->first('start_date')" :required="true">
                                 <x-input.label>Start date</x-input.label>
-                                <x-input.date name="start_date" wire:model="start_date"/>
+                                <x-input.date name="start_date" wire:model.defer="start_date"/>
                             </x-input.group>
                         </div>
 
                         <div class="sm:col-span-3">
                             <x-input.group :error="$errors->first('end_date')" :required="false">
                                 <x-input.label>End date</x-input.label>
-                                <x-input.date name="end_date" wire:model="end_date"/>
+                                <x-input.date name="end_date" wire:model.defer="end_date"/>
                             </x-input.group>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                             </fieldset>
                         </div>
 
-                        <x-well x-data="{ customPool: false }" x-show="type == 'pool' || type == 'both'"
+                        <x-well x-data="{ customPool: $wire.entangle('customPool') }" x-show="type == 'pool' || type == 'both'"
                                 class="px-4 py-5 sm:p-6">
                             <x-input.label class="text-base text-gray-900">Pool</x-input.label>
                             <fieldset class="mt-4">
@@ -130,7 +130,7 @@
                                     <x-input.label for="pool-venue">Choose an existing venue</x-input.label>
                                     <select id="pool-venue"
                                             wire:model.defer="pool"
-                                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md">
                                         @foreach($pools as $pool)
                                             <option value="{{ $pool->id }}">{{ $pool->name_for_select }}</option>
                                         @endforeach
@@ -141,16 +141,17 @@
                                     </x-link>
                                 </div>
 
-                                <div x-show="customPool" class="space-y-8">
+                                <div x-show="customPool" class="space-y-6">
                                     <x-input.group :error="$errors->first('pool_name')">
                                         <x-input.label>Name</x-input.label>
-                                        <x-input.text name="pool_name" wire:model.defer="pool_name"/>
+                                        <x-input.text name="pool_name" wire:model.defer="pool_name" x-bind:required="customPool && (type == 'pool' || type == 'both')"/>
                                     </x-input.group>
 
                                     <div>
                                         <x-input.label for="pool-country">Country</x-input.label>
                                         <select id="pool-country" wire:model.defer="pool_country"
-                                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                                x-bind:required="customPool && (type == 'pool' || type == 'both')"
+                                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md">
                                             @foreach(countries() as $country)
                                                 <option
                                                     value="{{ $country['iso_3166_1_alpha2'] }}">{{ $country['name'] }}</option>
@@ -160,38 +161,39 @@
 
                                     <x-input.group :error="$errors->first('pool_city')">
                                         <x-input.label>City</x-input.label>
-                                        <x-input.text name="pool_city" wire:model.defer="pool_city"/>
+                                        <x-input.text name="pool_city" wire:model.defer="pool_city" x-bind:required="customPool && (type == 'pool' || type == 'both')"/>
                                     </x-input.group>
 
                                     <div>
                                         <x-input.label for="pool-size">Pool size</x-input.label>
-                                        <fieldset class="mt-4">
+                                        <fieldset>
                                             <legend class="sr-only">Pool size</legend>
-                                            <div
-                                                class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                                            <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                                                 <x-input.group class="flex space-x-2 items-center">
                                                     <x-input.radio name="pool_size" value="25"
-                                                                   wire:model.defer="pool_size" required/>
+                                                                   wire:model.defer="pool_size" x-bind:required="customPool && (type == 'pool' || type == 'both')"/>
                                                     <x-input.label>25m</x-input.label>
                                                 </x-input.group>
 
                                                 <x-input.group class="flex space-x-2 items-center">
                                                     <x-input.radio name="pool_size" value="50"
-                                                                   wire:model.defer="pool_size" required/>
+                                                                   wire:model.defer="pool_size" x-bind:required="customPool && (type == 'pool' || type == 'both')"/>
                                                     <x-input.label>50m</x-input.label>
                                                 </x-input.group>
                                             </div>
                                         </fieldset>
                                     </div>
 
-                                    <x-link href="" x-on:click.prevent="customPool = false" class="mt-1 text-sm">
-                                        Choose from existing venues
-                                    </x-link>
+                                    <div class="mt-1">
+                                        <x-link href="" x-on:click.prevent="customPool = false" class="text-sm">
+                                            Choose from existing venues
+                                        </x-link>
+                                    </div>
                                 </div>
                             </fieldset>
                         </x-well>
 
-                        <x-well x-data="{ customBeach: false }" x-show="type == 'beach' || type == 'both'"
+                        <x-well x-data="{ customBeach: $wire.entangle('customBeach') }" x-show="type == 'beach' || type == 'both'"
                                 class="px-4 py-5 sm:p-6">
                             <x-input.label class="text-base text-gray-900">Beach</x-input.label>
                             <fieldset class="mt-4">
@@ -199,27 +201,28 @@
                                     <x-input.label for="beach-venue">Choose an existing venue</x-input.label>
                                     <select id="beach-venue"
                                             wire:model.defer="beach"
-                                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md">
                                         @foreach($beaches as $beach)
                                             <option value="{{ $beach->id }}">{{ $beach->name_for_select }}</option>
                                         @endforeach
                                     </select>
 
-                                    <x-link href="" class="mt-1 text-sm" x-on:click.prevent="customBeach = true">
+                                    <x-link href="" class="mt-1 text-sm" x-on:click.prevent="customBeach = true" x-bind:required="customBeach && (type == 'beach' || type == 'both')">
                                         Or create a new venue
                                     </x-link>
                                 </div>
 
-                                <div x-show="customBeach" class="space-y-8">
+                                <div x-show="customBeach" class="space-y-6">
                                     <x-input.group :error="$errors->first('beach_name')">
                                         <x-input.label>Name</x-input.label>
-                                        <x-input.text name="beach_name" wire:model.defer="beach_name"/>
+                                        <x-input.text name="beach_name" wire:model.defer="beach_name" x-bind:required="customBeach && (type == 'beach' || type == 'both')"/>
                                     </x-input.group>
 
                                     <div>
                                         <x-input.label for="beach-country">Country</x-input.label>
                                         <select id="beach-country" wire:model.defer="beach_country"
-                                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                                x-bind:required="customBeach && (type == 'beach' || type == 'both')"
+                                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md">
                                             @foreach(countries() as $country)
                                                 <option
                                                     value="{{ $country['iso_3166_1_alpha2'] }}">{{ $country['name'] }}</option>
@@ -229,13 +232,14 @@
 
                                     <x-input.group :error="$errors->first('beach_city')">
                                         <x-input.label>City</x-input.label>
-                                        <x-input.text name="beach_city" wire:model.defer="beach_city"/>
+                                        <x-input.text name="beach_city" wire:model.defer="beach_city" x-bind:required="customBeach && (type == 'beach' || type == 'both')"/>
                                     </x-input.group>
 
-
-                                    <x-link href="" class="mt-1 text-sm" x-on:click.prevent="customBeach = true">
-                                        Choose from existing venues
-                                    </x-link>
+                                    <div class="mt-1">
+                                        <x-link href="" class="text-sm" x-on:click.prevent="customBeach = false">
+                                            Choose from existing venues
+                                        </x-link>
+                                    </div>
                                 </div>
                             </fieldset>
                         </x-well>

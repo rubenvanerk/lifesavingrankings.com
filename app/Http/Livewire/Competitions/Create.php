@@ -25,11 +25,13 @@ class Create extends Component
     public Collection $beaches;
     public ?string $venue_type = null;
     public ?int $pool = null;
+    public bool $customPool = false;
     public ?string $pool_name = null;
     public ?string $pool_country = null;
     public ?string $pool_city = null;
     public ?int $pool_size = null;
     public ?int $beach = null;
+    public bool $customBeach = false;
     public ?string $beach_name = null;
     public ?string $beach_country = null;
     public ?string $beach_city = null;
@@ -40,7 +42,7 @@ class Create extends Component
     protected array $rules = [
         'name' => ['required', 'max:255'],
         'start_date' => ['required', 'date'],
-        'end_date' => ['required', 'date'],
+        'end_date' => ['nullable', 'date'],
         'timekeeping' => ['required', 'enum_value:' . TimekeepingMethod::class],
         'ils_sanctioned' => ['bool'],
     ];
@@ -73,17 +75,17 @@ class Create extends Component
             'file_link' => $this->file_link,
         ]);
 
-        foreach ($this->files as $file) {
+        foreach ($this->files ?: [] as $file) {
             $competition->addMedia($file)->toMediaCollection('files');
         }
 
         if ($this->venue_type === 'pool' || $this->venue_type === 'both') {
-            if ($this->pool) {
+            if (!$this->customPool) {
                 $pool = Venue::find($this->pool);
             } else {
                 $pool = Venue::create([
                     'name' => $this->pool_name,
-                    'country' => $this->pool_country,
+                    'country_code' => $this->pool_country,
                     'city' => $this->pool_city,
                     'pool_size' => $this->pool_size,
                     'type' => VenueType::Pool,
@@ -93,12 +95,12 @@ class Create extends Component
         }
 
         if ($this->venue_type === 'beach' || $this->venue_type === 'both') {
-            if ($this->beach) {
+            if (!$this->customBeach) {
                 $beach = Venue::find($this->beach);
             } else {
                 $beach = Venue::create([
                     'name' => $this->beach_name,
-                    'country' => $this->beach_country,
+                    'country_code' => $this->beach_country,
                     'city' => $this->beach_city,
                     'type' => VenueType::Beach,
                 ]);
