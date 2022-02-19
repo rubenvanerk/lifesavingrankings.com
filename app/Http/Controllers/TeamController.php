@@ -12,7 +12,10 @@ class TeamController extends Controller
 {
     public function __construct()
     {
-        app(Filter::class)->hide('team');
+        $this->middleware(function ($request, $next) {
+            app(Filter::class)->hide('team');
+            return $next($request);
+        });
     }
 
     public function show(Team $team): View

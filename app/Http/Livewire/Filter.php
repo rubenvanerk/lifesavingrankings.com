@@ -4,55 +4,60 @@ namespace App\Http\Livewire;
 
 use App\Services\FilterField;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
 use Livewire\Component;
+USE App\Services\Filter as FilterService;
 
 class Filter extends Component
 {
     // TODO: age, nationality, pool length, ils sanctioned, timekeeping
     // TODO: add option to disable certain filters
 
-    public Collection $fields;
-    public Collection $options;
+    public array $fieldValues;
+    public FilterService $filter;
 
-    protected $listeners = ['filtered' => '$refresh'];
+    protected $listeners = ['resetFilter'];
 
-    public function render(\App\Services\Filter $filter): View
+    public function mount(FilterService $filter)
     {
-        $this->fields = $filter->fields;
+        $this->filter = $filter;
 
-        if (!isset($this->options)) {
-            $this->options = collect();
-            $filter->fields
-                ->filter(
-                    fn(FilterField $filterField) => !empty(
-                        $filterField->options
-                    ),
-                )
-                ->each(function (FilterField $filterField, $fieldName) {
-                    $this->options->put($fieldName, $filterField->options);
-                });
-        }
+        $this->fieldValues = $this->filter->fields
+            ->mapWithKeys(fn(FilterField $field, $name) => [$name => $field->value])
+            ->toArray();
+    }
 
-        return view('livewire.filter', compact('filter'));
+    public function render(): View
+    {
+        return view('livewire.filter');
     }
 
     public function updated()
     {
-        $filter = app(\App\Services\Filter::class);
-        $filter->fields = $this->fields->mapWithKeys(function (
-            $filterField,
-            $key,
-        ) {
-            return [$key => new FilterField(...array_values($filterField))];
-        });
-        $filter->saveToSession();
+        foreach ($this->filter->fields as $name => $field) {
+            $this->filter->set($name, $this->fieldValues[$name]);
+        }
+
+        $this->filter->saveToSession();
         $this->emit('filtered');
     }
 
-    public function clear()
+    public function resetFilter()
     {
-        app(\App\Services\Filter::class)->reset();
+        $this->filter->reset();
+        $this->fieldValues = array_map(fn () => null, $this->fieldValues);
         $this->emit('filtered');
+    }
+
+    public function countActive(): int
+    {
+        return collect($this->fieldValues)->filter()->count();
+    }
+
+    public function hydrateFieldValues($value)
+    {
+        $this->fieldValues = array_map(
+            fn($fieldValue) => is_numeric($fieldValue) ? (int)$fieldValue : $fieldValue,
+            $value
+        );
     }
 }

@@ -13,8 +13,8 @@ trait HasCountry
     protected function countryCode(): Attribute
     {
         return new Attribute(
-            get: fn($value) => strtolower($value),
-            set: fn($value) => strtoupper($value),
+            get: fn($value) => strtolower($value ?: ''),
+            set: fn($value) => strtoupper($value ?: ''),
         );
     }
 

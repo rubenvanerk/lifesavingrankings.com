@@ -15,7 +15,6 @@ trait WithFilter
 
     public function resetFilter(): void
     {
-        Filter::reset();
-        $this->emit('filtered');
+        $this->emit('resetFilter');
     }
 }

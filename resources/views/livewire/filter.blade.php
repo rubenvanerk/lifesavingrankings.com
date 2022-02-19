@@ -24,57 +24,36 @@
 
         <div class="py-4 px-6 text-white">
             <div class="flex">
-                <h2 class="text-lg font-bold pb-4 w-0 grow">Filter results on this page</h2>
+                <h2 class="text-lg font-bold pb-4 w-0 grow">{{ __('filter.title') }}</h2>
                 <span>
-                    <x-base.button icon="s-refresh" wire:click="clear">
-                        Reset
+                    <x-base.button icon="s-refresh" wire:click="resetFilter">
+                        {{ __('filter.reset') }}
                     </x-base.button>
                     <x-base.button icon="s-x-circle" @click="filter = false">
-                        Close
+                        {{ __('filter.close') }}
                     </x-base.button>
                 </span>
-
             </div>
+
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {{-- TODO: Dynamically show filters based on $fields and visibility --}}
-                <x-input.group :error="$errors->first('from_date')" id="from-date">
-                    <x-input.label class="text-white" color="tex-white">From date</x-input.label>
-                    <x-input.date name="from_date" wire:model="fields.from_date.value"/>
-                </x-input.group>
 
-                <x-input.group :error="$errors->first('to_date')" id="to-date">
-                    <x-input.label class="text-white" color="tex-white">To date</x-input.label>
-                    <x-input.date name="to_date" wire:model="fields.to_date.value"/>
-                </x-input.group>
+                @foreach($this->filter->getVisibleFields() as $name => $field)
+                    <x-input.group :error="$errors->first($name)" :id="$name">
+                        <x-input.label class="text-white" color="tex-white">{{ __("filter.fields.$name") }}</x-input.label>
+                        @if ($field->type === \App\Enums\FilterFieldType::Select)
+                            <x-input.select :value="$fieldValues[$name]"
+                                            wire:model="fieldValues.{{ $name }}"
+                                            :options="$field->options ?? []"
+                            />
+                        @else
+                            <x-dynamic-component :component="'input.' . strtolower($field->type->name)"
+                                                 :value="$fieldValues[$name]"
+                                                 wire:model="fieldValues.{{ $name }}"
+                            />
+                        @endif
+                    </x-input.group>
+                @endforeach
 
-                <x-input.group :error="$errors->first('from_year_of_birth')" id="from-yob">
-                    <x-input.label class="text-white" color="tex-white">From year of birth</x-input.label>
-                    <x-input.number name="from_year_of_birth" wire:model="fields.from_year_of_birth.value"/>
-                </x-input.group>
-
-                <x-input.group :error="$errors->first('to_year_of_birth')" id="to-yob">
-                    <x-input.label class="text-white" color="tex-white">From date</x-input.label>
-                    <x-input.number name="to_year_of_birth" wire:model="fields.to_year_of_birth.value"/>
-                </x-input.group>
-
-                <div>
-                    <x-input.label for="category" color-class="text-white">Category</x-input.label>
-                    <select wire:model="fields.competition_category.value" name="competition_category" id="category" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md text-gray-900">
-                        <option value="">---</option>
-                        @foreach($this->options['competition_category'] ?? [] as $key => $option)
-                            <option value="{{ $key }}">{{ $option }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <x-input.label for="venue" color-class="text-white">Venue</x-input.label>
-                    <select wire:model="fields.venue.value" name="competition_category" id="venue" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm rounded-md text-gray-900">
-                        <option value="">---</option>
-                        @foreach(\App\Models\Venue::orderBy('name')->get()->pluck('name', 'id') as $key => $option)
-                            <option value="{{ $key }}">{{ $option }}</option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
         </div>
     </div>

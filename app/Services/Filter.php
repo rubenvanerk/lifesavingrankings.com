@@ -1,19 +1,14 @@
 <?php namespace App\Services;
 
-use App\Enums\EventType;
-use App\Enums\Gender;
-use App\Models\Athlete;
+use App\Enums\FilterFieldType;
 use App\Models\Competition;
-use App\Models\CompetitionCategory;
-use App\Models\Event;
-use App\Models\Team;
-use App\Models\Venue;
 use Arr;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Livewire\Wireable;
 
-class Filter
+class Filter implements Wireable
 {
     public Collection $fields;
 
@@ -26,49 +21,51 @@ class Filter
                 $filterInSession['from_date'] ?? null,
                 true,
                 true,
+                FilterFieldType::Date,
             ),
             'to_date' => new FilterField(
                 $filterInSession['to_date'] ?? null,
                 true,
                 true,
+                FilterFieldType::Date,
             ),
             'from_year_of_birth' => new FilterField(
                 $filterInSession['from_year_of_birth'] ?? null,
                 true,
                 true,
+                FilterFieldType::Number,
             ),
             'to_year_of_birth' => new FilterField(
                 $filterInSession['to_year_of_birth'] ?? null,
                 true,
                 true,
+                FilterFieldType::Number,
             ),
             'competition' => new FilterField(
                 null,
                 false,
                 true,
-                Competition::class,
             ),
             'competition_category' => new FilterField(
                 $filterInSession['competition_category'] ?? null,
+                false,
                 true,
-                true,
-                CompetitionCategory::class,
+                FilterFieldType::Select,
             ),
-            'athlete' => new FilterField(null, false, true, Athlete::class),
-            'event' => new FilterField(null, false, true, Event::class),
-            'team' => new FilterField(null, true, true, Team::class),
-            'gender' => new FilterField(null, false, true, Gender::class),
+            'athlete' => new FilterField(null, false, true),
+            'event' => new FilterField(null, false, true),
+            'team' => new FilterField(null, false, true, FilterFieldType::Select),
+            'gender' => new FilterField(null, false, true),
             'event_type' => new FilterField(
                 null,
                 false,
                 true,
-                EventType::class,
             ),
             'venue' => new FilterField(
                 $filterInSession['venue'] ?? null,
+                false,
                 true,
-                true,
-                Venue::class,
+                FilterFieldType::Select,
             ),
         ]);
     }
@@ -76,12 +73,25 @@ class Filter
     public function set(string $name, mixed $value = null)
     {
         $field = $this->getFieldByName($name);
+
         $this->generateOptions($name, $value);
-        if ($value instanceof Model) {
-            $value = $value->id;
+
+        if (!is_null($value)) {
+            \Debugbar::debug($value);
+
+            $this->setVisibility($name);
         }
-        $field->value = $value;
+
+        $field->value = $value instanceof Model ? $value->id : $value;
+
         $this->saveToSession();
+    }
+
+    public function show(string $name)
+    {
+        $field = $this->getFieldByName($name);
+        $field->visible = true;
+        $field->saveToSession = true;
     }
 
     public function hide(string $name)
@@ -124,33 +134,31 @@ class Filter
             fn(FilterField $field) => $field->saveToSession,
         );
 
+        $filterInSession = collect(session()->get('filter', []));
+
         session()->put(
             'filter',
-            $fieldsToSave->mapWithKeys(
+            $filterInSession->merge($fieldsToSave->mapWithKeys(
                 fn(FilterField $field, $key) => [$key => $field->value],
-            ),
+            )),
         );
     }
 
     public function countActive(): int
     {
         return $this->fields
-            ->filter(
-                fn(FilterField $field) => $field->visible &&
-                    !empty($field->value),
-            )
+            ->filter(fn(FilterField $field) => $field->visible && $field->value)
             ->count();
     }
 
-    public static function reset(): void
+    public function reset(): void
     {
-        $filter = app(Filter::class);
-        $filter->fields
+        $this->fields
             ->filter(fn(FilterField $field) => $field->saveToSession)
             ->each(function (FilterField $field) {
                 $field->value = null;
             });
-        $filter->saveToSession();
+        $this->saveToSession();
     }
 
     public function options(string $fieldName, array $options)
@@ -167,11 +175,52 @@ class Filter
             ($value instanceof Competition ||
                 ($value = Competition::find($value)))
         ) {
-            $options = $value->categories->pluck('name', 'id')->toArray();
-            $this->options('competition_category', $options);
-            if (!Arr::has($options, $this->getValue('competition_category'))) {
+            $categories = collect([0 => '---'])->union($value->categories->pluck('name', 'id'));;
+            $this->options('competition_category', $categories->toArray());
+            if (!Arr::has($categories, $this->getValue('competition_category'))) {
                 $this->set('competition_category');
             }
         }
+    }
+
+    public function getVisibleFields(): Collection
+    {
+        return $this->fields->filter(fn($field) => $field->visible);
+    }
+
+    private function setVisibility(string $name)
+    {
+        switch ($name) {
+            case 'competition':
+                $this->show('competition_category');
+                break;
+        }
+    }
+
+    public function toLivewire(): array
+    {
+        return $this->fields->mapWithKeys(function (FilterField $field, string $key) {
+            return [$key => $field->toArray()];
+        })->toArray();
+    }
+
+    public static function fromLivewire($value): static
+    {
+        $filter = new static();
+
+        foreach ($value as $key => $item) {
+            $filter->fields[$key] = new FilterField(
+                $item['value'],
+                $item['visible'],
+                $item['enabled'],
+                FilterFieldType::tryFrom($item['type']),
+                $item['saveToSession'],
+                json_decode($item['options'], true),
+            );
+        }
+
+        $filter->fields = $filter->fields->filter(fn (FilterField $filterField) => $filterField->visible);
+
+        return $filter;
     }
 }
