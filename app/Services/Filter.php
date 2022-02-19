@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Livewire\Wireable;
 
-class Filter implements Wireable
+final class Filter implements Wireable
 {
     public Collection $fields;
 
