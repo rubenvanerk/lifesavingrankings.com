@@ -139,7 +139,8 @@ class TextParser implements ParserInterface
             );
         }
 
-        $team = new Team($this->options['team_matcher']->getMatch($line));
+        $teamName = $this->options['team_matcher']->getMatch($line);
+        $team = $teamName ? new Team($teamName) : null;
 
         return new Result(
             $event,

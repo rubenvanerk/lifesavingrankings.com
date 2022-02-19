@@ -69,7 +69,7 @@ class Result extends Model
 
     public function team(): BelongsTo
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Team::class)->withoutGlobalScope('with_valid_results');
     }
 
     public function segments(): HasMany

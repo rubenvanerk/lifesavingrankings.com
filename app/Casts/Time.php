@@ -48,14 +48,17 @@ class Time implements CastsAttributes
      * @param string $key
      * @param int|CarbonTime $value
      * @param array $attributes
-     * @return float|int
+     * @return float|int|null
      */
     public function set(
         $model,
         string $key,
         $value,
         array $attributes,
-    ): float|int {
+    ): float|int|null {
+        if (empty($value)) {
+            return null;
+        }
         if (is_numeric($value)) {
             return (int) $value;
         }
