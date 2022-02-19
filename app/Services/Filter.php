@@ -192,7 +192,7 @@ final class Filter implements Wireable
         switch ($name) {
             case 'competition':
                 $this->show('competition_category');
-                $this->hide('ils_sanctioned');
+                $this->disable('ils_sanctioned');
                 break;
         }
     }
