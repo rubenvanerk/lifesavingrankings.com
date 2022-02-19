@@ -10,5 +10,6 @@ return [
         'from_year_of_birth' => 'Vanaf geboortejaar',
         'to_year_of_birth' => 'Tot geboortejaar',
         'competition_category' => 'Categorie',
+        'ils_sanctioned' => 'Goedgekeurd door de ILS',
     ]
 ];

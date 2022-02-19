@@ -46,7 +46,7 @@
                                             :options="$field->options ?? []"
                             />
                         @else
-                            <x-dynamic-component :component="'input.' . strtolower($field->type->name)"
+                            <x-dynamic-component :component="'input.' . strtolower($field->type->value)"
                                                  :value="$fieldValues[$name]"
                                                  wire:model="fieldValues.{{ $name }}"
                             />

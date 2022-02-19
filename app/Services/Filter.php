@@ -67,6 +67,7 @@ final class Filter implements Wireable
                 true,
                 FilterFieldType::Select,
             ),
+            'ils_sanctioned' => new FilterField($filterInSession['ils_sanctioned'] ?? null, true, true, FilterFieldType::Checkbox),
         ]);
     }
 
@@ -77,8 +78,6 @@ final class Filter implements Wireable
         $this->generateOptions($name, $value);
 
         if (!is_null($value)) {
-            \Debugbar::debug($value);
-
             $this->setVisibility($name);
         }
 
@@ -193,6 +192,7 @@ final class Filter implements Wireable
         switch ($name) {
             case 'competition':
                 $this->show('competition_category');
+                $this->hide('ils_sanctioned');
                 break;
         }
     }
@@ -204,16 +204,16 @@ final class Filter implements Wireable
         })->toArray();
     }
 
-    public static function fromLivewire($value): static
+    public static function fromLivewire($value): Filter
     {
-        $filter = new static();
+        $filter = new Filter();
 
         foreach ($value as $key => $item) {
             $filter->fields[$key] = new FilterField(
                 $item['value'],
                 $item['visible'],
                 $item['enabled'],
-                FilterFieldType::tryFrom($item['type']),
+                FilterFieldType::tryFrom($item['type'] ?: ''),
                 $item['saveToSession'],
                 json_decode($item['options'], true),
             );

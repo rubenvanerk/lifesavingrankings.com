@@ -1,4 +1,4 @@
-@props(['name', 'value' => false])
+@props(['name' => null, 'value' => false])
 
 <div
     x-data="{ value: @js($value) }"

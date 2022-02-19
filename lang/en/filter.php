@@ -10,5 +10,6 @@ return [
         'from_year_of_birth' => 'From year of birth',
         'to_year_of_birth' => 'To year of birth',
         'competition_category' => 'Category',
+        'ils_sanctioned' => 'ILS sanctioned',
     ]
 ];
