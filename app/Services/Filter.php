@@ -67,7 +67,12 @@ final class Filter implements Wireable
                 true,
                 FilterFieldType::Select,
             ),
-            'ils_sanctioned' => new FilterField($filterInSession['ils_sanctioned'] ?? null, true, true, FilterFieldType::Checkbox),
+            'ils_sanctioned' => new FilterField(
+                $filterInSession['ils_sanctioned'] ?? null,
+                true,
+                true,
+                FilterFieldType::Checkbox,
+            ),
         ]);
     }
 
@@ -218,8 +223,6 @@ final class Filter implements Wireable
                 json_decode($item['options'], true),
             );
         }
-
-        $filter->fields = $filter->fields->filter(fn (FilterField $filterField) => $filterField->visible);
 
         return $filter;
     }

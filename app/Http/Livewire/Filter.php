@@ -10,7 +10,6 @@ USE App\Services\Filter as FilterService;
 class Filter extends Component
 {
     // TODO: age, nationality, pool length, timekeeping
-    // TODO: add option to disable certain filters
 
     public array $fieldValues;
     public FilterService $filter;
