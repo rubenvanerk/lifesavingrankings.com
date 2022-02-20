@@ -21,6 +21,7 @@ class Team extends Model
     {
         static::addGlobalScope('with_valid_results', function (Builder $query) {
             $query->whereHas('results', function (Builder $query) {
+                /** @var Result $query */
                 $query->valid();
             });
         });
