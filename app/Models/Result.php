@@ -163,8 +163,6 @@ class Result extends Model
         }
 
         if ($filter->getValue('ils_sanctioned')) {
-            \Debugbar::debug(1);
-
             $query->whereRelation('competition', 'ils_sanctioned', $filter->getValue('ils_sanctioned'));
         }
 
