@@ -6,7 +6,7 @@
         set expanded(value) {
             this.active = value ? this.id : null
         },
-    }" role="region" class="border rounded shadow-inner">
+    }" x-cloak role="region" class="border rounded shadow-inner">
     <h2>
         <button
             x-on:click="expanded = !expanded"

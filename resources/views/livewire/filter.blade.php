@@ -41,8 +41,7 @@
                     <x-input.group :error="$errors->first($name)" :id="$name">
                         <x-input.label class="text-white" color="tex-white">{{ __("filter.fields.$name") }}</x-input.label>
                         @if ($field->type === \App\Enums\FilterFieldType::Select)
-                            <x-input.select :value="$fieldValues[$name]"
-                                            wire:model="fieldValues.{{ $name }}"
+                            <x-input.select wire:model="fieldValues.{{ $name }}"
                                             :options="$field->options ?? []"
                             />
                         @else
