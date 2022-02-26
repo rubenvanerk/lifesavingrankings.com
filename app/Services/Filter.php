@@ -198,6 +198,8 @@ final class Filter implements Wireable
             case 'competition':
                 $this->show('competition_category');
                 $this->disable('ils_sanctioned');
+                $this->disable('from_date');
+                $this->disable('to_date');
                 break;
         }
     }
