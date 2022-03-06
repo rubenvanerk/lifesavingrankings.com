@@ -37,7 +37,8 @@
         "spatie/laravel-sluggable": "^3.1",
         "spatie/regex": "^3.1",
         "staudenmeir/eloquent-eager-limit": "^1.0",
-        "stijnvanouplines/blade-country-flags": "^1.0"
+        "stijnvanouplines/blade-country-flags": "^1.0",
+        "wire-elements/modal": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "dev-master",

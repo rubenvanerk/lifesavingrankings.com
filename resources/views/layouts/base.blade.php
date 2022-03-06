@@ -58,5 +58,6 @@
         @yield('body')
 
         @livewireScripts
+        @livewire('livewire-ui-modal')
     </body>
 </html>

@@ -27,6 +27,9 @@
                                           wire:target="saveAndImport"/>
                     Save & import
                 </x-base.button>
+                <x-base.button wire:click="$emit('openModal', 'copy-config')">
+                    Copy from other comp
+                </x-base.button>
             </div>
         </div>
     </x-layout.panel>

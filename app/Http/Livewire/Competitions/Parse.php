@@ -29,6 +29,8 @@ class Parse extends Component
 
     protected $queryString = ['currentTab' => ['except' => self::TAB_TEXT]];
 
+    protected $listeners = ['copy-config' => 'copyConfig'];
+
     public function mount()
     {
         $this->parser_config = $this->media->parser_config;
@@ -125,5 +127,9 @@ class Parse extends Component
         } else {
             $this->results = null;
         }
+    }
+
+    public function copyConfig(ParserConfig $parserConfig) {
+        $this->parser_config->options = $parserConfig->options;
     }
 }
