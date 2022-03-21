@@ -7,7 +7,7 @@ trait HasCountry
     public function getCountryNameAttribute()
     {
         $currentLocale = config('app.locales.' . app()->getLocale() . '.code3');
-        return $this->country->getTranslation($currentLocale)['common'];
+        return $this->country?->getTranslation($currentLocale)['common'];
     }
 
     protected function countryCode(): Attribute

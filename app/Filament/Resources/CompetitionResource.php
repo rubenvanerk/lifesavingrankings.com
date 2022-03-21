@@ -62,6 +62,7 @@ class CompetitionResource extends Resource
         return $table->columns([
             Tables\Columns\TextColumn::make('name'),
             Tables\Columns\TextColumn::make('status_name')->label('Status'),
+            Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
             Tables\Columns\TextColumn::make('View')
                 ->default('View')
                 ->url(

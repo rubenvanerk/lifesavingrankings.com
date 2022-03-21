@@ -10,6 +10,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class Create extends Component
 {
@@ -62,6 +64,10 @@ class Create extends Component
             ->get();
     }
 
+    /**
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
+     */
     public function submit()
     {
         $this->validate();
@@ -108,6 +114,8 @@ class Create extends Component
 
             $competition->venues()->attach($beach);
         }
+
+        $competition->save();
 
         $this->created = true;
     }
