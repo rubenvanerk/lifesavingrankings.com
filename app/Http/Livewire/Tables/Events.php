@@ -11,12 +11,9 @@ use App\Models\Result;
 use App\Models\Team;
 use App\Services\Filter;
 use App\Traits\WithFilter;
-use Arr;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Livewire\Component;
-use View;
 
 class Events extends Component
 {
@@ -39,7 +36,7 @@ class Events extends Component
         $this->eventType = $eventType?->value;
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         $filter = app(Filter::class);
         $filter->set('gender', Gender::coerce($this->gender));
