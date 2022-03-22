@@ -24,6 +24,7 @@
         "filament/filament": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "imtigger/laravel-job-status": "dev-master",
         "laravel/framework": "^9.2",
         "laravel/scout": "^9.4",
         "laravel/tinker": "^2.5",
@@ -92,7 +93,6 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": true,

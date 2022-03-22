@@ -4,16 +4,19 @@ namespace App\Http\Livewire\Competitions;
 
 use App\Exceptions\UnsupportedMimeTypeException;
 use App\Jobs\ImportCompetitionFile;
+use App\Models\JobStatus;
 use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Parser\ParserService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class Parse extends Component
 {
+    use DispatchesJobs;
+
     public Media $media;
     public ParserConfig $parser_config;
     public ?string $currentRegex = null;
@@ -73,16 +76,18 @@ class Parse extends Component
         return view('livewire.competitions.parse', $data);
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate();
         $this->parser_config->save();
     }
 
-    public function saveAndImport()
+    public function saveAndImport(): void
     {
         $this->save();
-        ImportCompetitionFile::dispatch($this->media);
+        $job = new ImportCompetitionFile($this->media);
+        $this->dispatch($job);
+        $this->parser_config->job_status()->associate(JobStatus::find($job->getJobStatusId()))->save();
     }
 
     public function highlight($regex, $optionName)

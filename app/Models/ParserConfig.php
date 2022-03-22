@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Casts\Options;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Livewire\Wireable;
 
 class ParserConfig extends Model
 {
@@ -16,5 +15,10 @@ class ParserConfig extends Model
     public function media(): BelongsTo
     {
         return $this->belongsTo(Media::class);
+    }
+
+    public function job_status(): BelongsTo
+    {
+        return $this->belongsTo(JobStatus::class);
     }
 }
