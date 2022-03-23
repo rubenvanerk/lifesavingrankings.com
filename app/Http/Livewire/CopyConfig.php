@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\ParserConfig;
+use Arr;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 
@@ -15,8 +16,8 @@ class CopyConfig extends ModalComponent
         $configs = ParserConfig::with('media')->get();
         $configs = $configs->mapWithKeys(function ($config) {
             return [$config->id => $config->media->file_name];
-        });
-        $configs->prepend('Select a config');
+        })->toArray();
+        $configs = Arr::prepend($configs, 'Select a config');
 
         return view('livewire.copy-config', ['configs' => $configs]);
     }
