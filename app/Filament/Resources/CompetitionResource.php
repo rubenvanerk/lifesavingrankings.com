@@ -30,7 +30,7 @@ class CompetitionResource extends Resource
             Forms\Components\TextInput::make('slug')->required(),
             Forms\Components\BelongsToManyMultiSelect::make(
                 'venues',
-            )->relationship('venues', 'name'),
+            )->relationship('venues', 'name')->required(),
             Forms\Components\Toggle::make('ils_sanctioned')
                 ->label('ILS sanctioned')
                 ->inline(false)

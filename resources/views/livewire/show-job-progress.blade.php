@@ -7,7 +7,7 @@
             @else
                 <progress value="{{ $jobStatus->progress_now }}" max="{{ $jobStatus->progress_max }}" class="text-green-700 w-64"> {{ $jobStatus->progress_percentage }}% </progress>
                 <span>
-                    {{ $this->jobStatus->progress_percentage }}%
+                    {{ $jobStatus->progress_percentage }}%
                 </span>
             @endif
         </div>
