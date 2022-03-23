@@ -73,6 +73,7 @@
                                                    class="font-medium text-blue-700 hover:text-blue-500 mr-4">Parse</a>
                                             @endcan
                                             <a href="{{ route('competitions.download', [$competition, $file]) }}"
+                                               target="_blank"
                                                class="font-medium text-blue-700 hover:text-blue-500">
                                                 {{ __('app.download') }}
                                             </a>
