@@ -46,6 +46,7 @@ class CompetitionResource extends Resource
             ),
             Forms\Components\Textarea::make('comment')->columnSpan(2),
             Forms\Components\SpatieMediaLibraryFileUpload::make('files')
+                ->multiple()
                 ->collection('files')
                 ->preserveFilenames(true),
             Forms\Components\Repeater::make('videos')->schema([
