@@ -160,7 +160,7 @@ class TextParser implements ParserInterface
             $resultStatus,
             $category,
             $segments,
-            $this->options['splits_matcher']->getMatches($line),
+            $this->options['splits_matcher']->getMatches($line)?->toArray(),
             $line,
             $lineNumber,
         );
