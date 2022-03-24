@@ -3,6 +3,12 @@
         <livewire:show-job-progress :job-status="$parser_config->job_status"/>
     @endif
 
+    @if (!empty($errorMessage))
+        <x-base.alert color="red" class="mb-3">
+            {{ $errorMessage }}
+        </x-base.alert>
+    @endif
+
     <div class="grid grid-cols-3 gap-4">
         <x-layout.panel title="Config">
 

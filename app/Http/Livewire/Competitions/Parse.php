@@ -8,6 +8,7 @@ use App\Models\JobStatus;
 use App\Models\Media;
 use App\Models\ParserConfig;
 use App\Parser\ParserService;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Collection;
@@ -71,6 +72,8 @@ class Parse extends Component
             return view('livewire.competitions.parse_error', [
                 'message' => $e->getMessage(),
             ]);
+        } catch (Exception $e) {
+            $data['errorMessage'] = $e->getMessage();
         }
 
         return view('livewire.competitions.parse', $data);
@@ -90,7 +93,7 @@ class Parse extends Component
         $this->parser_config->job_status()->associate(JobStatus::find($job->getJobStatusId()))->save();
     }
 
-    public function highlight($regex, $optionName)
+    public function highlight($regex, $optionName): void
     {
         $this->currentRegex = $regex;
         $this->currentRegexOptionName = $optionName;

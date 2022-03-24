@@ -5,6 +5,7 @@ namespace App\Parser;
 use App\Enums\EventType;
 use App\Enums\Gender;
 use App\Enums\ResultStatus;
+use App\Exceptions\Parser\EventNotFoundException;
 use App\Interfaces\ParserInterface;
 use App\Models\Event;
 use App\Models\Media;
@@ -34,6 +35,9 @@ class TextParser implements ParserInterface
         return file_get_contents($competitionFile->getPath());
     }
 
+    /**
+     * @throws EventNotFoundException
+     */
     public function getParsedResults(
         Media $competitionFile,
         ?ParserConfig $parserConfig = null,
@@ -68,6 +72,11 @@ class TextParser implements ParserInterface
                     $event = null;
                     continue;
                 }
+
+                if (is_null($event)) {
+                    throw new EventNotFoundException("Event not found on line $lineNumber: " . $line);
+                }
+
                 $gender = $this->getGenderFromLine($line);
                 $previousEvent = $event;
                 $event = $this->getEventFromLine($line);
