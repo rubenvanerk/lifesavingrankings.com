@@ -164,7 +164,7 @@
                                                 <x-table.cell>{{ $result->category?->name }}</x-table.cell>
                                                 <x-table.cell>{{ $result->event?->name }}</x-table.cell>
                                                 <x-table.cell>{{ $result->getFormattedTime() }}</x-table.cell>
-                                                <x-table.cell>{{ is_iterable($result->splits) ? implode(', ', $result->splits->toArray()) : '' }}</x-table.cell>
+                                                <x-table.cell>{{ is_iterable($result->splits) ? implode(', ', $result->splits) : '' }}</x-table.cell>
                                             </x-table.row>
                                         @endforeach
                                     </x-slot>
