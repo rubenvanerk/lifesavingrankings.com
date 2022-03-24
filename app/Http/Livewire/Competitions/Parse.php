@@ -35,7 +35,7 @@ class Parse extends Component
 
     protected $listeners = ['copy-config' => 'copyConfig'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->parser_config = $this->media->parser_config;
     }
@@ -123,21 +123,22 @@ class Parse extends Component
         return array_merge($values, $canOccurOnNextLine);
     }
 
-    public function refreshResults()
+    public function refreshResults(): void
     {
         $this->loadTable = true;
     }
 
-    public function updatedCurrentTab()
+    public function updatedCurrentTab(): void
     {
-        if ($this->currentTab == self::TAB_TABLE) {
+        if ($this->currentTab === self::TAB_TABLE) {
             $this->refreshResults();
         } else {
             $this->results = null;
         }
     }
 
-    public function copyConfig(ParserConfig $parserConfig) {
+    public function copyConfig(ParserConfig $parserConfig): void
+    {
         $this->parser_config->options = $parserConfig->options;
     }
 }

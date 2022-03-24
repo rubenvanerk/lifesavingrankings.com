@@ -17,7 +17,7 @@ class CopyConfig extends ModalComponent
         $configs = $configs->mapWithKeys(function ($config) {
             return [$config->id => $config->media->file_name];
         })->toArray();
-        $configs = Arr::prepend($configs, 'Select a config');
+        $configs = [null => 'Select a config'] + $configs;
 
         return view('livewire.copy-config', ['configs' => $configs]);
     }
@@ -27,6 +27,7 @@ class CopyConfig extends ModalComponent
         if (is_numeric($this->configToCopy)) {
             $this->configToCopy = ParserConfig::find($this->configToCopy);
         }
+
         if ($this->configToCopy instanceof ParserConfig) {
             $this->emit('copy-config', ['parserConfig' => $this->configToCopy]);
             $this->closeModal();
