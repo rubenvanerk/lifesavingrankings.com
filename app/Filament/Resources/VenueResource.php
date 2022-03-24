@@ -5,11 +5,13 @@ namespace App\Filament\Resources;
 use App\Enums\VenueType;
 use App\Filament\Resources\VenueResource\Pages;
 use App\Models\Venue;
+use Closure;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Support\Str;
 
 class VenueResource extends Resource
 {
@@ -35,7 +37,9 @@ class VenueResource extends Resource
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('slug')
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->reactive()
+                ->afterStateUpdated(fn (Closure $set, $state) => $set('slug', Str::slug($state))),
             Forms\Components\TextInput::make('city')
                 ->required()
                 ->maxLength(255),

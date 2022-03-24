@@ -8,12 +8,14 @@ use App\Filament\Resources\CompetitionResource\Pages;
 use App\Filament\Resources\CompetitionResource\RelationManagers\CategoriesRelationManager;
 use App\Filament\Resources\CompetitionResource\RelationManagers\ResultsRelationManager;
 use App\Models\Competition;
+use Closure;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class CompetitionResource extends Resource
 {
@@ -26,7 +28,10 @@ class CompetitionResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make('name')->required(),
+            Forms\Components\TextInput::make('name')
+                ->required()
+                ->reactive()
+                ->afterStateUpdated(fn (Closure $set, $state) => $set('slug', Str::slug($state))),
             Forms\Components\TextInput::make('slug')->required(),
             Forms\Components\BelongsToManyMultiSelect::make(
                 'venues',
