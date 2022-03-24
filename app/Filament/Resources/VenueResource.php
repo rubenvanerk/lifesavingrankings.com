@@ -34,12 +34,14 @@ class VenueResource extends Resource
         );
 
         return $form->schema([
-            Forms\Components\TextInput::make('name')->required(),
+            Forms\Components\TextInput::make('name')
+                ->required()
+                ->reactive()
+                ->afterStateUpdated(fn (Closure $set, $state) => $set('slug', Str::slug($state))),
             Forms\Components\TextInput::make('slug')
                 ->required()
                 ->maxLength(255)
-                ->reactive()
-                ->afterStateUpdated(fn (Closure $set, $state) => $set('slug', Str::slug($state))),
+                ->unique(),
             Forms\Components\TextInput::make('city')
                 ->required()
                 ->maxLength(255),

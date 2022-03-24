@@ -32,7 +32,7 @@ class CompetitionResource extends Resource
                 ->required()
                 ->reactive()
                 ->afterStateUpdated(fn (Closure $set, $state) => $set('slug', Str::slug($state))),
-            Forms\Components\TextInput::make('slug')->required(),
+            Forms\Components\TextInput::make('slug')->unique()->required(),
             Forms\Components\BelongsToManyMultiSelect::make(
                 'venues',
             )->relationship('venues', 'name')->required(),
