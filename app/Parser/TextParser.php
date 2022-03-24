@@ -194,7 +194,7 @@ class TextParser implements ParserInterface
         Gender $gender,
     ): ?Segments {
         if ($this->options['team_mate_matcher']->occursOnNextLine) {
-            $line = $this->lines[$lineNumber] ?? null;
+            $line = $this->lines[$lineNumber] ?? '';
         }
 
         $names = $this->options['team_mate_matcher']->getMatches($line);
