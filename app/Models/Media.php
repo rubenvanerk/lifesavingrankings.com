@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Livewire\Wireable;
 
 class Media extends \Spatie\MediaLibrary\MediaCollections\Models\Media
 {
@@ -37,5 +35,18 @@ class Media extends \Spatie\MediaLibrary\MediaCollections\Models\Media
     public function results(): HasMany
     {
         return $this->hasMany(Result::class)->withoutGlobalScope('published');
+    }
+
+    public function getFileContents(): string
+    {
+        $stream = $this->stream();
+
+        $contents = stream_get_contents($stream);
+
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+
+        return $contents;
     }
 }
