@@ -73,13 +73,14 @@ class TextParser implements ParserInterface
                     continue;
                 }
 
+                $gender = $this->getGenderFromLine($line);
+                $previousEvent = $event;
+                $event = $this->getEventFromLine($line);
+
                 if (is_null($event)) {
                     throw new EventNotFoundException("Event not found on line $lineNumber: " . $line);
                 }
 
-                $gender = $this->getGenderFromLine($line);
-                $previousEvent = $event;
-                $event = $this->getEventFromLine($line);
                 if ($previousEvent?->id !== $event->id) {
                     $category = null;
                 }
