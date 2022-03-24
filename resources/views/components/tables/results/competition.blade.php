@@ -57,7 +57,9 @@
                                         {{ $result->entrant->name }}
                                     @endif
                                 </span>
-                                <a href="{{ route('teams.show', $result->team) }}">{{ $result->team?->name }}</a>
+                                @if ($result->team)
+                                    <a href="{{ route('teams.show', $result->team) }}">{{ $result->team?->name }}</a>
+                                @endif
                             </span>
                         </span>
                         <span class="font-medium">
