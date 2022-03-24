@@ -20,7 +20,7 @@
             @forelse($results as $result)
                 <x-table.row>
                     <x-table.cell>{{ $loop->index + 1 }}</x-table.cell>
-                    <x-tables.cells.entrants :entrants="[$result->entrant]" :segments="$result->segments"/>
+                    <x-tables.cells.entrants :entrants="Arr::wrap($result->entrant)" :segments="$result->segments"/>
                     <x-tables.cells.times :results="[$result]"/>
                     <x-tables.cells.teams :teams="\Illuminate\Support\Arr::wrap($result->team)"/>
                 </x-table.row>

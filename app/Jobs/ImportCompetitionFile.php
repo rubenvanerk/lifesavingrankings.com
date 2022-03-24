@@ -43,7 +43,7 @@ class ImportCompetitionFile implements ShouldQueue
                 $this->competitionFile,
             );
 
-            $this->incrementProgress();
+            $this->incrementProgress(1, 25);
         }
     }
 }

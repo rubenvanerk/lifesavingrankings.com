@@ -1,4 +1,4 @@
-<div class="bg-white rounded-md p-5 mb-4 flex justify-center" wire:poll.1000ms>
+<div class="bg-white rounded-md p-5 mb-4 flex justify-center" wire:poll>
     @if (!$jobStatus->is_queued)
         <div class="flex items-center space-x-1">
             @if($jobStatus->is_finished)
