@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Model;
 
 class AthleteResource extends Resource
 {
@@ -33,7 +34,9 @@ class AthleteResource extends Resource
 
         return $form->schema([
             Forms\Components\TextInput::make('name')->required(),
-            Forms\Components\TextInput::make('slug')->required(),
+            Forms\Components\TextInput::make('slug')
+                ->required()
+                ->unique(ignorable: fn (?Model $record): ?Model => $record),
             Forms\Components\MultiSelect::make('country_codes')->options(
                 $countryOptions->toArray(),
             ),

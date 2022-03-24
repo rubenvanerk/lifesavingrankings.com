@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class CompetitionResource extends Resource
@@ -32,7 +33,9 @@ class CompetitionResource extends Resource
                 ->required()
                 ->reactive()
                 ->afterStateUpdated(fn (Closure $set, $state) => $set('slug', Str::slug($state))),
-            Forms\Components\TextInput::make('slug')->unique()->required(),
+            Forms\Components\TextInput::make('slug')
+                ->unique(ignorable: fn (?Model $record): ?Model => $record)
+                ->required(),
             Forms\Components\BelongsToManyMultiSelect::make(
                 'venues',
             )->relationship('venues', 'name')->required(),

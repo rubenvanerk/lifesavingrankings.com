@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class VenueResource extends Resource
@@ -41,7 +42,7 @@ class VenueResource extends Resource
             Forms\Components\TextInput::make('slug')
                 ->required()
                 ->maxLength(255)
-                ->unique(),
+                ->unique(ignorable: fn (?Model $record): ?Model => $record),
             Forms\Components\TextInput::make('city')
                 ->required()
                 ->maxLength(255),
