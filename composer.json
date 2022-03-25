@@ -44,16 +44,17 @@
         "wire-elements/modal": "^1.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
         "barryvdh/laravel-debugbar": "dev-master",
         "barryvdh/laravel-ide-helper": "^2.10",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "laravel/telescope": "^4.7",
+        "larswiegers/laravel-translations-checker": "^0.2.0",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "^1.0",
         "phpunit/phpunit": "^9.5.10",
+        "roave/security-advisories": "dev-latest",
         "spatie/laravel-ignition": "^1.0",
         "spatie/laravel-stubs": "^2.4"
     },
