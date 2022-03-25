@@ -54,9 +54,8 @@ class Results extends Component
             }
 
             if (
-                !$filter->getValue('competition') &&
-                !$filter->getValue('athlete') &&
-                !$filter->getValue('team')
+                !$filter->getValue('competition')
+                && !$filter->getValue('athlete')
             ) {
                 $sub = Result::filter()
                     ->selectRaw('entrant_id, MIN(time)')
