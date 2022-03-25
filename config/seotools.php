@@ -11,7 +11,7 @@ return [
         'defaults'       => [
             'title'        => 'LifesavingRankings.com', // set false to total remove
             'titleBefore'  => false, // Put defaults.title before page title, like 'It's Over 9000! - Dashboard'
-            'description'  => 'LifesavingRankings.com is the largest lifesaving competition database', // set false to total remove
+            'description'  => 'Compare, track and analyse lifesaving results from all over the world.', // set false to total remove
             'separator'    => ' - ',
             'keywords'     => [],
             'canonical'    => false, // Set to null or 'full' to use Url::full(), set to 'current' to use Url::current(), set false to total remove

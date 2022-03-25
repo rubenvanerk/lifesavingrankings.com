@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @php
-    SEO::setTitle('Home');
+    SEO::setTitle('LifesavingRankings.com: The largest lifesaving results database');
+    SEOMeta::setTitleDefault('')
 @endphp
 
 @section('page-title')
-    {!! __('app.welcome', ['html' => '<wbr/>']) !!}
+    {!! config('app.name') !!}
 @endsection
 
 @section('page-subtitle')

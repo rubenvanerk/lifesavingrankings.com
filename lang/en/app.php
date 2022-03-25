@@ -5,7 +5,7 @@ use App\Enums\CompetitionStatus;
 return [
     'welcome' => 'Welcome to Lifesaving:htmlRankings.com',
     'tagline' =>
-        'The :style_open largest :style_close lifesaving competition database',
+        'The :style_open largest :style_close lifesaving results database',
 
     'athletes' => 'Athlete|Athletes',
     'competitions' => 'Competition|Competitions',
