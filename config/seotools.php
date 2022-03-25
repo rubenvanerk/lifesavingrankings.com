@@ -41,7 +41,7 @@ return [
             'url'         => null, // Set null for using Url::current(), set false to total remove
             'type'        => 'website',
             'site_name'   => false,
-            'images'      => ['/images/og-image.png'],
+            'images'      => [],
         ],
     ],
     'twitter' => [

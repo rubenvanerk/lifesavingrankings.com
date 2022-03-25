@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Filter;
 use Illuminate\Support\ServiceProvider;
+use SEO;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        SEO::addImages(url('images/og-image.png'));
     }
 }
