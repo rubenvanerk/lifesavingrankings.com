@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @php
-    SEO::setTitle('LifesavingRankings.com: The largest lifesaving results database');
-    SEOMeta::setTitleDefault('')
+    SEO::setTitle('LifesavingRankings.com: the largest lifesaving results database', false);
 @endphp
 
 @section('page-title')
