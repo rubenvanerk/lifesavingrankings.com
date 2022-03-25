@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
+@section('page-title')
     Parsing {{ $competition->name }}
 @endsection
 

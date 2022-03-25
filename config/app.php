@@ -176,7 +176,8 @@ return [
         /*
          * Package Service Providers...
          */
-        \Imtigger\LaravelJobStatus\LaravelJobStatusBusServiceProvider::class,
+        Imtigger\LaravelJobStatus\LaravelJobStatusBusServiceProvider::class,
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
 
         /*
          * Application Service Providers...

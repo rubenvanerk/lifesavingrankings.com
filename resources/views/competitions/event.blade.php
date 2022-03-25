@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ $event->name }} {{ strtolower($gender->description) }} at {{ $competition->name }}
+@php
+    SEO::setTitle($competition->name . ': ' . $event->name . ' ' . strtolower($gender->description))
+@endphp
+
+@section('page-title')
+    {{ $competition->name }}: {{ $event->name }} {{ strtolower($gender->description) }}
 @endsection
 
 @section('content')

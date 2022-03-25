@@ -6,14 +6,14 @@
             <x-layout.menu/>
 
             <header class="py-10">
-                @hasSection('title')
+                @hasSection('page-title')
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <h1 class="text-3xl font-bold text-white">
-                            @yield('title')
+                            @yield('page-title')
                         </h1>
 
-                        @hasSection('subtitle')
-                            <h2 class="text-xl font-bold text-white mt-3">@yield('subtitle')</h2>
+                        @hasSection('page-subtitle')
+                            <h2 class="text-xl font-bold text-white mt-3">@yield('page-subtitle')</h2>
                         @endif
 
                         @if(!request()->routeIs('home'))

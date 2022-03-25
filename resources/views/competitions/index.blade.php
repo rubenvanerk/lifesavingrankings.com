@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title')
+@php
+    SEO::setTitle(trans_choice('app.competitions', 2));
+@endphp
+
+@section('page-title')
     {{ trans_choice('app.competitions', 2) }}
 @endsection
 

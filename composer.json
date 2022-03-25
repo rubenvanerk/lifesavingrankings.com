@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": "^8.1",
+        "artesaos/seotools": "^0.22.0",
         "bensampo/laravel-enum": "^5.0",
         "blade-ui-kit/blade-heroicons": "^1.2",
         "blade-ui-kit/blade-ui-kit": "^0.3.1",

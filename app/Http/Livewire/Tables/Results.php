@@ -13,6 +13,7 @@ use App\Traits\WithFilter;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use SEOMeta;
 
 class Results extends Component
 {

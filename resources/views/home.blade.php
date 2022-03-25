@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title')
+@php
+    SEO::setTitle('Home');
+@endphp
+
+@section('page-title')
     {!! __('app.welcome', ['html' => '<wbr/>']) !!}
 @endsection
 
-@section('meta-title')
-    Home
-@endsection
-
-@section('subtitle')
+@section('page-subtitle')
     {!! __('app.tagline', ['style_open' => '<span class="text-amber-300 font-extrabold">', 'style_close' => '</span>']) !!}
 @endsection
 

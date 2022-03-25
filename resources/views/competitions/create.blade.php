@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
-@section('title')
-    Add a competition
+@php
+    SEO::setTitle(__('app.add_competition'))
+@endphp
+
+@section('page-title')
+    {{ __('app.add_competition') }}
 @endsection
 
 @section('content')

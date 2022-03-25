@@ -1,4 +1,8 @@
-@section('title') Search @endsection
+@php
+    SEO::setTitle('Search')
+@endphp
+
+@section('page-title') Search @endsection
 
 <div class="px-6">
     <div class="flex-col space-y-4 mt-5">

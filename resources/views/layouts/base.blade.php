@@ -1,18 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="lsr">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        @hasSection('title')
-            @hasSection('meta-title')
-                <title>@yield('meta-title') | {{ config('app.name') }}</title>
-            @else
-                <title>@yield('title') | {{ config('app.name') }}</title>
-            @endif
-        @else
-            <title>{{ config('app.name') }}</title>
-        @endif
+        @include('layouts.partials.meta')
 
         <!-- Favicon -->
 		<link rel="shortcut icon" href="{{ url(asset('favicon.ico')) }}">

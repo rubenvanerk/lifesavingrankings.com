@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
-@section('title')
-    {{ $athlete->name }} {{ $event->name }}
+@php
+    SEO::setTitle($athlete->name . ': ' . $event->name)
+@endphp
+
+@section('page-title')
+    {{ $athlete->name }}: {{ $event->name }}
 @endsection
 
 @section('content')
