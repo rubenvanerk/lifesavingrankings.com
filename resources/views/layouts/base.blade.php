@@ -28,6 +28,7 @@
 
         <!-- Scripts -->
         <script src="{{ url(mix('js/app.js')) }}" defer></script>
+        <script defer data-domain="new.lifesavingrankings.com" src="https://plausible.wrve.nl/js/script.js"></script>
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
