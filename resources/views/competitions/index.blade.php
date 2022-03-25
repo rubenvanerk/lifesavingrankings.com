@@ -7,7 +7,7 @@
 @section('content')
     <div class="px-4 sm:px-6 lg:px-8">
         <x-base.button href="{{ route('competitions.create') }}">
-            Add competition
+            {{ __('app.add_competition') }}
         </x-base.button>
     </div>
 

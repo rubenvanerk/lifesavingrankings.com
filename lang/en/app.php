@@ -51,6 +51,7 @@ return [
         'add_competition' => 'Add a competition',
     ],
 
+    'add_competition' => 'Add a competition',
     'added_competition' => 'Added :competition_name with :result_count results',
 
     'sponsors' =>

@@ -51,6 +51,7 @@ return [
         'add_competition' => 'Voeg een wedstrijd toe',
     ],
 
+    'add_competition' => 'Voeg een wedstrijd toe',
     'added_competition' =>
         ':competition_name toegevoegd met :result_count resultaten',
 
