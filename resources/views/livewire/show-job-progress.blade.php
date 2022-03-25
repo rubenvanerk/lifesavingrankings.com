@@ -4,6 +4,9 @@
             @if($jobStatus->is_finished)
                 <x-heroicon-s-check-circle class="w-5 h-5 text-green-700"/>
                 <span>Done!</span>
+            @elseif($jobStatus->is_failed)
+                    <x-heroicon-s-x-circle class="w-5 h-5 text-red-700"/>
+                    <span>Failed!</span>
             @else
                 <progress value="{{ $jobStatus->progress_now }}" max="{{ $jobStatus->progress_max }}" class="text-green-700 w-64"> {{ $jobStatus->progress_percentage }}% </progress>
                 <span>

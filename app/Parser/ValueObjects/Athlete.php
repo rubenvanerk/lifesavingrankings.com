@@ -14,6 +14,7 @@ class Athlete extends Entrant
             $this->name,
             $this->gender,
             $this->yearOfBirth,
+            $competition
         );
     }
 }
