@@ -4,6 +4,7 @@
             <x-table.heading>{{ trans_choice('app.teams', 1) }}</x-table.heading>
             <x-table.heading>{{ __('app.country') }}</x-table.heading>
         </x-slot>
+
         <x-slot name="body">
             @foreach($teams as $team)
                 <x-table.row>
@@ -12,7 +13,7 @@
                             {{ $team->name }}
                         </a>
                     </x-table.cell>
-                    <x-table.cell class="hidden lg:table-cell max-w-0 w-full">
+                    <x-table.cell class="max-w-0 w-full">
                         @if ($team->country)
                             <span class="flex items-center space-x-1">
                                 <x-flag :country="$team->country"/>

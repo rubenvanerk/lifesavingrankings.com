@@ -1,7 +1,15 @@
-@php $title = $title ?? null @endphp
+@props([
+    'title' => null,
+    'addPadding' => true,
+    'pagination' => '',
+    'head',
+    'body',
+    'mobileBody',
+    'mobilePagination',
+])
 
 <div class="hidden sm:block">
-    <div class="w-full mx-auto {{ ($addPadding ?? true) ? 'p-5' : '' }}">
+    <div class="w-full mx-auto {{ $addPadding ? 'p-5' : '' }}">
         <div class="flex flex-col mt-2 @if ($title) bg-white shadow sm:rounded-md sm:overflow-hidden @endif">
             @if ($title)
                 <div class="px-4 sm:px-6 py-6">
@@ -27,13 +35,13 @@
                     </tbody>
                 </table>
 
-                {{ $pagination ?? '' }}
+                {{ $pagination }}
             </div>
         </div>
     </div>
 </div>
 
-@if (isset($mobileBody))
+@if ($mobileBody)
     <div class="shadow sm:hidden">
         <ul class="mobile-table mt-4 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
             @if ($title)
@@ -52,6 +60,6 @@
             {{ $mobileBody }}
         </ul>
 
-        {{ $pagination ?? '' }}
+        {{ $pagination }}
     </div>
 @endif
