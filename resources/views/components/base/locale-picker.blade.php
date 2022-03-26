@@ -29,7 +29,7 @@
                 </a>
             @endforeach
             <hr class="my-2">
-            <a href="https://poeditor.com/join/project?hash=6P7Ma7RAPw" target="_blank" class="block px-4 py-2 text-sm text-gray-700 flex items-center space-x-2 hover:bg-gray-100" role="menuitem">
+            <a href="https://crwd.in/lifesavingrankingscom" target="_blank" class="block px-4 py-2 text-sm text-gray-700 flex items-center space-x-2 hover:bg-gray-100" role="menuitem">
                 <span>{{ __('app.help_translating') }}</span>
                 <x-heroicon-s-external-link class="h-4 w-4"/>
             </a>

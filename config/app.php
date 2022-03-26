@@ -92,6 +92,10 @@ return [
             'label' => 'Nederlands',
             'code3' => 'nld',
         ],
+        'it' => [
+            'label' => 'Italiano',
+            'code3' => 'ita',
+        ],
     ],
 
     /*
