@@ -10,6 +10,7 @@
 ### Instructions
 
 ```shell
+cp .env.example .env
 composer install --ignore-platform-reqs
 vendor/bin/sail up
 vendor/bin/sail php artisan migrate --seed
