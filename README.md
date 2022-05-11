@@ -10,7 +10,7 @@
 ### Instructions
 
 ```shell
-composer install --ignore-platform-reqs--ignore-platform-req
+composer install --ignore-platform-reqs
 vendor/bin/sail up
 vendor/bin/sail php artisan migrate --seed
 vendor/bin/sail php artisan db:seed --class=FakeSeeder
