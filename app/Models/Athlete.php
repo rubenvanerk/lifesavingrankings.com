@@ -10,6 +10,7 @@ use App\Traits\HasCountries;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
@@ -44,6 +45,11 @@ class Athlete extends Model
         return $this->morphMany(Result::class, 'entrant');
     }
 
+    public function ids(): HasMany
+    {
+        return $this->hasMany(AthleteId::class);
+    }
+
     public function scopeFilter($query): void
     {
         $filter = app(Filter::class);
@@ -56,15 +62,6 @@ class Athlete extends Model
     public function getNationalitiesAttribute()
     {
         return $this->countries;
-    }
-
-    public function toDatabase(): Athlete
-    {
-        return AthleteFinder::firstOrNew(
-            $this->name,
-            $this->gender,
-            $this->year_of_birth,
-        );
     }
 
     public function getLastTeamAttribute(): Team
