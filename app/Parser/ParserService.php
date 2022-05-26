@@ -23,9 +23,10 @@ class ParserService
      * @throws UnsupportedMimeTypeException
      */
     public function __construct(
-        protected Media $competitionFile,
+        protected Media         $competitionFile,
         protected ?ParserConfig $parserConfig = null,
-    ) {
+    )
+    {
         if (empty($this->parserConfig)) {
             $this->parserConfig = $this->competitionFile->parser_config;
         }
@@ -41,20 +42,15 @@ class ParserService
      */
     protected function getConcreteParser(): ParserInterface
     {
-        $concreteParser = match ($this->competitionFile->mime_type) {
+        return match ($this->competitionFile->mime_type) {
             'application/pdf' => new PdfParser(),
             'text/plain' => new TextParser(),
-            default => null
-        };
-
-        if (is_null($concreteParser)) {
-            throw new UnsupportedMimeTypeException(
+            'text/csv' => new CsvParser(),
+            default => throw new UnsupportedMimeTypeException(
                 $this->competitionFile->mime_type .
-                    ' is currently not supported',
-            );
-        }
-
-        return $concreteParser;
+                ' is currently not supported',
+            )
+        };
     }
 
     public function getParsedResults(): Collection
@@ -68,10 +64,7 @@ class ParserService
     public function getHighlightedRawText($highlightRegex = null): string
     {
         $rawText = $this->rawText;
-        if (
-            $this->competitionFile->parser_config->options['text_remover']
-                ->value
-        ) {
+        if ($this->competitionFile->parser_config->options['text_remover']->value ?? false) {
             $rawText = Regex::replace(
                 $this->competitionFile->parser_config->options['text_remover']
                     ->value,
@@ -83,24 +76,20 @@ class ParserService
         $lines = collect(explode("\n", $rawText));
 
         if (
-            $this->isValidRegex($highlightRegex) &&
-            $this->countMatches($highlightRegex) < 5000
+            $this->isValidRegex($highlightRegex)
+            && $this->countMatches($highlightRegex) < 5000
         ) {
-            $lines = $lines->map(function ($line) use ($highlightRegex) {
-                return Regex::replace(
-                    $highlightRegex,
-                    fn(MatchResult $result) => '<mark>' .
-                        $result->result() .
-                        '</mark>',
-                    $line,
-                )->result();
-            });
+            $lines = $lines->map(fn($line) => Regex::replace(
+                $highlightRegex,
+                fn(MatchResult $result) => '<mark>' .
+                    $result->result() .
+                    '</mark>',
+                $line,
+            )->result());
         }
 
         // wrap lines in spans, so line numbers can be shown
-        $lines = $lines->map(function ($line) {
-            return '<span>' . $line . '</span>';
-        });
+        $lines = $lines->map(fn($line) => '<span>' . $line . '</span>');
 
         return $lines->implode("\n");
     }
@@ -108,6 +97,7 @@ class ParserService
     public function countMatches($highlightRegex = null): ?int
     {
         $matchCount = 0;
+
         if ($this->isValidRegex($highlightRegex)) {
             $lines = collect(explode("\n", $this->rawText));
             $lines->map(function ($line) use ($highlightRegex, &$matchCount) {
@@ -116,6 +106,7 @@ class ParserService
                 );
             });
         }
+
         return $matchCount;
     }
 
@@ -127,22 +118,16 @@ class ParserService
     public function getIndicatedEvents(): Collection
     {
         $lines = collect(explode("\n", $this->rawText));
+
         /** @var EventIndicator $eventIndicator */
         $eventIndicator = $this->parserConfig->options['event_indicator'];
+
         /** @var EventRejector $eventRejector */
         $eventRejector = $this->parserConfig->options['event_rejector'];
-        $eventLines = $lines->filter(function ($line) use (
-            $eventIndicator,
-            $eventRejector,
-        ) {
-            return $eventIndicator->hasMatch($line) &&
-                !$eventRejector->hasMatch($line);
-        });
-        $eventMatchers = $this->parserConfig->options->filter(function (
-            Option $option,
-        ) {
-            return $option->group === Option::GROUP_EVENTS;
-        });
+
+        $eventLines = $lines->filter(fn($line) => $eventIndicator->hasMatch($line) && !$eventRejector->hasMatch($line));
+        $eventMatchers = $this->parserConfig->options->filter(fn(Option $option) => $option->group === Option::GROUP_EVENTS);
+
         return $eventLines->map(function ($eventLine) use ($eventMatchers) {
             foreach ($eventMatchers as $eventMatcher) {
                 if ($eventMatcher->hasMatch($eventLine)) {

@@ -102,24 +102,14 @@ class Parse extends Component
     public function rules(): array
     {
         $values = $this->media->parser_config->options
-            ->mapWithKeys(function ($option) {
-                return [
-                    'parser_config.options.' .
-                    $option->name .
-                    '.value' => 'nullable',
-                ];
-            })
+            ->mapWithKeys(fn($option) => ['parser_config.options.' . $option->name . '.value' => 'nullable'])
             ->toArray();
+
         $canOccurOnNextLine = $this->media->parser_config->options
             ->filter(fn($option) => $option->canOccurOnNextLine)
-            ->mapWithKeys(function ($option) {
-                return [
-                    'parser_config.options.' .
-                    $option->name .
-                    '.occursOnNextLine' => 'nullable',
-                ];
-            })
+            ->mapWithKeys(fn($option) => ['parser_config.options.' . $option->name . '.occursOnNextLine' => 'nullable'])
             ->toArray();
+
         return array_merge($values, $canOccurOnNextLine);
     }
 

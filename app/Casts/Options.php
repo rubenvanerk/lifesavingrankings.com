@@ -57,9 +57,7 @@ class Options implements CastsAttributes
             }
         }
 
-        return $options->mapWithKeys(function (Option $option) {
-            return [$option->name => $option];
-        });
+        return $options->mapWithKeys(fn(Option $option) => [$option->name => $option]);
     }
 
     /**

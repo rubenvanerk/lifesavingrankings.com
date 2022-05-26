@@ -106,7 +106,7 @@
                              x-show="currentTab == 'text'">
                             @if ($currentTab == self::TAB_TEXT)
                                 <x-well class="p-3 rounded-md">
-                                    <pre class="numbered overflow-scroll max-h-screen leading-4">{!! $rawText !!}</pre>
+                                    <pre class="numbered overflow-scroll max-h-screen leading-4">{!! $rawText ?? '' !!}</pre>
                                 </x-well>
                             @else
                                 <div type="button" class="relative block w-full rounded-lg p-12 text-center">
